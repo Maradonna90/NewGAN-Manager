@@ -30,16 +30,17 @@ class NEWGAN_Manager(tk.Frame):
         frame_prf = tk.Frame(panel)
         #TODO: Create Profile LineEdit + Create Buttun
         frame_prf_sel = tk.Frame(panel)
-        combo_prf = ttk.Combobox(frame_prf_sel, values=list(self.config.keys()), postCommand=self._set_profile_status)
-        combo_prf.current(list(self.config.values()).index(True))
+        self.combo_prf = ttk.Combobox(frame_prf_sel, values=list(self.config.keys()), state='readonly')
+        self.combo_prf.current(list(self.config.values()).index(True))
+        self.combo_prf.bind("<<ComboboxSelected>>", self._set_profile_status)
         ent_prf = tk.Entry(frame_prf, width=20)
-        btn_prf = tk.Button(frame_prf, text='Create', command=lambda e=ent_prf, c=combo_prf: self._create_profile(e, c))
+        btn_prf = tk.Button(frame_prf, text='Create', command=lambda e=ent_prf, c=self.combo_prf: self._create_profile(e, c))
         ent_prf.pack(side=LEFT, expand=Y, fill=X)
         btn_prf.pack(side=LEFT, padx=5)
         frame_prf.pack(fill=X, padx='1c', pady=3)
         #TODO Select Profile: Combobox
         #TODO: select profile with True as default
-        combo_prf.pack(side=LEFT)
+        self.combo_prf.pack(side=LEFT)
         #TODO Deactivate Profile
         btn_prf_act = tk.Button(frame_prf_sel, text='Delete', command=lambda e=ent_prf : self._delete_profile(e))
         btn_prf_act.pack(side=LEFT, padx=5)
@@ -101,12 +102,14 @@ class NEWGAN_Manager(tk.Frame):
         with open(path, 'w') as fp:
             json.dump(data, fp)
 
-    def _set_profile_status(self):
-        name = combo_prf.get()
+    def _set_profile_status(self, event):
+        name = self.combo_prf.get()
         for prf, status in self.config.items():
+            print(status)
             if status:
                 self.config[prf] = False
         self.config[name] = True
+        self._write_config(self.cfg_path, self.config)
 
     def _refresh_combo(self, combo):
         combo['values'] =list(self.config.keys())
