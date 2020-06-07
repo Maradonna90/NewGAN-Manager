@@ -100,13 +100,19 @@ class NEWGAN_Manager(tk.Frame):
             ent.insert(END, fn)
     def _replace_faces(self, rtf, img_dir, profile, prog):
         #parse rtf
+        if profile == "No Profile":
+            print("Please select a profile!")
+            return
+        if '' in [rtf, img_dir]:
+            print("Select RTF and/or image directory")
+            return
         rtf_data = self.parse_rtf(rtf)
         with open(".config/config_template", "r") as fp:
             config_template = fp.read()
         #walk all img subdirs and get all filenames. Create map
         all_ethnicies = ["East European", "Scandinavian", "Mediterranean", "Arabian",
                          "African", "South East Asian", "East Asian", "Central Asian", "UK",
-                         "Carribean"]
+                         "Carribean", "South American"]
         all_images = []
         for eth in all_ethnicities.keys():
             [all_images.append(f.name) for f in os.scandir(eth+"/") if f.is_file()]
