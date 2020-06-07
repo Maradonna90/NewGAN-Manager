@@ -36,11 +36,11 @@ class NEWGAN_Manager(tk.Frame):
         btn_prf.pack(side=LEFT, padx=5)
         frame_prf.pack(fill=X, padx='1c', pady=3)
         self.combo_prf.pack(side=LEFT)
-        #TODO Delete Profile
+        #Delete Profile
         btn_prf_act = tk.Button(frame_prf_sel, text='Delete', command=lambda e=ent_prf, c=self.combo_prf : self._delete_profile(e, c))
         btn_prf_act.pack(side=LEFT, padx=5)
         frame_prf_sel.pack(fill=X, padx='1c', pady=3)
-        #TODO: MID PATHS
+        #MID PATHS
         frame_rtf = tk.Frame(panel)
         lbl_rtf = tk.Label(frame_rtf, width=20, text='RTF File')
         ent_rtf = tk.Entry(frame_rtf, width=40)
@@ -62,9 +62,12 @@ class NEWGAN_Manager(tk.Frame):
         #TODO: BOTTOM: Generation
         frame_gen = tk.Frame(panel)
         #TODO Generate Button
-        btn_gen = tk.Button(frame_gen, text='Replace Faces', command=lambda r=ent_rtf.get(), i=ent_img.get(), p=self.combo.get(): 
-                            self._replace_faces(r, i, p))
-        btn_gen.pack(side=BOTTOM)
+        progress = tk.Progressbar(frame_gen, orient = HORIZONTAL, length = 110)
+        progress.pack(side=BOTTOM)
+        btn_gen = tk.Button(frame_gen, text='Replace Faces', command=lambda r=ent_rtf.get(), i=ent_img.get(), p=self.combo.get(),
+                            prog=progress :
+                            self._replace_faces(r, i, p, prog))
+        btn_gen.pack(side=TOP)
         #TODO Progressbar
         frame_img.pack(fill=X, padx='1c', pady=3)
 
@@ -95,12 +98,12 @@ class NEWGAN_Manager(tk.Frame):
             print(fn)
             ent.delete(0, END)
             ent.insert(END, fn)
-    def _replace_faces(self, rtf, img_dir, profile):
-        #TODO parse rtf
+    def _replace_faces(self, rtf, img_dir, profile, prog):
+        #parse rtf
         rtf_data = self.parse_rtf(rtf)
         with open(".config/config_template", "r") as fp:
             config_template = fp.read()
-        #TODO: walk all img subdirs and get all filenames. Create map
+        #walk all img subdirs and get all filenames. Create map
         all_ethnicies = ["East European", "Scandinavian", "Mediterranean", "Arabian",
                          "African", "South East Asian", "East Asian", "Central Asian", "UK",
                          "Carribean"]
@@ -109,7 +112,7 @@ class NEWGAN_Manager(tk.Frame):
             [all_images.append(f.name) for f in os.scandir(eth+"/") if f.is_file()]
         prf_cfg = self._load_config(".config/"+profile+".json")
         prf_imgs = set(prf_cfg["imgs"])
-        #TODO map rtf_data to ethnicities
+        #map rtf_data to ethnicities
         xml_string = []
         for player in rtf_data:
             if player[2]:
@@ -122,8 +125,9 @@ class NEWGAN_Manager(tk.Frame):
             player_img = random.choice(tuple(selection_pool))
             prf_imgs.add(player_img)
 
-        #TODO create config file entry
+        #create config file entry
             xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/{}/portrait\"/>".format(player_img, player[0]))
+            prog["value"] += 1
         #save profile metadata (used pics and config.xml)
         xml_players = "\n".join(xml_string)
         xml_config = config_template.replace("[players]", xml_players)
@@ -131,6 +135,7 @@ class NEWGAN_Manager(tk.Frame):
             fp.write(xml_config)
         prf_cfg["imgs"] = list(prf_imgs)
         self._write_config(".config/"+profile+".json", prf_cfg)
+        prog["value"] = 110
 
     def _load_config(self, path):
         with open(path, 'r') as fp:
