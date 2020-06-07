@@ -28,7 +28,6 @@ class NEWGAN_Manager(tk.Frame):
         panel.pack(side=TOP, fill=BOTH, expand=Y)
         #TODO: TOP Profiles
         frame_prf = tk.Frame(panel)
-        #TODO: Create Profile LineEdit + Create Buttun
         frame_prf_sel = tk.Frame(panel)
         self.combo_prf = ttk.Combobox(frame_prf_sel, values=list(self.config.keys()), state='readonly')
         self.combo_prf.current(list(self.config.values()).index(True))
@@ -38,11 +37,9 @@ class NEWGAN_Manager(tk.Frame):
         ent_prf.pack(side=LEFT, expand=Y, fill=X)
         btn_prf.pack(side=LEFT, padx=5)
         frame_prf.pack(fill=X, padx='1c', pady=3)
-        #TODO Select Profile: Combobox
-        #TODO: select profile with True as default
         self.combo_prf.pack(side=LEFT)
-        #TODO Deactivate Profile
-        btn_prf_act = tk.Button(frame_prf_sel, text='Delete', command=lambda e=ent_prf : self._delete_profile(e))
+        #TODO Delete Profile
+        btn_prf_act = tk.Button(frame_prf_sel, text='Delete', command=lambda e=ent_prf, c=self.combo_prf : self._delete_profile(e, c))
         btn_prf_act.pack(side=LEFT, padx=5)
         frame_prf_sel.pack(fill=X, padx='1c', pady=3)
         #TODO: MID PATHS
@@ -124,7 +121,15 @@ class NEWGAN_Manager(tk.Frame):
 
     def _delete_profile(self, ent, c):
         #TODO: delete profile and remove entry from combobox
-        pass
+        prf = self.combo_prf.get()
+        if prf == "No Profile":
+            print("Can't delte no profile")
+            return
+        del self.config[prf]
+        self.config["No Profile"] = True
+        self._write_config(self.cfg_path, self.config)
+        self._refresh_combo(self.combo_prf)
+
     def parse_rtf(self, path):
         UID_regex = re.compile('([0-9]){10}')
         result_data = []
