@@ -1,0 +1,21 @@
+<record>
+        <!-- resource manager options -->
+
+        <!-- dont preload anything in this folder -->
+        <boolean id="preload" value="false"/>
+
+                <!-- turn off auto mapping -->
+        <boolean id="amap" value="false"/>
+
+                <!-- logo mappings -->
+                <!-- the following XML maps pictures inside this folder into other positions
+                        in the resource system, which allows this folder to be dropped into any
+                        place in the graphics folder and still have the game pick up the graphics
+                        files from the correct places
+                -->
+
+        <list id="maps">
+				[players]
+        </list>
+</record>
+
