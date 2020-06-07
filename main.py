@@ -7,7 +7,6 @@ import json
 import tkinter.ttk as ttk
 #TODO: map Nat and 2nd Nat to random image
 #TODO: store UID mapping to image in JSON in .config => avoid double assigning
-#TODO: differ between player and staff
 #TODO: create profiles to have assignments per savegame and switch active profiles
 #TODO: NAT -> ethnicity mapping config file
 
@@ -20,7 +19,7 @@ class NEWGAN_Manager(tk.Frame):
         self.cfg_path = ".config/cfg.json"
         if not os.path.isfile(self.cfg_path):
             print("No config!")
-            self._write_config(self.cfg_path, {})
+            self._write_config(self.cfg_path, {"No Profile" : True})
         self.config = self._load_config(self.cfg_path)
         self.create_widgets()
 
@@ -30,19 +29,21 @@ class NEWGAN_Manager(tk.Frame):
         #TODO: TOP Profiles
         frame_prf = tk.Frame(panel)
         #TODO: Create Profile LineEdit + Create Buttun
+        frame_prf_sel = tk.Frame(panel)
+        combo_prf = ttk.Combobox(frame_prf_sel, values=list(self.config.keys()), postCommand=self._set_profile_status)
+        combo_prf.current(list(self.config.values()).index(True))
         ent_prf = tk.Entry(frame_prf, width=20)
-        btn_prf = tk.Button(frame_prf, text='Create', command=lambda e=ent_prf: self._create_profile(e))
+        btn_prf = tk.Button(frame_prf, text='Create', command=lambda e=ent_prf, c=combo_prf: self._create_profile(e, c))
         ent_prf.pack(side=LEFT, expand=Y, fill=X)
         btn_prf.pack(side=LEFT, padx=5)
-        ent_prf.pack(side=LEFT, expand=Y, fill=X)
-        btn_prf.pack(side=LEFT, padx=5)
-        #TODO Select Profile: Combobox
-        combo_prf = ttk.Combobox(frame_prf, values=list(self.config.keys()))
-        combo_prf.pack()
-        #TODO Deactivate Profile
-        btn_prf_act = tk.Button(frame_prf, text='Create', command=lambda e=ent_prf: self._create_profile(e))
-        btn_prf_act.pack(side=LEFT, padx=5)
         frame_prf.pack(fill=X, padx='1c', pady=3)
+        #TODO Select Profile: Combobox
+        #TODO: select profile with True as default
+        combo_prf.pack(side=LEFT)
+        #TODO Deactivate Profile
+        btn_prf_act = tk.Button(frame_prf_sel, text='Delete', command=lambda e=ent_prf : self._delete_profile(e))
+        btn_prf_act.pack(side=LEFT, padx=5)
+        frame_prf_sel.pack(fill=X, padx='1c', pady=3)
         #TODO: MID PATHS
         frame_rtf = tk.Frame(panel)
         lbl_rtf = tk.Label(frame_rtf, width=20, text='RTF File')
@@ -61,18 +62,9 @@ class NEWGAN_Manager(tk.Frame):
         ent_img.pack(side=LEFT, expand=Y, fill=X)
         btn_img.pack(side=LEFT, padx=5)
         frame_img.pack(fill=X, padx='1c', pady=3)
-        #self.label = tk.Label(text="Test")
-        #self.label.grid(row=0, column=0)
 
         #TODO: BOTTOM: Generation
-        #self.hi_there = tk.Button(self)
-        #self.hi_there["text"] = "Hello World\n(click me)"
-        #self.hi_there["command"] = self.say_hi
-        #self.hi_there.pack(side="top")
-
-        #self.quit = tk.Button(self, text="QUIT", fg="red",command=self.master.destroy)
-        #self.quit.grid(row=1, column=0)
-
+        
     def _file_dialog(self, type, ent):
         # triggered when the user clicks a 'Browse' button
         fn = None
@@ -109,14 +101,27 @@ class NEWGAN_Manager(tk.Frame):
         with open(path, 'w') as fp:
             json.dump(data, fp)
 
-    def _set_profile_status(self, name, active=True):
-        pass
+    def _set_profile_status(self):
+        name = combo_prf.get()
+        for prf, status in self.config.items():
+            if status:
+                self.config[prf] = False
+        self.config[name] = True
 
-    def _create_profile(self, ent):
+    def _refresh_combo(self, combo):
+        combo['values'] =list(self.config.keys())
+        combo.current(list(self.config.values()).index(True))
+
+
+    def _create_profile(self, ent, c):
         self.config[ent.get()] = False
         self._write_config(self.cfg_path, self.config)
         ent.delete(0, 'end')
+        self._refresh_combo(c)
 
+    def _delete_profile(self, ent, c):
+        #TODO: delete profile and remove entry from combobox
+        pass
     def parse_rtf(self, path):
         UID_regex = re.compile('([0-9]){10}')
         result_data = []
