@@ -1,3 +1,4 @@
 .config/*
 newgan-manager/
+beeware-newgan/
 *.rtf
