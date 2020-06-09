@@ -53,22 +53,22 @@ class NewGANManager(toga.App):
         #pth_box = toga.Box()
         dir_box = toga.Box()
         dir_lab = toga.Label(text="Select Image Directory:")
-        dir_inp = toga.TextInput()
-        dir_btn = toga.Button(label="...")
+        self.dir_inp = toga.TextInput(readonly=True)
+        dir_btn = toga.Button(label="...", on_press=self.action_select_folder_dialog)
 
         rtf_box = toga.Box()
         rtf_lab = toga.Label(text="RTF File:")
-        rtf_inp = toga.TextInput()
+        self.rtf_inp = toga.TextInput(readonly=True)
         rtf_btn = toga.Button(label="...")
 
         #main_box.add(pth_box)
         main_box.add(dir_box)
         main_box.add(rtf_box)
         dir_box.add(dir_lab)
-        dir_box.add(dir_inp)
+        dir_box.add(self.dir_inp)
         dir_box.add(dir_btn)
         rtf_box.add(rtf_lab)
-        rtf_box.add(rtf_inp)
+        rtf_box.add(self.rtf_inp)
         rtf_box.add(rtf_btn)
 
 
@@ -171,6 +171,14 @@ class NewGANManager(toga.App):
 
     def _throw_error(self, msg):
         self.main_window.error_dialog('Error', msg)
-
+    
+    def action_select_folder_dialog(self, widget):
+        try:
+            path_names = self.main_window.select_folder_dialog(
+                title="Select folder"
+            )
+            self.dir_inp.value = path_names[0]
+        except:
+            pass
 def main():
     return NewGANManager()
