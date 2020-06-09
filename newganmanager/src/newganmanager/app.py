@@ -24,7 +24,10 @@ class NewGANManager(toga.App):
         os.makedirs(".config", exist_ok=True)
         self.cfg_path = ".config/cfg.json"
         self.config = self._load_config(self.cfg_path)
-
+        for k, v in self.config["Profile"].items():
+            if v:
+                self.cur_prf = k
+                break
         main_box = toga.Box()
         
         #TODO: TOP Profiles
@@ -34,9 +37,9 @@ class NewGANManager(toga.App):
         prf_inp = toga.TextInput()
 
         prfsel_box = toga.Box()
-        self.prfsel_lst = toga.Selection(items=list(self.config["Profile"].keys()))
-        self.prfsel_lst.value = "No Profile"
-        prfsel_btn = toga.Button(label="Delete")
+        self.prfsel_lst = toga.Selection(items=list(self.config["Profile"].keys()), on_select=lambda e : self._set_profile_status(e))
+        self.prfsel_lst.value = self.cur_prf
+        prfsel_btn = toga.Button(label="Delete", on_press=lambda e=None, c=self.prfsel_lst : self._delete_profile(c))
         prf_btn = toga.Button(label="Create", on_press=lambda e=None, d=prf_inp, c=self.prfsel_lst: self._create_profile(d, c))
 
         main_box.add(prf_box)
@@ -100,13 +103,16 @@ class NewGANManager(toga.App):
         with open(path, 'w') as fp:
             json.dump(data, fp)
 
-    def _set_profile_status(self, event):
-        name = self.combo_prf.get()
+    def _set_profile_status(self, e):
+        if e.value == None:
+            return
+        name = e.value
         for prf, status in self.config["Profile"].items():
             if status:
                 self.config["Profile"][prf] = False
-                with open('.config/'+prf+'.xml', 'wb') as output, open('config.xml', 'rb') as input:
-                    copyfileobj(input, output)
+                if os.path.isfile("config.xml"):
+                    with open('.config/'+prf+'.xml', 'wb') as output, open('config.xml', 'rb') as input:
+                        copyfileobj(input, output)
 
         self.config["Profile"][name] = True
         with open('config.xml', 'wb') as output, open('.config/'+name+'.xml', 'rb') as input:
@@ -114,35 +120,37 @@ class NewGANManager(toga.App):
         print(self.config["Profile"])
         self._write_config(self.cfg_path, self.config)
 
-    def _refresh_combo(self, combo):
-        combo['items'] = list(self.config["Profile"].keys())
-        combo.value = list(self.config["Profile"].values()).index(True)
+    def _refresh_combo(self, combo, create=None):
+        combo.items = list(self.config["Profile"].keys())
+        if create == None:
+            combo.value = self.cur_prf
+        else:
+            combo.value = create
 
 
     def _create_profile(self, ent, c):
-        print(ent, c)
         name = ent.value
         self.config["Profile"][name] = False
         self._write_config(self.cfg_path, self.config)
         self._write_config(".config/"+name+".json", {"imgs" : {}})
         ent.clear()
-        self._refresh_combo(c)
+        open('.config/'+name+'.xml', 'a').close
+        self._refresh_combo(c, name)
 
-    def _delete_profile(self, ent, c):
-        prf = self.combo_prf.get()
+    def _delete_profile(self, c):
+        prf = c.value
         if prf == "No Profile":
             print("Can't delet no profile")
             self._throw_error("Can't delete 'No Profile'")
             return
         del self.config["Profile"][prf]
         self.config["Profile"]["No Profile"] = True
+        self.cur_prf = "No Profile"
         self._write_config(self.cfg_path, self.config)
         os.remove(".config/"+prf+".json")
-        try:
-            os.remove(".config/"+prf+".xml")
-        except:
-            pass
-        self._refresh_combo(self.combo_prf)
+        os.remove("config.xml")
+        os.remove(".config/"+prf+".xml")
+        self._refresh_combo(c)
 
     def parse_rtf(self, path):
         #TODO: fix parser for advanced view
@@ -162,7 +170,7 @@ class NewGANManager(toga.App):
         return result_data
 
     def _throw_error(self, msg):
-        messagebox.showerror("Error", msg)
+        self.main_window.error_dialog('Error', msg)
 
 def main():
     return NewGANManager()
