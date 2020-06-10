@@ -60,27 +60,42 @@ class NewGANManager(toga.App):
         prf_inp = toga.TextInput()
 
         self.prfsel_box = toga.Box()
+        prf_lab = toga.Label(text="Create Profile: ")
+
+        prfsel_lab = toga.Label(text="Select Profile: ")
         self.prfsel_lst = SourceSelection(items=list(self.config["Profile"].keys()), on_select=self._set_profile_status)
         self.prfsel_lst.value = self.cur_prf
         prfsel_btn = toga.Button(label="Delete", on_press=lambda e=None, c=self.prfsel_lst : self._delete_profile(c))
         prf_btn = toga.Button(label="Create", on_press=lambda e=None, d=prf_inp, c=self.prfsel_lst: self._create_profile(d, c))
 
         self.main_box.add(prf_box)
+        prf_box.add(prf_lab)
         prf_box.add(prf_inp)
         prf_box.add(prf_btn)
+        prf_lab.style.update(padding_top=7)
+        prf_inp.style.update(direction=ROW, padding=(0, 20), flex=0.5)
+
+
         self.main_box.add(self.prfsel_box)
+        self.prfsel_box.add(prfsel_lab)
         self.prfsel_box.add(self.prfsel_lst)
         self.prfsel_box.add(prfsel_btn)
+        self.prfsel_lst.style.update(direction=ROW, padding=(0, 20), flex=0.5)
+        prfsel_lab.style.update(padding_top=7)
 
         # MID Path selections
         dir_box = toga.Box()
         dir_lab = toga.Label(text="Select Image Directory: ")
         self.dir_inp = toga.TextInput(readonly=True, initial=self.prf_cfg['img_dir'])
+        self.dir_inp.style.update(direction=ROW, padding=(0, 20), flex=0.5)
+
         self.dir_btn = toga.Button(label="...", on_press=self.action_select_folder_dialog, enabled=False)
 
         rtf_box = toga.Box()
         rtf_lab = toga.Label(text="RTF File: ")
         self.rtf_inp = toga.TextInput(readonly=True, initial=self.prf_cfg['rtf'])
+        self.rtf_inp.style.update(direction=ROW, padding=(0, 20), flex=0.5)
+
         self.rtf_btn = toga.Button(label="...", on_press=self.action_open_file_dialog, enabled=False)
 
         self.main_box.add(dir_box)
@@ -91,6 +106,10 @@ class NewGANManager(toga.App):
         rtf_box.add(rtf_lab)
         rtf_box.add(self.rtf_inp)
         rtf_box.add(self.rtf_btn)
+        dir_lab.style.update(padding_top=7)
+        rtf_lab.style.update(padding_top=7)
+
+
 
         
         gen_mode_box = toga.Box()
@@ -98,6 +117,10 @@ class NewGANManager(toga.App):
         self.genmdeinfo_lab = toga.Label(text=self.mode_info["Generate"])
         self.genmde_lst = SourceSelection(items=list(self.mode_info.keys()), on_select=self.update_label)
         self.genmde_lst.value = "Generate"
+        self.genmde_lst.style.update(direction=ROW, padding=(0, 20), flex=0.5)
+        self.genmde_lab.style.update(padding_top=7)
+        self.genmdeinfo_lab.style.update(padding_top=7)
+
         gen_mode_box.add(self.genmde_lab)
         gen_mode_box.add(self.genmde_lst)
         gen_mode_box.add(self.genmdeinfo_lab)
@@ -105,20 +128,27 @@ class NewGANManager(toga.App):
         # BOTTOM Generation
         gen_box = toga.Box()
         self.gen_btn = toga.Button(label="Replace Faces", on_press=self._replace_faces, enabled=False)
+        self.gen_btn.style.update(padding_bottom=20)
+        self.gen_lab =  toga.Label(text="")
+
+
         self.gen_prg = toga.ProgressBar(max=110)
         gen_box.add(self.gen_btn)
+        gen_box.add(self.gen_lab)
         gen_box.add(self.gen_prg)
         self.main_box.add(gen_box)
+        self.gen_lab.style.update(padding_top=20)
+
         # END configs
         gen_mode_box.style.update(direction=ROW, padding=20)
         prf_box.style.update(direction=ROW, padding=20)
         self.prfsel_box.style.update(direction=ROW, padding=20)
         dir_box.style.update(direction=ROW, padding=20)
         rtf_box.style.update(direction=ROW, padding=20)
-        gen_box.style.update(direction=COLUMN, padding=20, alignment='left')
-        self.main_box.style.update(direction=COLUMN, padding=10, alignment='left', width=120)
+        gen_box.style.update(direction=COLUMN, padding=20, alignment='center')
+        self.main_box.style.update(direction=COLUMN, padding=10, alignment='center', width=600, height=400)
 
-        self.main_window = toga.MainWindow(title=self.formal_name)
+        self.main_window = toga.MainWindow(title=self.formal_name, size=(800, 600))
         self.main_window.content = self.main_box
         self.main_window.show()
 
@@ -221,6 +251,13 @@ class NewGANManager(toga.App):
 
     def _throw_error(self, msg):
         self.main_window.error_dialog('Error', msg)
+
+    def _show_info(self, msg):
+        self.main_window.info_dialog("Info", msg)
+        self.gen_lab.text = ""
+        self.gen_prg.stop()
+        self.gen_prg.value = 0
+
     
     def action_select_folder_dialog(self, widget):
         try:
@@ -266,8 +303,10 @@ class NewGANManager(toga.App):
         if '' in [rtf, img_dir]:
             self._throw_error("Select RTF and/or image directory!")
             print("Select RTF and/or image directory!")
+            self.gen_lab.text = ""
             return
         self.gen_prg.start()
+        self.gen_lab.tex = "Parsing RTF..."
         rtf_data = self.parse_rtf(rtf)
         self.gen_prg.max = len(rtf_data)+10
         with open(".config/config_template", "r") as fp:
@@ -276,7 +315,7 @@ class NewGANManager(toga.App):
         all_ethnicities = ["East European", "Scandinavian", "Mediterranean", "Arabian",
                          "African", "East Asian", "Central Asian", "Central European"]
         all_images = []
-        print("Load profile config and create image set...")
+        self.gen_lab.text = "Load profile config and create image set..."
         prf_cfg = self._load_config(".config/"+profile+".json")
         if mode == "Generate":
             prf_cfg['imgs'] = {}
@@ -285,12 +324,12 @@ class NewGANManager(toga.App):
         prf_eth_map = prf_cfg['ethnics']
         prf_imgs = set(prf_cfg["imgs"].values())
         xml_string = []
-        print("Restore already replaced faces if applicable...")
+        self.gen_lab.text = "Restore already replaced faces if applicable..."
         for k, v in prf_map.items():
             xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/{}/portrait\"/>".format(prf_eth_map[k]+"/"+v, k))
 
         #map rtf_data to ethnicities
-        print("Map player to ethnicity...")
+        self.gen_lab.text = "Map player to ethnicity..."
         for i, player in enumerate(rtf_data):
             #print("2nd:", player[2])
             if player[2]:
@@ -323,16 +362,17 @@ class NewGANManager(toga.App):
             print(i, p_ethnic)
 
         #save profile metadata (used pics and config.xml)
-        print("Generate config.xml...")
+        self.gen_lab.text = "Generate config.xml..."
         xml_players = "\n".join(xml_string)
         xml_config = config_template.replace("[players]", xml_players)
         with open(self.prf_cfg['img_dir']+"config.xml", 'w') as fp:
             fp.write(xml_config)
-        print("Save metadata for profile...")
+        self.gen_lab.text = "Save metadata for profile..."
         prf_cfg["imgs"] = prf_map
         self._write_config(".config/"+profile+".json", prf_cfg)
         self.gen_prg.value += 10
-        print("Finished! :)")
+        self.gen_lab.text = "Finished! :)"
+        self._show_info("Finished! :)")
 
 def main():
     return NewGANManager()
