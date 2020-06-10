@@ -281,8 +281,7 @@ class NewGANManager(toga.App):
             config_template = fp.read()
         #walk all img subdirs and get all filenames. Create map
         all_ethnicities = ["East European", "Scandinavian", "Mediterranean", "Arabian",
-                         "African", "South East Asian", "East Asian", "Central Asian", "UK",
-                         "Carribean", "South American"]
+                         "African", "East Asian", "Central Asian", "Central European"]
         all_images = []
         print("Load profile config and create image set...")
         prf_cfg = self._load_config(".config/"+profile+".json")
