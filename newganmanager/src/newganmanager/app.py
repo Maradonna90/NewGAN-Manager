@@ -262,14 +262,7 @@ class NewGANManager(toga.App):
         img_dir = self.prf_cfg['img_dir']
         profile = self.cur_prf
         mode = self.genmde_lst.value
-        #TODO: overwrite option: overwrites if sample matches and img_map entry, else add img_map
-        #TODO: preserve option: keep matches in img_map and add new entries
-        #TODO generates: makes a complete new generation and deletes previous img_map 
         #parse rtf
-        if profile == "No Profile":
-            self._throw_error("Please select a profile!")
-            print("Please select a profile!")
-            return
         if '' in [rtf, img_dir]:
             self._throw_error("Select RTF and/or image directory!")
             print("Select RTF and/or image directory!")
