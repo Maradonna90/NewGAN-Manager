@@ -35,3 +35,8 @@ jobs:
         briefcase create
         briefcase build
         briefcase package --no-sign
+    - name: Save Installer
+      uses: actions/upload-artifact@v1
+      with:
+        name: NewGAN-Manager-Installer
+        path: macOS/NewGAN Manager-0.0.1.dmg
