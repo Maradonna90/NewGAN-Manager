@@ -34,4 +34,4 @@ jobs:
       run: |
         briefcase create
         briefcase build
-        briefcase package
+        briefcase package --no-sign
