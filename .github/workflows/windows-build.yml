@@ -28,7 +28,7 @@ jobs:
     - name: Beeware dependencies
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        python3 -m pip install --pre beeware
+        python -m pip install --pre beeware
     - name: Build
       run: |
         briefcase create
