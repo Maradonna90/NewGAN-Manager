@@ -34,3 +34,8 @@ jobs:
         briefcase create
         briefcase build
         briefcase package
+    - name: Save Installer
+      uses: actions/upload-artifact@v1
+      with:
+        name: NewGAN-Manager-Installer
+        path: windows\NewGAN Manager-0.0.1.msi
