@@ -31,5 +31,5 @@ jobs:
     - name: Build
       run: |
         briefcase create
-        briefacse build
+        briefcase build
         briefcase package
