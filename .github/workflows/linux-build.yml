@@ -41,5 +41,5 @@ jobs:
     - name: Append configs
       uses: actions/upload-artifact@v1
       with:
-        name: NewGAN-Manager-Installer-Linux
+        name: NewGAN-Manager-Installer-Linux/.config
         path: .config
