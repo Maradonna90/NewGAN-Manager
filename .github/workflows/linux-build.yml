@@ -34,15 +34,15 @@ jobs:
         briefcase build --no-docker
         briefcase package --no-docker
     - name: Save Installer
-      uses: actions/upload-artifact@v1
-      with:
-        name: NewGAN-Manager-Installer-Linux
-        path: linux/NewGAN_Manager-0.0.1-x86_64.AppImage
-      uses: actions/upload-artifact@v1v
-      with:
-        name: NewGAN-Manager-Installer-Linux
-        path: .config/
-      uses: actions/upload-artifact@v1v
-      with:
-        name: NewGAN-Manager-Installer-Linux
-        path: views/
+      - uses: actions/upload-artifact@v2
+        with:
+          name: NewGAN-Manager-Installer-Linux
+          path: linux/NewGAN_Manager-0.0.1-x86_64.AppImage
+      - uses: actions/upload-artifact@v2
+        with:
+          name: NewGAN-Manager-Installer-Linux
+          path: .config/
+      - uses: actions/upload-artifact@v2
+        with:
+          name: NewGAN-Manager-Installer-Linux
+          path: views/
