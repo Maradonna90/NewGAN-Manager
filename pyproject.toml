@@ -11,7 +11,7 @@ author_email = "None"
 formal_name = "NewGAN Manager"
 description = "NewGAN Replacement Management Tool"
 icon = "src/newganmanager/resources/newganmanager"
-sources = ['src/newganmanager', 'src/newganmanager/resources/.config/cfg.json', 'src/newganmanager/resources/.config/config_template', 'src/newganmanager/resources/.config/No Profile.json']
+sources = ['src/newganmanager']
 requires = []
 
 
