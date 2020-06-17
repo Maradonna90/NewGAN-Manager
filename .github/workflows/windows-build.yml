@@ -39,3 +39,9 @@ jobs:
       with:
         name: NewGAN-Manager-Installer-Win
         path: windows\NewGAN Manager-0.0.1.msi
+    - name: Append configs
+      uses: actions/upload-artifact@v1
+      with:
+        name: NewGAN-Manager-Installer-Win
+        path: .config
+

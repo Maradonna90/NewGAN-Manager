@@ -40,3 +40,9 @@ jobs:
       with:
         name: NewGAN-Manager-Installer-Mac
         path: macOS/NewGAN Manager-0.0.1.dmg
+    - name: Append configs
+      uses: actions/upload-artifact@v1
+      with:
+        name: NewGAN-Manager-Installer-Mac
+        path: .config
+
