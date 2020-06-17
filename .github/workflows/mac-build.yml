@@ -18,10 +18,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.5
+    - name: Set up Python 3.7
       uses: actions/setup-python@v2
       with:
-        python-version: 3.5
+        python-version: 3.7
     - name: Install dependencies
       run: |
         #apt-get update
@@ -29,7 +29,7 @@ jobs:
     - name: Beeware dependencies
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        python -m pip install --pre beeware
+        python -m pip install beeware
     - name: Build
       run: |
         briefcase create
@@ -38,5 +38,5 @@ jobs:
     - name: Save Installer
       uses: actions/upload-artifact@v1
       with:
-        name: NewGAN-Manager-Installer
+        name: NewGAN-Manager-Installer-Mac
         path: macOS/NewGAN Manager-0.0.1.dmg
