@@ -34,17 +34,17 @@ jobs:
         briefcase build --no-docker
         briefcase package --no-docker
     - name: Save Installer
-    - run: echo hi > world.txt
-    - uses: actions/upload-artifact@v2
-      with:
-        path: world.txt
+      - run: echo hi > world.txt
+      - uses: actions/upload-artifact@v2
+        with:
+          path: world.txt
 
-    - run: echo howdy > extra-file.txt
-    - uses: actions/upload-artifact@v2
-      with:
-        path: extra-file.txt
+      - run: echo howdy > extra-file.txt
+      - uses: actions/upload-artifact@v2
+        with:
+          path: extra-file.txt
 
-    - run: echo hello > world.txt
-    - uses: actions/upload-artifact@v2
-      with:
-        path: world.txt
+      - run: echo hello > world.txt
+      - uses: actions/upload-artifact@v2
+        with:
+          path: world.txt
