@@ -38,10 +38,12 @@ jobs:
       with:
         name: NewGAN-Manager-Installer-Linux
         path: linux/NewGAN_Manager-0.0.1-x86_64.AppImage
+      
       uses: actions/upload-artifact@v2
       with:
         name: NewGAN-Manager-Installer-Linux
         path: .config/
+      
       uses: actions/upload-artifact@v2
       with:
         name: NewGAN-Manager-Installer-Linux
