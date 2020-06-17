@@ -43,3 +43,8 @@ jobs:
       with:
         name: NewGAN-Manager-Installer-Linux
         path: .config
+    - name: Append views
+      uses: actions/upload-artifact@v1
+      with:
+        name: NewGAN-Manager-Installer-Linux
+        path: views/

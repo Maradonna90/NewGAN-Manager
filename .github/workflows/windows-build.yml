@@ -44,4 +44,9 @@ jobs:
       with:
         name: NewGAN-Manager-Installer-Win
         path: .config
+    - name: Append views
+      uses: actions/upload-artifact@v1
+      with:
+        name: NewGAN-Manager-Installer-Win
+        path: views/
 
