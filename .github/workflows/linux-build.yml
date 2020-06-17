@@ -34,17 +34,17 @@ jobs:
         briefcase build --no-docker
         briefcase package --no-docker
     - name: Save Installer
-      uses: actions/upload-artifact@v2
+    - run: echo hi > world.txt
+    - uses: actions/upload-artifact@v2
       with:
-        name: NewGAN-Manager-Installer-Linux
-        path: linux/NewGAN_Manager-0.0.1-x86_64.AppImage
-      
-      uses: actions/upload-artifact@v2
+        path: world.txt
+
+    - run: echo howdy > extra-file.txt
+    - uses: actions/upload-artifact@v2
       with:
-        name: NewGAN-Manager-Installer-Linux
-        path: .config/
-      
-      uses: actions/upload-artifact@v2
+        path: extra-file.txt
+
+    - run: echo hello > world.txt
+    - uses: actions/upload-artifact@v2
       with:
-        name: NewGAN-Manager-Installer-Linux
-        path: views/
+        path: world.txt
