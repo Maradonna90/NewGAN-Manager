@@ -1,6 +1,6 @@
-![MacOS](https://github.com/Maradonna90/NewGAN-Manager/workflows/Beeware%20MacOS/badge.svg)
-![Linux](https://github.com/Maradonna90/NewGAN-Manager/workflows/beeware%20ubuntu/badge.svg)
-![Windows](https://github.com/Maradonna90/NewGAN-Manager/workflows/Beeware%20Windows/badge.svg)
+![MacOS](https://github.com/Maradonna90/NewGAN-Manager/workflows/MacOS/badge.svg)
+![Linux](https://github.com/Maradonna90/NewGAN-Manager/workflows/Linux/badge.svg)
+![Windows](https://github.com/Maradonna90/NewGAN-Manager/workflows/Windows/badge.svg)
 
 # Main Contributors to NewGAN
 [Maradonna](https://community.sigames.com/profile/50821-maradonna/) (gestalt): Coding and image generation  
