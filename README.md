@@ -1,3 +1,7 @@
+![MacOS](https://github.com/Maradonna90/NewGAN-Manager/workflows/Beeware%20MacOS/badge.svg)
+![Linux](https://github.com/Maradonna90/NewGAN-Manager/workflows/beeware%20ubuntu/badge.svg)
+![Windows](https://github.com/Maradonna90/NewGAN-Manager/workflows/Beeware%20Windows/badge.svg)
+
 # Main Contributors to NewGAN
 [Maradonna](https://community.sigames.com/profile/50821-maradonna/) (gestalt): Coding and image generation  
 [HRiddick](https://sortitoutsi.net/user/profile/137954): Image cleaning and post processing  
