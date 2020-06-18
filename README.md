@@ -1,7 +1,7 @@
 # Main Contributors to NewGAN
-* [Maradonna](https://community.sigames.com/profile/50821-maradonna/) (gestalt): Coding and image generation
-* [HRiddick](https://sortitoutsi.net/user/profile/137954): Image cleaning and post processing
-* [Krysler](https://community.sigames.com/profile/157461-krysler76/): FM views hacking
+[Maradonna](https://community.sigames.com/profile/50821-maradonna/) (gestalt): Coding and image generation
+[HRiddick](https://sortitoutsi.net/user/profile/137954): Image cleaning and post processing
+[Krysler](https://community.sigames.com/profile/157461-krysler76/): FM views hacking
 
 Most of us are active on several FM platforms under the same Nicknames.
 
