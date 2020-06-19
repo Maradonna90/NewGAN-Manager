@@ -61,12 +61,14 @@ class NewGANManager(toga.App):
         self.prf_cfg = self._load_config(".config/"+self.cur_prf+".json")
         self.logger.info("Creating GUI")
         self.main_box = toga.Box()
+        self.logger.info("Created main box")
 
         # TOP Profiles
 
 
         prf_box = toga.Box()
         prf_inp = toga.TextInput()
+        self.logger.info("Created prf_inp")
 
         self.prfsel_box = toga.Box()
         prf_lab = toga.Label(text="Create Profile: ")
