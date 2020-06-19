@@ -67,6 +67,8 @@ class NewGANManager(toga.App):
 
 
         prf_box = toga.Box()
+        self.logger.info("Created prf_box")
+
         prf_inp = toga.TextInput()
         self.logger.info("Created prf_inp")
 
