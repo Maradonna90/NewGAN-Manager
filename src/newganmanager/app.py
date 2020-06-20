@@ -196,8 +196,9 @@ class NewGANManager(toga.App):
             self.config["Profile"][name] = True
             self.cur_prf = name
             self.prf_cfg = self._load_config(".config/"+self.cur_prf+".json")
-            with open(self.prf_cfg['img_dir']+'config.xml', 'wb') as output, open('.config/'+name+'.xml', 'rb') as input:
-                copyfileobj(input, output)
+            if os.path.isfile('.config/'+self.cur_prf+'.xml'):
+                with open(self.prf_cfg['img_dir']+'config.xml', 'wb') as output, open('.config/'+name+'.xml', 'rb') as input:
+                    copyfileobj(input, output)
             self._refresh_inp()
             if self.cur_prf == "No Profile":
                 self.gen_btn.enabled = False
@@ -241,11 +242,17 @@ class NewGANManager(toga.App):
             return
         del self.config["Profile"][prf]
         self.config["Profile"]["No Profile"] = True
-        os.remove(self.prf_cfg['img_dir']+"config.xml")
+        try:
+            os.remove(self.prf_cfg['img_dir']+"config.xml")
+        except OSError:
+            pass
         self.cur_prf = "No Profile"
         self._write_config(self.cfg_path, self.config)
-        os.remove(".config/"+prf+".json")
-        os.remove(".config/"+prf+".xml")
+        try:
+            os.remove(".config/"+prf+".json")
+            os.remove(".config/"+prf+".xml")
+        except OSError:
+            pass
         c.remove_item(prf)
         self._refresh_inp(True)
 
