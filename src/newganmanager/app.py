@@ -255,6 +255,9 @@ class NewGANManager(toga.App):
             pass
         c.remove_item(prf)
         self._refresh_inp(True)
+        self.gen_btn.enabled = False
+        self.dir_btn.enabled = False
+        self.rtf_btn.enabled = False
 
     def parse_rtf(self, path):
         #TODO: fix parser for advanced view
