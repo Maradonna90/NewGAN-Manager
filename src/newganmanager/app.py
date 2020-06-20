@@ -236,7 +236,7 @@ class NewGANManager(toga.App):
         prf = c.value
         self.logger.info("Delete profile: {}".format(prf))
         if prf == "No Profile":
-            print("Can't delet no profile")
+            self.logger.info("Can't delet no profile")
             self._throw_error("Can't delete 'No Profile'")
             return
         del self.config["Profile"][prf]
@@ -300,6 +300,7 @@ class NewGANManager(toga.App):
                 multiselect=False,
                 file_types=['rtf']
             )
+            self.logger.info("Created file-dialog")
             if fname is not None:
                 self.rtf_inp.value = fname
                 self.prf_cfg['rtf'] = fname
@@ -308,7 +309,8 @@ class NewGANManager(toga.App):
                 self.prf_cfg['rtf'] = ""
                 self.rtf_inp.value = ""
                 self._write_config(".config/"+self.cur_prf+".json", self.prf_cfg)
-        except ValueError:
+        except Exception:
+            self.logger.error("Fatal error in main loop", exc_info=True)
             pass
 
     def _replace_faces(self, widget):
