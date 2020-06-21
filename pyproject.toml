@@ -10,7 +10,7 @@ author_email = "None"
 [tool.briefcase.app.newganmanager]
 formal_name = "NewGAN Manager"
 description = "NewGAN Replacement Management Tool"
-icon = "src/newganmanager/resources/newganmanager"
+icon = "src/newganmanager/resources/logo"
 sources = ['src/newganmanager', '.config', 'views']
 requires = []
 
