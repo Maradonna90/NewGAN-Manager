@@ -146,6 +146,19 @@ class NewGANManager(toga.App):
         self.main_box.add(gen_box)
         self.gen_lab.style.update(padding_top=20)
 
+        # Report bad image
+        rep_box = toga.Box()
+        self.rep_txt = toga.TextInput()
+        self.rep_img = toga.ImageView(toga.Image("resources/default.png"))
+        self.rep_img.style.update(height=180)
+        self.rep_img.style.update(width=180)
+        self.rep_btn = toga.Button(label="Report", on_press=None, enabled=False)
+
+        rep_box.add(self.rep_txt)
+        rep_box.add(self.rep_img)
+        rep_box.add(self.rep_btn)
+        self.main_box.add(rep_box)
+
         # END configs
         gen_mode_box.style.update(direction=ROW, padding=20)
         prf_box.style.update(direction=ROW, padding=20)
@@ -153,7 +166,7 @@ class NewGANManager(toga.App):
         dir_box.style.update(direction=ROW, padding=20)
         rtf_box.style.update(direction=ROW, padding=20)
         gen_box.style.update(direction=COLUMN, padding=20, alignment='center')
-        self.main_box.style.update(direction=COLUMN, padding=10, alignment='center', width=600, height=400)
+        self.main_box.style.update(direction=COLUMN, padding=10, alignment='center', width=600, height=1000)
 
         self.main_window = toga.MainWindow(title=self.formal_name, size=(800, 600))
         self.main_window.content = self.main_box
@@ -198,10 +211,12 @@ class NewGANManager(toga.App):
                 self.gen_btn.enabled = False
                 self.dir_btn.enabled = False
                 self.rtf_btn.enabled = False
+                self.rep_btn.enabled = False
             else:
                 self.gen_btn.enabled = True
                 self.dir_btn.enabled = True
                 self.rtf_btn.enabled = True
+                self.rep_btn.enabled = True
             self._write_config(self.cfg_path, self.config)
 
     def _refresh_inp(self, clear=False):
@@ -252,6 +267,7 @@ class NewGANManager(toga.App):
         self.gen_btn.enabled = False
         self.dir_btn.enabled = False
         self.rtf_btn.enabled = False
+        self.rep_btn.enabled = False
 
     def parse_rtf(self, path):
         # TODO: fix parser for advanced view
