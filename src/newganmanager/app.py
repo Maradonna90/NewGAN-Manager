@@ -149,7 +149,7 @@ class NewGANManager(toga.App):
         # Report bad image
         rep_box = toga.Box()
         self.rep_lab = toga.Label(text="Player UID: ")
-        self.rep_inp = toga.TextInput()
+        self.rep_inp = toga.TextInput(on_change=self.change_image)
         self.rep_img = toga.ImageView(toga.Image("resources/default.png"))
         self.rep_img.style.update(height=180)
         self.rep_img.style.update(width=180)
@@ -421,6 +421,27 @@ class NewGANManager(toga.App):
         self.gen_prg.value += 10
         self.gen_lab.text = "Finished! :)"
         self._show_info("Finished! :)")
+
+    def change_image(self, id):
+        uid = id.value
+        try:
+            img_name = self.prf_cfg["imgs"][uid]
+            img_eth = self.prf_cfg["ethnics"][uid]
+            img_path = self.prf_cfg["img_dir"] + "/" + img_eth + "/" + img_name
+            self.rep_img.image = toga.Image(img_path)
+            self.logger.info("change image preview to: {}".format(img_path))
+        except Exception:
+            return
+
+    def send_report(self, img_name, img_file):
+        pass
+        # TODO: create email
+
+        # TODO: adjust text with file name
+
+        # TODO: attach image file
+
+        # TODO: send email to adress
 
 
 def main():
