@@ -148,18 +148,24 @@ class NewGANManager(toga.App):
 
         # Report bad image
         rep_box = toga.Box()
-        self.rep_txt = toga.TextInput()
+        self.rep_lab = toga.Label(text="Player UID: ")
+        self.rep_inp = toga.TextInput()
         self.rep_img = toga.ImageView(toga.Image("resources/default.png"))
         self.rep_img.style.update(height=180)
         self.rep_img.style.update(width=180)
         self.rep_btn = toga.Button(label="Report", on_press=None, enabled=False)
 
-        rep_box.add(self.rep_txt)
+        rep_box.add(self.rep_lab)
+        rep_box.add(self.rep_inp)
         rep_box.add(self.rep_img)
         rep_box.add(self.rep_btn)
         self.main_box.add(rep_box)
+        self.rep_lab.style.update(padding_top=10)
+        self.rep_inp.style.update(direction=ROW, padding=(0, 20), flex=0.5)
+
 
         # END configs
+        rep_box.style.update(direction=ROW, padding=20)
         gen_mode_box.style.update(direction=ROW, padding=20)
         prf_box.style.update(direction=ROW, padding=20)
         self.prfsel_box.style.update(direction=ROW, padding=20)
@@ -168,7 +174,7 @@ class NewGANManager(toga.App):
         gen_box.style.update(direction=COLUMN, padding=20, alignment='center')
         self.main_box.style.update(direction=COLUMN, padding=10, alignment='center', width=600, height=1000)
 
-        self.main_window = toga.MainWindow(title=self.formal_name, size=(800, 600))
+        self.main_window = toga.MainWindow(title=self.formal_name, size=(1000, 600))
         self.main_window.content = self.main_box
         self.main_window.show()
 
