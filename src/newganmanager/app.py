@@ -9,6 +9,7 @@ import json
 import re
 import os
 import logging
+from dhooks import Webhook, Embed, File
 
 
 class SourceSelection(toga.Selection):
@@ -48,7 +49,7 @@ class NewGANManager(toga.App):
 
         self.mode_info = {"Overwrite": "Overwrites already replaced faces",
                           "Preserve":  "Preserves already replaced faces",
-                          "Generate": "Removes already replaced faces."}
+                          "Generate": "Generates mapping from scratch."}
         os.makedirs(".config", exist_ok=True)
         self.cfg_path = ".config/cfg.json"
         self.logger.info("Loading cfg.json")
@@ -153,7 +154,7 @@ class NewGANManager(toga.App):
         self.rep_img = toga.ImageView(toga.Image("resources/default.png"))
         self.rep_img.style.update(height=180)
         self.rep_img.style.update(width=180)
-        self.rep_btn = toga.Button(label="Report", on_press=None, enabled=False)
+        self.rep_btn = toga.Button(label="Report", on_press=self.send_report, enabled=False)
 
         rep_box.add(self.rep_lab)
         rep_box.add(self.rep_inp)
@@ -433,15 +434,26 @@ class NewGANManager(toga.App):
         except Exception:
             return
 
-    def send_report(self, img_name, img_file):
-        pass
-        # TODO: create email
+    def send_report(self, e):
+        uid = self.rep_inp.value
+        img_name = self.prf_cfg["imgs"][uid]
+        img_eth = self.prf_cfg["ethnics"][uid]
+        img_path = img_eth + "/" + img_name
+        img_file = self.rep_img.image.path
+        self.logger.info("send report: {}".format(img_file))
 
-        # TODO: adjust text with file name
+        hook = Webhook("https://discord.com/api/webhooks/764148972910411807/bv-n2nVxbj2lxMgJjLNu19T5GNBOUnR-mBPleJFnHaL9D7H3pjVH1vZuXIjnGtnVrriJ")
 
-        # TODO: attach image file
+        embed = Embed(
+            description='A user reported the following face',
+            color=0x5CDBF0,
+            timestamp='now'  # sets the timestamp to current time
+            )
 
-        # TODO: send email to adress
+        file = File(img_file)
+        embed.add_field(name='File', value=img_path)
+
+        hook.send(embed=embed, file=file)
 
 
 def main():
