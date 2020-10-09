@@ -151,7 +151,7 @@ class NewGANManager(toga.App):
         rep_box = toga.Box()
         self.rep_lab = toga.Label(text="Player UID: ")
         self.rep_inp = toga.TextInput(on_change=self.change_image)
-        self.rep_img = toga.ImageView(toga.Image("resources/default.png"))
+        self.rep_img = toga.ImageView(toga.Image("resources/logo.png"))
         self.rep_img.style.update(height=180)
         self.rep_img.style.update(width=180)
         self.rep_btn = toga.Button(label="Report", on_press=self.send_report, enabled=False)
