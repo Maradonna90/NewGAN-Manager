@@ -288,10 +288,10 @@ class NewGANManager(toga.App):
                 rtf_data.append(line.strip())
         for newgen in rtf_data:
             data_fields = newgen.split('|')
-            sec_nat = data_fields[5].strip()
+            sec_nat = data_fields[3].strip()
             if sec_nat == '':
                 sec_nat = None
-            result_data.append([data_fields[3].strip(), data_fields[4].strip(), sec_nat])
+            result_data.append([data_fields[1].strip(), data_fields[2].strip(), sec_nat, data_fields[7].strip()])
         return result_data
 
     def _throw_error(self, msg):
@@ -380,12 +380,42 @@ class NewGANManager(toga.App):
         # map rtf_data to ethnicities
         self.gen_lab.text = "Map player to ethnicity..."
         for i, player in enumerate(rtf_data):
-            # print("2nd:", player[2])
+            n2_ethnic = None
             if player[2]:
                 # print("DO 2nd!")
-                p_ethnic = self.config["Ethnics"][player[2]]
-            else:
-                p_ethnic = self.config["Ethnics"][player[1]]
+                n2_ethnic = self.config["Ethnics"][player[2]]
+            n1_ethnic = self.config["Ethnics"][player[1]]
+            if player[3] == "1":
+                if "EECA" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "EECA"
+                if "Italmed" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "Italmed"
+                if "SAMed" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "SAMed"
+                if "South American" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "South American"
+                if "SpanMed" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "SpanMed"
+                if "YugoGreek" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "YugoGreek"
+            elif player[3] in ["3", "6", "7", "8", "9"]:
+                p_ethnic = "African"
+            elif player[3] == "10":
+                p_ethnic = "Asian"
+            elif player[3] == "2":
+                p_ethnic = "MENA"
+                if "MESA" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "MESA"
+            elif player[3] == "5":
+                p_ethnic = "Seasian"
+            elif player[3] == "0":
+                p_ethnic = "Central European"
+                if "Scandinavian" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "Scandinavian"
+                elif "Caucasian" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "Caucasian"
+            elif player[3] == "4":
+                p_ethnic = "MESA"
             if player[0] in prf_map:
                 if mode == "Preserve":
                     self.logger.info("Preserve: {} {}".format(i, p_ethnic))
