@@ -442,7 +442,7 @@ class NewGANManager(toga.App):
         img_file = self.rep_img.image.path
         self.logger.info("send report: {}".format(img_file))
 
-        hook = Webhook("https://discord.com/api/webhooks/764148972910411807/bv-n2nVxbj2lxMgJjLNu19T5GNBOUnR-mBPleJFnHaL9D7H3pjVH1vZuXIjnGtnVrriJ")
+        hook = Webhook("https://discord.com/api/webhooks/770397581149863946/Wls0g6LEyTXEpOqzfLn2YuDRKANFSAFpwKe62VL9IxpwsQDWFjYHVfy19hrYiv5p0X2a")
 
         embed = Embed(
             description='A user reported the following face',
