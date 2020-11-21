@@ -38,4 +38,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: NewGAN-Manager-Installer-Win
-        path: windows\NewGAN Manager-0.0.1.msi
+        path: windows\NewGAN Manager-1.0.0.msi
