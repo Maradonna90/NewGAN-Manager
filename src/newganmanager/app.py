@@ -284,7 +284,6 @@ class NewGANManager(toga.App):
         self.logger.info(rtf)
         rtf_data = []
         for line in rtf:
-            self.logger.info(line.strip())
             if UID_regex.search(line):
                 self.logger.info(line.strip())
                 rtf_data.append(line.strip())
@@ -359,9 +358,8 @@ class NewGANManager(toga.App):
             return
         self.gen_prg.start()
         self.gen_lab.tex = "Parsing RTF..."
-        #yield 1
+        yield 1
         rtf_data = self.parse_rtf(rtf)
-        self.logger.info(rtf_data)
         self.gen_prg.max = len(rtf_data)+10
         with open(".config/config_template", "r") as fp:
             config_template = fp.read()
@@ -370,7 +368,7 @@ class NewGANManager(toga.App):
         #                  "African", "East Asian", "Central Asian", "Central European"]
         # all_images = []
         self.gen_lab.text = "Load profile config and create image set..."
-        #yield 1
+        yield 1
         prf_cfg = self._load_config(".config/"+profile+".json")
         if mode == "Generate":
             prf_cfg['imgs'] = {}
@@ -380,13 +378,13 @@ class NewGANManager(toga.App):
         prf_imgs = set(prf_cfg["imgs"].values())
         xml_string = []
         self.gen_lab.text = "Restore already replaced faces if applicable..."
-        #yield 1
+        yield 1
         for k, v in prf_map.items():
             xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/{}/portrait\"/>".format(prf_eth_map[k]+"/"+v, k))
 
         # map rtf_data to ethnicities
         self.gen_lab.text = "Map player to ethnicity..."
-        #yield 1
+        yield 1
         for i, player in enumerate(rtf_data):
             n2_ethnic = None
             if player[2]:
@@ -428,7 +426,7 @@ class NewGANManager(toga.App):
                 if mode == "Preserve":
                     self.logger.info("Preserve: {} {}".format(i, p_ethnic))
                     self.gen_prg.value += 1
-                    #yield 0.001
+                    yield 0.001
                     continue
                 elif mode == "Overwrite":
                     self.logger.info("Overwrite: {} {}".format(i, p_ethnic))
@@ -448,22 +446,22 @@ class NewGANManager(toga.App):
         # create config file entry
             xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/{}/portrait\"/>".format(p_ethnic+"/"+player_img, player[0]))
             self.gen_prg.value += 1
-            #yield 0.001
+            yield 0.001
             self.logger.info("{} {}".format(i, p_ethnic))
 
         # save profile metadata (used pics and config.xml)
         self.gen_lab.text = "Generate config.xml..."
-        #yield 1
+        yield 1
         xml_players = "\n".join(xml_string)
         xml_config = config_template.replace("[players]", xml_players)
         with open(self.prf_cfg['img_dir']+"config.xml", 'w') as fp:
             fp.write(xml_config)
         self.gen_lab.text = "Save metadata for profile..."
-        #yield 1
+        yield 1
         prf_cfg["imgs"] = prf_map
         self._write_config(".config/"+profile+".json", prf_cfg)
         self.gen_prg.value += 10
-        #yield 0
+        yield 0
         self.gen_lab.text = "Finished! :)"
         self._show_info("Finished! :)")
 
