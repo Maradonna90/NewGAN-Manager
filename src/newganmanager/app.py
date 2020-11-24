@@ -339,6 +339,7 @@ class NewGANManager(toga.App):
             pass
 
     def _replace_faces(self, widget):
+        self.logger.info("Start Replace Faces")
         # get values from UI elements
         rtf = self.prf_cfg['rtf']
         img_dir = self.prf_cfg['img_dir']
