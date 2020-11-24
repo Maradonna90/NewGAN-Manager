@@ -283,6 +283,7 @@ class NewGANManager(toga.App):
         rtf = open(path, 'r')
         rtf_data = []
         for line in rtf:
+            self.logger.info(line.strip())
             if UID_regex.search(line):
                 self.logger.info(line.strip())
                 rtf_data.append(line.strip())
