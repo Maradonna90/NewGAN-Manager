@@ -284,6 +284,7 @@ class NewGANManager(toga.App):
         rtf_data = []
         for line in rtf:
             if UID_regex.search(line):
+                self.logger.info(line.strip())
                 rtf_data.append(line.strip())
         for newgen in rtf_data:
             data_fields = newgen.split('|')
@@ -358,6 +359,7 @@ class NewGANManager(toga.App):
         self.gen_lab.tex = "Parsing RTF..."
         #yield 1
         rtf_data = self.parse_rtf(rtf)
+        self.logger.info(rtf_data)
         self.gen_prg.max = len(rtf_data)+10
         with open(".config/config_template", "r") as fp:
             config_template = fp.read()
