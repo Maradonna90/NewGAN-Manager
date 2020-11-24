@@ -280,7 +280,11 @@ class NewGANManager(toga.App):
         self.logger.info("Parse rtf file: {}".format(path))
         UID_regex = re.compile('([0-9]){10}')
         result_data = []
-        rtf = open(path, 'r')
+        try:
+            rtf = open(path, 'r')
+            self.logger.info(rtf)
+        except:
+            self.logger.info("Reading RTF failed!")
         rtf_data = []
         for line in rtf:
             self.logger.info(line.strip())
