@@ -39,4 +39,5 @@ On Linux the log file is created wherever you place the `NewGAN_Manager-*.AppIma
 TBD
 
 # Roadmap
-* [ ] integrate Kryslers view for better mapping
+* test functionalitiy with code
+* 
