@@ -466,6 +466,7 @@ class NewGANManager(toga.App):
         self._show_info("Finished! :)")
 
     def change_image(self, id):
+        self.logger.info("try to change image preview)
         uid = id.value
         try:
             img_name = self.prf_cfg["imgs"][uid]
@@ -474,6 +475,7 @@ class NewGANManager(toga.App):
             self.rep_img.image = toga.Image(img_path)
             self.logger.info("change image preview to: {}".format(img_path))
         except Exception:
+            self.logger.info("changing image preview failed!")
             return
 
     def send_report(self, e):
