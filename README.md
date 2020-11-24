@@ -6,8 +6,12 @@
 [Maradonna](https://community.sigames.com/profile/50821-maradonna/) (gestalt): Coding and image generation  
 [HRiddick](https://sortitoutsi.net/user/profile/137954): Image cleaning and post processing  
 [Krysler76](https://community.sigames.com/profile/157461-krysler76/): FM views hacking  
-
 Most of us are active on several FM platforms under the same Nicknames.
+
+# Support Me!
+[![Donate with PayPal]
+  (https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png)]
+  (https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=marco.jendryczko%40gmx.net&item_name=NewGAN-Manager&currency_code=EUR)
 
 # Installation Guide
 I tried to make the whole installation process as much one-click and go as possible. Unfortunately providing a cross-platform app without managing a codebase for every supported platform is impossible to me. Therefore some small adjustments may be needed, depending on your system.
