@@ -173,7 +173,7 @@ class NewGANManager(toga.App):
         dir_box.style.update(direction=ROW, padding=20)
         rtf_box.style.update(direction=ROW, padding=20)
         gen_box.style.update(direction=COLUMN, padding=20, alignment='center')
-        self.main_box.style.update(direction=COLUMN, padding=10, alignment='center', width=600, height=1000)
+        self.main_box.style.update(direction=COLUMN, padding=10, alignment='center')
 
         self.main_window = toga.MainWindow(title=self.formal_name, size=(1000, 600))
         self.main_window.content = self.main_box
@@ -277,7 +277,6 @@ class NewGANManager(toga.App):
         self.rep_btn.enabled = False
 
     def parse_rtf(self, path):
-        # TODO: fix parser for advanced view
         self.logger.info("Parse rtf file: {}".format(path))
         UID_regex = re.compile('([0-9]){10}')
         result_data = []
