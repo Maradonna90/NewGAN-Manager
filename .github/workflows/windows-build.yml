@@ -39,4 +39,3 @@ jobs:
       with:
         name: NewGAN-Manager-Installer-Win
         path: windows\NewGAN Manager-1.0.0.msi
-        path: windows\
