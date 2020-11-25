@@ -10,7 +10,12 @@ class Config_Manager:
             data = json.load(fp)
             return data
 
-
-    def save_config(self), path, data):
+    def save_config(self, path, data):
         with open(path, 'w') as fp:
             json.dump(data, fp)
+
+    def get_latest_prf(self, path):
+        cfg = self.load_config(path)
+        for k, v in cfg["Profile"].items():
+            if v:
+                return k

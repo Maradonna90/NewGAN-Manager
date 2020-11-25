@@ -38,12 +38,16 @@ class Profile_Manager(config_manager.Config_Manager):
         open('.config/'+name+'.xml', 'a').close
 
     def load_profile(self, name):
+        deact_img_dir = self.prf_cfg['img_dir']
         self.prf_cfg = self.load_config(".config/"+name+".json")
-        self.swap_xml(self.cur_prf, name)
+        act_img_dir = self.prf_cfg['img_dir']
+        self.swap_xml(self.cur_prf, name, deact_img_dir, act_img_dir)
         self.config[name] = True
         self.cur_prf = name
 
     def write_xml(self, mode, data):
+        with open(".config/config_template", "r", encode="UTF-8") as fp:
+            config_template = fp.read()
         if mode == "Generate":
             self.prf_cfg['imgs'] = {}
             self.prf_cfg['ethnics'] = {}
@@ -54,16 +58,21 @@ class Profile_Manager(config_manager.Config_Manager):
         for k, v in prf_map.items():
             xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/{}/portrait\"/>".format(prf_eth_map[k]+"/"+v, k))
 
-        for k, v in data.items():
-            xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/{}/portrait\"/>".format(prf_eth_map[k]+"/"+v, k))
+        for dat in data:
+            xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/{}/portrait\"/>".format(dat[0]+"/"+dat[1], dat[3]))
 
-    def swap_xml(self, deact_name, act_name):
+         xml_players = "\n".join(xml_string)
+         xml_config = config_template.replace("[players]", xml_players)
+         with open(self.prf_cfg['img_dir']+"config.xml", 'w') as fp:
+             fp.write(xml_config)
+
+    def swap_xml(self, deact_name, act_name, deact_img_dir, act_img_dir):
         if os.path.isfile(self.prf_cfg['img_dir']+"config.xml"):
-            with open('.config/'+deact_name+'.xml', 'wb') as output, open(self.prf_cfg['img_dir']+'config.xml', 'rb') as input:
+            with open('.config/'+deact_name+'.xml', 'wb') as output, open(deact_img_dir+'config.xml', 'rb') as input:
                 copyfileobj(input, output)
 
         if os.path.isfile('.config/'+self.cur_prf+'.xml'):
-            with open(self.prf_cfg['img_dir']+'config.xml', 'wb') as output, open('.config/'+act_name+'.xml', 'rb') as input:
+            with open(act_img_dir+'config.xml', 'wb') as output, open('.config/'+act_name+'.xml', 'rb') as input:
                 copyfileobj(input, output)
 
     def get_ethnic(self, nation):

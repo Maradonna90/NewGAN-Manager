@@ -17,4 +17,7 @@
     * toggle_btns()
 * Reporter
     * send_report(value)
+
 # Write better Tests
+
+# Use one config file for nation->ethnicity and one for last active profile
