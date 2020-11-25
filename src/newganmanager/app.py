@@ -434,7 +434,7 @@ class NewGANManager(toga.App):
                 if mode == "Preserve":
                     self.logger.info("Preserve: {} {}".format(i, p_ethnic))
                     self.gen_prg.value += 1
-                    yield 0.001
+                    # yield 0.001
                     continue
                 elif mode == "Overwrite":
                     self.logger.info("Overwrite: {} {}".format(i, p_ethnic))
