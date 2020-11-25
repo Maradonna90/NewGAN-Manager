@@ -2,7 +2,7 @@
 ![Linux](https://github.com/Maradonna90/NewGAN-Manager/workflows/Linux/badge.svg)
 ![Windows](https://github.com/Maradonna90/NewGAN-Manager/workflows/Windows/badge.svg)
 
-# Main Contributors to NewGAN
+# Main Contributors
 **[Maradonna](https://community.sigames.com/profile/50821-maradonna/) (gestalt)**: Initiator, Coding, Image Generation  
 **Samaroy**: Coordination, Image Generation  
 **[HRiddick](https://sortitoutsi.net/user/profile/137954)**: Image Cleaning, Post Processing  
