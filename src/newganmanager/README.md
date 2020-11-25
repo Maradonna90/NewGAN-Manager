@@ -13,5 +13,8 @@
 * Face_Mapper for the mapping
     * create mapping()
     * generate_xml()
-
+* UI-APP
+    * toggle_btns()
+* Reporter
+    * send_report(value)
 # Write better Tests
