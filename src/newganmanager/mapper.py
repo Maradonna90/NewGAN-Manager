@@ -1,17 +1,17 @@
 import random
+import os
 
 
 class Mapper:
-    def __init__(self):
-        pass
+    def __init__(self, profile_manager):
+        self.profile_manager = profile_manager
 
-    def generate_mapping(self, rtf_data, mode, prf_map, prf_imgs):
+    def generate_mapping(self, rtf_data, mode, prf_map, prf_imgs, prf_eth_map):
         for i, player in enumerate(rtf_data):
             n2_ethnic = None
             if player[2]:
-                # print("DO 2nd!")
-                n2_ethnic = self.config["Ethnics"][player[2]]
-            n1_ethnic = self.config["Ethnics"][player[1]]
+                n2_ethnic = self.profile_manager.get_ethnic(player[2])
+            n1_ethnic = self.profile_manager.get_ethnic([player[1])
             if player[3] == "1":
                 if "EECA" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "EECA"
@@ -59,5 +59,5 @@ class Mapper:
             prf_eth_map[player[0]] = p_ethnic
             prf_imgs.add(player_img)
             player_img = player_img.split('.')[0]
-            return generate_mapping
+            return mapping
 

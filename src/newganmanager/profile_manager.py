@@ -66,6 +66,5 @@ class Profile_Manager(config_manager.Config_Manager):
             with open(self.prf_cfg['img_dir']+'config.xml', 'wb') as output, open('.config/'+act_name+'.xml', 'rb') as input:
                 copyfileobj(input, output)
 
-
-
-
+    def get_ethnic(self, nation):
+        return self.config["Ethnics"][nation]
