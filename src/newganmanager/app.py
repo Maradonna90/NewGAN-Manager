@@ -389,8 +389,16 @@ class NewGANManager(toga.App):
             n2_ethnic = None
             if player[2]:
                 # print("DO 2nd!")
-                n2_ethnic = self.config["Ethnics"][player[2]]
-            n1_ethnic = self.config["Ethnics"][player[1]]
+                try:
+                    n2_ethnic = self.config["Ethnics"][player[2]]
+                except Exception:
+                    self.logger.info("Havent found 2nd Nation")
+                    continue
+            try:        
+                n1_ethnic = self.config["Ethnics"][player[1]]
+            except Exception:
+                self.logger.info("Havent found 1st Nation")
+                continue
             if player[3] == "1":
                 if "EECA" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "EECA"
