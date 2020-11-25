@@ -3,9 +3,14 @@
 ![Windows](https://github.com/Maradonna90/NewGAN-Manager/workflows/Windows/badge.svg)
 
 # Main Contributors to NewGAN
-[Maradonna](https://community.sigames.com/profile/50821-maradonna/) (gestalt): Coding and image generation  
-[HRiddick](https://sortitoutsi.net/user/profile/137954): Image cleaning and post processing  
-[Krysler76](https://community.sigames.com/profile/157461-krysler76/): FM views hacking  
+**[Maradonna](https://community.sigames.com/profile/50821-maradonna/) (gestalt)**: Initiator, Coding, Image Generation  
+**Samaroy**: Coordination, Image Generation  
+**[HRiddick](https://sortitoutsi.net/user/profile/137954)**: Image Cleaning, Post Processing  
+**[Krysler76](https://community.sigames.com/profile/157461-krysler76/)**: FM View Hacking  
+**Ayal**: Image Generation  
+**[Zealand](https://www.youtube.com/user/FMBaseOfficial)**: Image Generation  
+**ZeBurgs**: Image Generation  
+
 Most of us are active on several FM platforms under the same Nicknames.
 
 # Support Me!
@@ -16,7 +21,7 @@ I tried to make the whole installation process as much one-click and go as possi
 
 ## Windows
 1. Download the .msi Installer and go through the installtion process
-2. Go to the NewGAN installation folder (e.g `C:\Users\<username>\AppData\Local\Programs\NewGAN Manager`)
+2. Go to the NewGAN installation folder (e.g `%localappdata%\Programs\NewGAN Manager\`)
 	1. Move the `app\.config\` folder to the NewGAN installation folder from step 2.
 	2. Move the `app\views\` folder to your Football Manager userfolder `My Documents\Sports Interactive\Football Manager 20XX\`
 
