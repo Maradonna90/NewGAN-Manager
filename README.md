@@ -37,7 +37,7 @@ TBD
 If the app crashes for some reason open an issue and please provide the `newgan.log` file. It helps to figure where exactly the app crashed combined with your description.
 
 ## newgan.log on Windows
-On Windows the log file is created in the installation directory. It should be under `C:\Users\<username>\AppData\Local\Programs\NewGAN Manager`
+On Windows the log file is created in the installation directory. It should be under `%localappdata%\Programs\NewGAN Manager\`
 
 ## newgan.log on Linux
 On Linux the log file is created wherever you place the `NewGAN_Manager-*.AppImage` file and execute it.
