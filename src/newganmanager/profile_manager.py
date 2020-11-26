@@ -10,9 +10,9 @@ class Profile_Manager(config_manager.Config_Manager):
         self.cur_prf = name
 
     def delete_profile(self, name):
-        self.logger.info("Delete profile: {}".format(name))
+        # self.logger.info("Delete profile: {}".format(name))
         if name == "No Profile":
-            self.logger.info("Can't delet no profile")
+            # self.logger.info("Can't delet no profile")
             self._throw_error("Can't delete 'No Profile'")
             return
         del self.config[name]
@@ -28,14 +28,14 @@ class Profile_Manager(config_manager.Config_Manager):
         self.load_profile("No Profile")
 
     def create_profile(self, name):
-        self.logger.info("Create new profile: {}".format(name))
-        self.config[name] = False
-        self.save_config(self.cfg_path, self.config)
+        # self.logger.info("Create new profile: {}".format(name))
+        self.config["Profile"][name] = False
+        self.save_config(".config/cfg.json", self.config)
         self.save_config(".config/"+name+".json", {"imgs": {},
                                                    "ethnics": {},
                                                    "img_dir": "",
                                                    "rtf": ""})
-        open('.config/'+name+'.xml', 'a').close
+        open('.config/'+name+'.xml', 'a').close()
 
     def load_profile(self, name):
         deact_img_dir = self.prf_cfg['img_dir']
@@ -61,19 +61,19 @@ class Profile_Manager(config_manager.Config_Manager):
         for dat in data:
             xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/{}/portrait\"/>".format(dat[0]+"/"+dat[1], dat[3]))
 
-         xml_players = "\n".join(xml_string)
-         xml_config = config_template.replace("[players]", xml_players)
-         with open(self.prf_cfg['img_dir']+"config.xml", 'w') as fp:
-             fp.write(xml_config)
+        xml_players = "\n".join(xml_string)
+        xml_config = config_template.replace("[players]", xml_players)
+        with open(self.prf_cfg['img_dir']+"config.xml", 'w') as fp:
+            fp.write(xml_config)
 
     def swap_xml(self, deact_name, act_name, deact_img_dir, act_img_dir):
-        if os.path.isfile(self.prf_cfg['img_dir']+"config.xml"):
+        if os.path.isfile(deact_img_dir+"config.xml"):
             with open('.config/'+deact_name+'.xml', 'wb') as output, open(deact_img_dir+'config.xml', 'rb') as input:
                 copyfileobj(input, output)
 
-        if os.path.isfile('.config/'+self.cur_prf+'.xml'):
+        if os.path.isfile('.config/'+act_name+'.xml'):
             with open(act_img_dir+'config.xml', 'wb') as output, open('.config/'+act_name+'.xml', 'rb') as input:
                 copyfileobj(input, output)
 
     def get_ethnic(self, nation):
-        return self.config["Ethnics"][nation]
+        return self.config["Ethnics"].get(nation, None)
