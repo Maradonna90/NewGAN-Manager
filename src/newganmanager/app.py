@@ -74,8 +74,10 @@ class NewGANManager(toga.App):
 
         self.prfsel_box = toga.Box()
         prf_lab = toga.Label(text="Create Profile: ")
+        prf_lab.style.update(width=125)
 
         prfsel_lab = toga.Label(text="Select Profile: ")
+        prfsel_lab.style.update(width=125)
         self.prfsel_lst = SourceSelection(items=list(self.config["Profile"].keys()), on_select=self._set_profile_status)
         self.prfsel_lst.value = self.cur_prf
         prfsel_btn = toga.Button(label="Delete", on_press=lambda e=None, c=self.prfsel_lst : self._delete_profile(c))
@@ -86,27 +88,30 @@ class NewGANManager(toga.App):
         prf_box.add(prf_inp)
         prf_box.add(prf_btn)
         prf_lab.style.update(padding_top=7)
-        prf_inp.style.update(direction=ROW, padding=(0, 20), flex=0.5)
+        
+        prf_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
 
         self.main_box.add(self.prfsel_box)
         self.prfsel_box.add(prfsel_lab)
         self.prfsel_box.add(self.prfsel_lst)
         self.prfsel_box.add(prfsel_btn)
-        self.prfsel_lst.style.update(direction=ROW, padding=(0, 20), flex=0.5)
+        self.prfsel_lst.style.update(direction=ROW, padding=(0, 20), flex=1)
         prfsel_lab.style.update(padding_top=7)
 
         # MID Path selections
         dir_box = toga.Box()
         dir_lab = toga.Label(text="Select Image Directory: ")
+        dir_lab.style.update(width=125)
         self.dir_inp = toga.TextInput(readonly=True, initial=self.prf_cfg['img_dir'])
-        self.dir_inp.style.update(direction=ROW, padding=(0, 20), flex=0.5)
+        self.dir_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
 
         self.dir_btn = toga.Button(label="...", on_press=self.action_select_folder_dialog, enabled=False)
 
         rtf_box = toga.Box()
         rtf_lab = toga.Label(text="RTF File: ")
+        rtf_lab.style.update(width=125)
         self.rtf_inp = toga.TextInput(readonly=True, initial=self.prf_cfg['rtf'])
-        self.rtf_inp.style.update(direction=ROW, padding=(0, 20), flex=0.5)
+        self.rtf_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
 
         self.rtf_btn = toga.Button(label="...", on_press=self.action_open_file_dialog, enabled=False)
 
@@ -123,10 +128,11 @@ class NewGANManager(toga.App):
 
         gen_mode_box = toga.Box()
         self.genmde_lab = toga.Label(text="Mode: ")
+        self.genmde_lab.style.update(width=125)
         self.genmdeinfo_lab = toga.Label(text=self.mode_info["Generate"])
         self.genmde_lst = SourceSelection(items=list(self.mode_info.keys()), on_select=self.update_label)
         self.genmde_lst.value = "Generate"
-        self.genmde_lst.style.update(direction=ROW, padding=(0, 20), flex=0.5)
+        self.genmde_lst.style.update(direction=ROW, padding=(0, 20), flex=1)
         self.genmde_lab.style.update(padding_top=7)
         self.genmdeinfo_lab.style.update(padding_top=7)
 
@@ -150,6 +156,7 @@ class NewGANManager(toga.App):
         # Report bad image
         rep_box = toga.Box()
         self.rep_lab = toga.Label(text="Player UID: ")
+        self.rep_lab.style.update(width=125)
         self.rep_inp = toga.TextInput(on_change=self.change_image)
         self.rep_img = toga.ImageView(toga.Image("resources/logo.png"))
         self.rep_img.style.update(height=180)
@@ -162,18 +169,21 @@ class NewGANManager(toga.App):
         rep_box.add(self.rep_btn)
         self.main_box.add(rep_box)
         self.rep_lab.style.update(padding_top=10)
-        self.rep_inp.style.update(direction=ROW, padding=(0, 20), flex=0.5)
+        self.rep_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
 
 
-        # END configs
-        rep_box.style.update(direction=ROW, padding=20)
-        gen_mode_box.style.update(direction=ROW, padding=20)
-        prf_box.style.update(direction=ROW, padding=20)
-        self.prfsel_box.style.update(direction=ROW, padding=20)
-        dir_box.style.update(direction=ROW, padding=20)
-        rtf_box.style.update(direction=ROW, padding=20)
-        gen_box.style.update(direction=COLUMN, padding=20, alignment='center')
-        self.main_box.style.update(direction=COLUMN, padding=10, alignment='center')
+        # END config
+        self.prfsel_box.style.update(padding_bottom=20)
+        dir_box.style.update(padding_bottom=20)
+        prf_box.style.update(padding_bottom=20)
+        rtf_box.style.update(padding_bottom=20)
+        gen_mode_box.style.update(padding_bottom=20)
+        rep_box.style.update(padding_top=20)
+        
+
+
+        gen_box.style.update(direction=COLUMN, alignment='center')
+        self.main_box.style.update(direction=COLUMN, padding=30, alignment='center')
 
         self.main_window = toga.MainWindow(title=self.formal_name, size=(1000, 600))
         self.main_window.content = self.main_box
@@ -278,14 +288,14 @@ class NewGANManager(toga.App):
 
     def parse_rtf(self, path):
         self.logger.info("Parse rtf file: {}".format(path))
-        UID_regex = re.compile('([0-9]){10}')
+        UID_regex = re.compile('([0-9]){8,10}')
         result_data = []
         rtf = open(path, 'r', encoding="UTF-8")
         self.logger.info(rtf)
         rtf_data = []
         for line in rtf:
             if UID_regex.search(line):
-                self.logger.info(line.strip())
+                # self.logger.info(line.strip())
                 rtf_data.append(line.strip())
         for newgen in rtf_data:
             data_fields = newgen.split('|')
