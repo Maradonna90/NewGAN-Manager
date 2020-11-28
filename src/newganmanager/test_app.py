@@ -2,9 +2,14 @@ import unittest
 from rtfparser import RTF_Parser
 from config_manager import Config_Manager
 from profile_manager import Profile_Manager
+from  xmlparser import XML_Parser
 import os
 import shutil
 
+class Test_XML_Parser(unittest.TestCase):
+    def test_parse_xml(self):
+        test_xml = XML_Parser.parse_xml(None, "test/test.xml")
+        self.assertSequenceEqual(test_xml, [["0123456789", "African", "African1"]])
 
 class Test_RTF_Parser(unittest.TestCase):
 
