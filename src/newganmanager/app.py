@@ -54,11 +54,10 @@ class NewGANManager(toga.App):
                           "Preserve":  "Preserves already replaced faces",
                           "Generate": "Generates mapping from scratch."}
         os.makedirs(".config", exist_ok=True)
-        self.cfg_path = ".config/cfg.json"
         self.logger.info("Loading cfg.json")
 
         self.logger.info("Loading current profile")
-        self.profile_manager = Profile_Manager(self.cfg_path, self.Config_Manager.get_latest_prf(self.cfg_path))
+        self.profile_manager = Profile_Manager(".config/cfg.json", Config_Manager().get_latest_prf(".config/cfg.json"))
         self.logger.info("Creating GUI")
         self.main_box = toga.Box()
         self.logger.info("Created main box")
@@ -77,7 +76,7 @@ class NewGANManager(toga.App):
 
         prfsel_lab = toga.Label(text="Select Profile: ")
         prfsel_lab.style.update(width=label_width)
-        self.prfsel_lst = SourceSelection(items=list(self.config["Profile"].keys()), on_select=self._set_profile_status)
+        self.prfsel_lst = SourceSelection(items=list(self.profile_manager.config["Profile"].keys()), on_select=self._set_profile_status)
         self.prfsel_lst.value = self.profile_manager.cur_prf
         prfsel_btn = toga.Button(label="Delete", on_press=lambda e=None, c=self.prfsel_lst : self._delete_profile(c))
         prf_btn = toga.Button(label="Create", on_press=lambda e=None, d=prf_inp, c=self.prfsel_lst: self._create_profile(d, c))
@@ -101,7 +100,7 @@ class NewGANManager(toga.App):
         dir_box = toga.Box()
         dir_lab = toga.Label(text="Select Image Directory: ")
         dir_lab.style.update(width=label_width)
-        self.dir_inp = toga.TextInput(readonly=True, initial=self.prf_cfg['img_dir'])
+        self.dir_inp = toga.TextInput(readonly=True, initial=self.profile_manager.prf_cfg['img_dir'])
         self.dir_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
 
         self.dir_btn = toga.Button(label="...", on_press=self.action_select_folder_dialog, enabled=False)
@@ -109,7 +108,7 @@ class NewGANManager(toga.App):
         rtf_box = toga.Box()
         rtf_lab = toga.Label(text="RTF File: ")
         rtf_lab.style.update(width=label_width)
-        self.rtf_inp = toga.TextInput(readonly=True, initial=self.prf_cfg['rtf'])
+        self.rtf_inp = toga.TextInput(readonly=True, initial=self.profile_manager.prf_cfg['rtf'])
         self.rtf_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
 
         self.rtf_btn = toga.Button(label="...", on_press=self.action_open_file_dialog, enabled=False)
