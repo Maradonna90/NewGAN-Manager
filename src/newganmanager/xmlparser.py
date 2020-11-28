@@ -11,7 +11,7 @@ class XML_Parser:
         result_data = []
         xml = open(path, 'r', encoding="UTF-8")
         # self.logger.info(rtf)
-        result_data = []
+        result_data = {}
         for line in xml:
             if UID_regex.search(line):
                 uid = UID_regex.search(line).group(0).strip()
@@ -20,6 +20,6 @@ class XML_Parser:
                 img = eth_img[1]
                 eth = eth_img[0]
                 # self.logger.info(line.strip())
-                result_data.append([uid, eth, img])
+                result_data[uid] = {"ethnicity": eth, "image": img}
         xml.close()
         return result_data
