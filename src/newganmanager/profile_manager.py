@@ -45,26 +45,19 @@ class Profile_Manager(config_manager.Config_Manager):
         self.config[name] = True
         self.cur_prf = name
 
-    def write_xml(self, mode, data):
-        with open(".config/config_template", "r", encode="UTF-8") as fp:
+    def write_xml(self, data):
+        with open(".config/config_template", "r", encoding="UTF-8") as fp:
             config_template = fp.read()
-        if mode == "Generate":
-            self.prf_cfg['imgs'] = {}
-            self.prf_cfg['ethnics'] = {}
-        prf_map = self.prf_cfg["imgs"]
-        prf_eth_map = self.prf_cfg['ethnics']
-        xml_string = []
-
-        for k, v in prf_map.items():
-            xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/{}/portrait\"/>".format(prf_eth_map[k]+"/"+v, k))
+            xml_string = []
 
         for dat in data:
-            xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/{}/portrait\"/>".format(dat[0]+"/"+dat[1], dat[3]))
+            xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/{}/portrait\"/>".format(dat[0]+"/"+dat[1], dat[2]))
 
         xml_players = "\n".join(xml_string)
         xml_config = config_template.replace("[players]", xml_players)
         with open(self.prf_cfg['img_dir']+"config.xml", 'w') as fp:
             fp.write(xml_config)
+        return xml_string
 
     def swap_xml(self, deact_name, act_name, deact_img_dir, act_img_dir):
         if os.path.isfile(deact_img_dir+"config.xml"):

@@ -1,5 +1,4 @@
 import unittest
-from app import NewGANManager
 from rtfparser import RTF_Parser
 from config_manager import Config_Manager
 from profile_manager import Profile_Manager
@@ -20,11 +19,44 @@ class Test_RTF_Parser(unittest.TestCase):
         self.assertSequenceEqual(test_simple_UID[0], ["1915576430", "KSA", "ARG", "2"])
         self.assertEqual(len(test_simple_UID), 1)
 
+
 class Test_Config_Manager(unittest.TestCase):
 
     def test_get_latest_prf(self):
         latest_prf = Config_Manager().get_latest_prf("test/simple_cfg.json")
         self.assertEqual(latest_prf, "Profile2")
+
+
+class Test_Xml_Writing(unittest.TestCase):
+    def setUp(self):
+        self.pm = Profile_Manager(".config/cfg.json", "No Profile")
+        self.pm.prf_cfg["img_dir"] = "test/"
+        self.data = [
+            ["African", "African1", "1915714540"],
+            ["Caucasian", "Caucasian2", "1915576430"]
+        ]
+        self.xml_data = self.pm.write_xml(self.data)
+
+    def test_write_xml_template_string_formatting(self):
+        for xml_player, player in zip(self.xml_data, self.data):
+            self.assertEqual("<record from=\""+player[0]+"/"+player[1]+"\" to=\"graphics/pictures/person/"+player[2]+"/portrait\"/>", xml_player)
+
+    def test_write_xml_players_mapped_in_file(self):
+        with open(self.pm.prf_cfg['img_dir']+"config.xml", 'r', encoding="UTF-8") as fp:
+            xml_file = fp.read()
+        for player in self.data:
+            self.assertIn("<record from=\""+player[0]+"/"+player[1]+"\" to=\"graphics/pictures/person/"+player[2]+"/portrait\"/>", xml_file)
+
+    def test_write_xml_no_file_endings(self):
+        with open(self.pm.prf_cfg['img_dir']+"config.xml", 'r', encoding="UTF-8") as fp:
+            xml_file = fp.read()
+        self.assertNotIn(".png", xml_file)
+
+    def tearDown(self):
+        shutil.rmtree(".config/")
+        shutil.copytree("../../.config/", ".config/")
+        with open("test/config.xml", "w") as cfg:
+            cfg.write('OUTSIDE')
 
 
 class Test_Profile_Manager(unittest.TestCase):
@@ -50,9 +82,6 @@ class Test_Profile_Manager(unittest.TestCase):
     def test_load_profile(self):
         pass
 
-    def test_write_xml(self):
-        pass
-
     def test_swap_xml(self):
         self.pm.swap_xml("test", "No Profile", "test/", "test/")
         with open(".config/test.xml", "r") as test_xml:
@@ -69,18 +98,6 @@ class Test_Profile_Manager(unittest.TestCase):
         shutil.copytree("../../.config/", ".config/")
         with open("test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
-
-
-class Test_Mapper(unittest.TestCase):
-
-    def test_generate_mapping_generate(self):
-        pass
-
-    def test_generate_mapping_preserve(self):
-        pass
-
-    def test_generate_mapping_overwrite(self):
-        pass
 
 
 if __name__ == '__main__':
