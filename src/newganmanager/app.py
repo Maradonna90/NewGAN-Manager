@@ -292,14 +292,14 @@ class NewGANManager(toga.App):
 
     def parse_rtf(self, path):
         self.logger.info("Parse rtf file: {}".format(path))
-        UID_regex = re.compile('([0-9]){8,10}')
+        UID_regex = re.compile('([0-9]){10}')
         result_data = []
         rtf = open(path, 'r', encoding="UTF-8")
         self.logger.info(rtf)
         rtf_data = []
         for line in rtf:
             if UID_regex.search(line):
-                # self.logger.info(line.strip())
+                self.logger.info(line.strip())
                 rtf_data.append(line.strip())
         for newgen in rtf_data:
             data_fields = newgen.split('|')
