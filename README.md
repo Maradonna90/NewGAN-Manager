@@ -14,7 +14,7 @@
 Most of us are active on several FM platforms under the same Nicknames.
 
 # Support Me!
-[![Donate with PayPal](https://i.imgur.com/CKweDND.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=marco.jendryczko%40gmx.net&item_name=NewGAN-Manager&currency_code=EUR)
+[![Donate with PayPal](https://i.imgur.com/CKweDND.png)](paypal.me/marcojott90)
 
 # Installation Guide
 I tried to make the whole installation process as much one-click and go as possible. Unfortunately providing a cross-platform app without managing a codebase for every supported platform is impossible to me. Therefore some small adjustments may be needed, depending on your system.
