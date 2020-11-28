@@ -292,14 +292,14 @@ class NewGANManager(toga.App):
 
         # map rtf_data to ethnicities
         self.gen_lab.text = "Map player to ethnicity..."
-        mapping_data = Mapper().generate_mapping(rtf_data, mode, prf_map, prf_imgs, prf_eth_map)
+        mapping_data = Mapper(img_dir, self.profile_manager).generate_mapping(rtf_data, mode)
 
-        self.profile_manager.write_xml(mode, mapping_data)
+        self.profile_manager.write_xml(mapping_data)
         # save profile metadata (used pics and config.xml)
         self.gen_lab.text = "Generate config.xml..."
         self.gen_lab.text = "Save metadata for profile..."
         
-        self.Config_Manager.save_config(".config/"+profile+".json", prf_cfg)
+        self.Config_Manager.save_config(".config/"+profile+".json", self.profile_manager.prf_cfg)
         self.gen_prg.value += 10
         self.gen_lab.text = "Finished! :)"
         self._show_info("Finished! :)")
@@ -337,7 +337,7 @@ class NewGANManager(toga.App):
         embed.add_field(name='File', value=img_path)
 
         hook.send(embed=embed, file=file)
-
+        self._show_info("Thanks for Reporting!")
 
 def main():
     # create logger with 'spam_application'
