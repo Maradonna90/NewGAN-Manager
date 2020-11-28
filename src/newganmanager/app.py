@@ -11,6 +11,7 @@ from profile_manager import Profile_Manager
 from mapper import Mapper
 from rtfparser import RTF_Parser
 
+
 class SourceSelection(toga.Selection):
     def __init__(self, id=None, style=None, items=None, on_select=None, enabled=True, factory=None):
         super().__init__(id=id, style=style, items=items, on_select=on_select, enabled=enabled, factory=factory)
