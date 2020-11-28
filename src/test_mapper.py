@@ -23,7 +23,7 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree(".config/")
-        shutil.copytree("../../.config/", ".config/")
+        shutil.copytree("../.config/", ".config/")
         with open("test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 
@@ -102,7 +102,7 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree(".config/")
-        shutil.copytree("../../.config/", ".config/")
+        shutil.copytree("../.config/", ".config/")
         with open("test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 
@@ -193,7 +193,7 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree(".config/")
-        shutil.copytree("../../.config/", ".config/")
+        shutil.copytree("../.config/", ".config/")
         with open("test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 

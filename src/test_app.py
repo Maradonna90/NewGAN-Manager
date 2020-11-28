@@ -61,7 +61,7 @@ class Test_Xml_Writing(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree(".config/")
-        shutil.copytree("../../.config/", ".config/")
+        shutil.copytree("../.config/", ".config/")
         with open("test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 
@@ -102,7 +102,7 @@ class Test_Profile_Manager(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree(".config/")
-        shutil.copytree("../../.config/", ".config/")
+        shutil.copytree("../.config/", ".config/")
         with open("test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 
