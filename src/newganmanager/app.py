@@ -33,6 +33,9 @@ class SourceSelection(toga.Selection):
 
 
 class NewGANManager(toga.App):
+
+    
+
     def __init__(self, log):
         super().__init__()
         self.logger = log
@@ -65,6 +68,7 @@ class NewGANManager(toga.App):
         self.main_box = toga.Box()
         self.logger.info("Created main box")
 
+        label_width = 125
         # TOP Profiles
         prf_box = toga.Box()
         self.logger.info("Created prf_box")
@@ -74,10 +78,10 @@ class NewGANManager(toga.App):
 
         self.prfsel_box = toga.Box()
         prf_lab = toga.Label(text="Create Profile: ")
-        prf_lab.style.update(width=125)
+        prf_lab.style.update(width=label_width)
 
         prfsel_lab = toga.Label(text="Select Profile: ")
-        prfsel_lab.style.update(width=125)
+        prfsel_lab.style.update(width=label_width)
         self.prfsel_lst = SourceSelection(items=list(self.config["Profile"].keys()), on_select=self._set_profile_status)
         self.prfsel_lst.value = self.cur_prf
         prfsel_btn = toga.Button(label="Delete", on_press=lambda e=None, c=self.prfsel_lst : self._delete_profile(c))
@@ -101,7 +105,7 @@ class NewGANManager(toga.App):
         # MID Path selections
         dir_box = toga.Box()
         dir_lab = toga.Label(text="Select Image Directory: ")
-        dir_lab.style.update(width=125)
+        dir_lab.style.update(width=label_width)
         self.dir_inp = toga.TextInput(readonly=True, initial=self.prf_cfg['img_dir'])
         self.dir_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
 
@@ -109,7 +113,7 @@ class NewGANManager(toga.App):
 
         rtf_box = toga.Box()
         rtf_lab = toga.Label(text="RTF File: ")
-        rtf_lab.style.update(width=125)
+        rtf_lab.style.update(width=label_width)
         self.rtf_inp = toga.TextInput(readonly=True, initial=self.prf_cfg['rtf'])
         self.rtf_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
 
@@ -128,7 +132,7 @@ class NewGANManager(toga.App):
 
         gen_mode_box = toga.Box()
         self.genmde_lab = toga.Label(text="Mode: ")
-        self.genmde_lab.style.update(width=125)
+        self.genmde_lab.style.update(width=label_width)
         self.genmdeinfo_lab = toga.Label(text=self.mode_info["Generate"])
         self.genmde_lst = SourceSelection(items=list(self.mode_info.keys()), on_select=self.update_label)
         self.genmde_lst.value = "Generate"
@@ -156,7 +160,7 @@ class NewGANManager(toga.App):
         # Report bad image
         rep_box = toga.Box()
         self.rep_lab = toga.Label(text="Player UID: ")
-        self.rep_lab.style.update(width=125)
+        self.rep_lab.style.update(width=label_width)
         self.rep_inp = toga.TextInput(on_change=self.change_image)
         self.rep_img = toga.ImageView(toga.Image("resources/logo.png"))
         self.rep_img.style.update(height=180)
