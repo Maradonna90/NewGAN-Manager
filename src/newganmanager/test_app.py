@@ -46,13 +46,13 @@ class Test_Xml_Writing(unittest.TestCase):
 
     def test_write_xml_template_string_formatting(self):
         for xml_player, player in zip(self.xml_data, self.data):
-            self.assertEqual("<record from=\""+player[0]+"/"+player[1]+"\" to=\"graphics/pictures/person/"+player[2]+"/portrait\"/>", xml_player)
+            self.assertEqual("<record from=\""+player[1]+"/"+player[2]+"\" to=\"graphics/pictures/person/"+player[0]+"/portrait\"/>", xml_player)
 
     def test_write_xml_players_mapped_in_file(self):
         with open(self.pm.prf_cfg['img_dir']+"config.xml", 'r', encoding="UTF-8") as fp:
             xml_file = fp.read()
         for player in self.data:
-            self.assertIn("<record from=\""+player[0]+"/"+player[1]+"\" to=\"graphics/pictures/person/"+player[2]+"/portrait\"/>", xml_file)
+            self.assertIn("<record from=\""+player[1]+"/"+player[2]+"\" to=\"graphics/pictures/person/"+player[0]+"/portrait\"/>", xml_file)
 
     def test_write_xml_no_file_endings(self):
         with open(self.pm.prf_cfg['img_dir']+"config.xml", 'r', encoding="UTF-8") as fp:

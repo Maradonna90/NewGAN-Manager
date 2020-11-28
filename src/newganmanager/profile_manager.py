@@ -51,7 +51,7 @@ class Profile_Manager(config_manager.Config_Manager):
             xml_string = []
 
         for dat in data:
-            xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/{}/portrait\"/>".format(dat[0]+"/"+dat[1], dat[2]))
+            xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/{}/portrait\"/>".format(dat[1]+"/"+dat[2], dat[0]))
 
         xml_players = "\n".join(xml_string)
         xml_config = config_template.replace("[players]", xml_players)
