@@ -87,7 +87,7 @@ class Mapper:
                 self.logger.info("Ethnicity {} has no faces left for mapping. Skipping player {}".format(p_ethnic, player[0]))
                 continue
             mapping.append([player[0], p_ethnic, player_img])
-        if mode == "Overwrite":
+        if mode in ["Overwrite", "Preserve"]:
             self.post_rtf_hook(mapping, prf_imgs, xml_data)
         return mapping
 

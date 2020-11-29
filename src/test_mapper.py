@@ -80,9 +80,6 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
         next_mapping = self.mapper.generate_mapping(self.data_simple, "Generate")
         self.assertNotEqual(simple_mapping, next_mapping)
 
-    def test_generate_mapping_double_exclusive(self):
-        pass
-
 
 class Test_Mapper_Preserve_Mapping(unittest.TestCase):
     def setUp(self):
@@ -94,6 +91,9 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
         # data: UID, first_nat, sec_nat, eth-code
         self.data_simple = self.rtfparser.parse_rtf("test/test_simple.rtf")
         self.data_all_cases = self.rtfparser.parse_rtf("test/test_allcases.rtf")
+        self.data_subset1 = self.rtfparser.parse_rtf("test/allcases_subset1.rtf")
+        self.data_subset2 = self.rtfparser.parse_rtf("test/allcases_subset2.rtf")
+        self.data_exclusive = self.rtfparser.parse_rtf("test/test_exclusive.rtf")
         for eth in ["African", "Asian", "EECA", "Italmed", "SAMed", "South American", 
                     "SpanMed", "YugoGreek", "MENA", "MESA", "Caucasian", "Central European",
                     "Scandinavian", "Seasian"]:
@@ -162,14 +162,47 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
         self.assertSequenceEqual(simple_mapping, next_mapping)
 
     def test_preserve_mapping_double_exclusive(self):
-        pass
+        simple_mapping = self.mapper.generate_mapping(self.data_simple, "Preserve")
+        self.pm.write_xml(simple_mapping)
+        next_mapping = self.mapper.generate_mapping(self.data_exclusive, "Preserve")
+        self.pm.write_xml(next_mapping)
+        self.assertEqual(simple_mapping, next_mapping[2:])
+        self.assertEqual(len(next_mapping), 4)
 
-    def test_preserve_mapping_subset(self):
+    def test_preserve_mapping_complete_subset(self):
         simple_mapping = self.mapper.generate_mapping(self.data_simple, "Preserve")
         self.pm.write_xml(simple_mapping)
         next_mapping = self.mapper.generate_mapping(self.data_all_cases, "Preserve")
         self.pm.write_xml(next_mapping)
-        self.assertSequenceEqual(simple_mapping, next_mapping[:2])
+        self.assertEqual(simple_mapping, next_mapping[:2])
+
+    def test_preserve_mapping_complete_subset_reverse(self):
+        next_mapping = self.mapper.generate_mapping(self.data_all_cases, "Preserve")
+        self.pm.write_xml(next_mapping)
+        simple_mapping = self.mapper.generate_mapping(self.data_simple, "Preserve")
+        self.pm.write_xml(simple_mapping)
+        self.assertEqual(simple_mapping, next_mapping)
+
+    def test_preserve_mapping_partial_subset(self):
+        sub2_mapping = self.mapper.generate_mapping(self.data_subset2, "Preserve")
+        self.pm.write_xml(sub2_mapping)
+        sub1_mapping = self.mapper.generate_mapping(self.data_subset1, "Preserve")
+        self.pm.write_xml(sub1_mapping)
+        self.assertEqual(sub1_mapping[:5], sub2_mapping[:5])
+        self.assertIn(sub2_mapping[5], sub1_mapping)
+        self.assertIn(sub2_mapping[6], sub1_mapping)
+        self.assertIn(sub2_mapping[7], sub1_mapping)
+        self.assertIn(sub2_mapping[8], sub1_mapping)
+        self.assertIn(sub2_mapping[9], sub1_mapping)
+        self.assertEqual(len(sub1_mapping), 12)
+
+    def test_preserve_mapping_partial_subset_reverse(self):
+        sub1_mapping = self.mapper.generate_mapping(self.data_subset1, "Preserve")
+        self.pm.write_xml(sub1_mapping)
+        sub2_mapping = self.mapper.generate_mapping(self.data_subset2, "Preserve")
+        self.pm.write_xml(sub2_mapping)
+        self.assertEqual(sub1_mapping[:5], sub2_mapping[:5])
+        self.assertEqual(len(sub2_mapping), 12)
 
 
 class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
@@ -184,8 +217,9 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
         self.data_all_cases = self.rtfparser.parse_rtf("test/test_allcases.rtf")
         self.data_subset1 = self.rtfparser.parse_rtf("test/allcases_subset1.rtf")
         self.data_subset2 = self.rtfparser.parse_rtf("test/allcases_subset2.rtf")
+        self.data_exclusive = self.rtfparser.parse_rtf("test/test_exclusive.rtf")
 
-        for eth in ["African", "Asian", "EECA", "Italmed", "SAMed", "South American", 
+        for eth in ["African", "Asian", "EECA", "Italmed", "SAMed", "South American",
                     "SpanMed", "YugoGreek", "MENA", "MESA", "Caucasian", "Central European",
                     "Scandinavian", "Seasian"]:
             map = [eth+str(i)for i in range(20)]
@@ -253,7 +287,12 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
         self.assertNotEqual(simple_mapping, next_mapping)
 
     def test_overwrite_mapping_double_exclusive(self):
-        pass
+        simple_mapping = self.mapper.generate_mapping(self.data_simple, "Overwrite")
+        self.pm.write_xml(simple_mapping)
+        next_mapping = self.mapper.generate_mapping(self.data_exclusive, "Overwrite")
+        self.pm.write_xml(next_mapping)
+        self.assertEqual(simple_mapping, next_mapping[2:])
+        self.assertEqual(len(next_mapping), 4)
 
     def test_overwrite_mapping_complete_subset(self):
         simple_mapping = self.mapper.generate_mapping(self.data_simple, "Overwrite")
@@ -261,7 +300,15 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
         next_mapping = self.mapper.generate_mapping(self.data_all_cases, "Overwrite")
         self.pm.write_xml(next_mapping)
         self.assertNotEqual(simple_mapping, next_mapping[:2])
-    
+
+    def test_overwrite_mapping_complete_subset_reverse(self):
+        next_mapping = self.mapper.generate_mapping(self.data_all_cases, "Overwrite")
+        self.pm.write_xml(next_mapping)
+        simple_mapping = self.mapper.generate_mapping(self.data_simple, "Overwrite")
+        self.pm.write_xml(simple_mapping)
+        self.assertNotEqual(simple_mapping, next_mapping[:2])
+        self.assertEqual(next_mapping[2:], simple_mapping[2:])
+
     def test_overwrite_mapping_partial_subset(self):
         sub2_mapping = self.mapper.generate_mapping(self.data_subset2, "Overwrite")
         self.pm.write_xml(sub2_mapping)
@@ -275,6 +322,13 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
         self.assertIn(sub2_mapping[9], sub1_mapping)
         self.assertEqual(len(sub1_mapping), 12)
 
+    def test_overwrite_mapping_partial_subset_reverse(self):
+        sub1_mapping = self.mapper.generate_mapping(self.data_subset1, "Overwrite")
+        self.pm.write_xml(sub1_mapping)
+        sub2_mapping = self.mapper.generate_mapping(self.data_subset2, "Overwrite")
+        self.pm.write_xml(sub2_mapping)
+        self.assertNotEqual(sub1_mapping[:5], sub2_mapping[:5])
+        self.assertEqual(len(sub2_mapping), 12)
 
 
 if __name__ == '__main__':
