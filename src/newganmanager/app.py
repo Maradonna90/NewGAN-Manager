@@ -34,8 +34,6 @@ class SourceSelection(toga.Selection):
 
 class NewGANManager(toga.App):
 
-    
-
     def __init__(self, log):
         super().__init__()
         self.logger = log
@@ -54,7 +52,6 @@ class NewGANManager(toga.App):
                           "Preserve":  "Preserves already replaced faces",
                           "Generate": "Generates mapping from scratch."}
         os.makedirs(".config", exist_ok=True)
-        self.logger.info("Loading cfg.json")
 
         self.logger.info("Loading current profile")
         self.profile_manager = Profile_Manager(".config/cfg.json", Config_Manager().get_latest_prf(".config/cfg.json"))
@@ -85,8 +82,7 @@ class NewGANManager(toga.App):
         prf_box.add(prf_lab)
         prf_box.add(prf_inp)
         prf_box.add(prf_btn)
-        prf_lab.style.update(padding_top=7)
-        
+        prf_lab.style.update(padding_top=7) 
         prf_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
 
         self.main_box.add(self.prfsel_box)
@@ -102,7 +98,6 @@ class NewGANManager(toga.App):
         dir_lab.style.update(width=label_width)
         self.dir_inp = toga.TextInput(readonly=True, initial=self.profile_manager.prf_cfg['img_dir'])
         self.dir_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
-
         self.dir_btn = toga.Button(label="...", on_press=self.action_select_folder_dialog, enabled=False)
 
         rtf_box = toga.Box()
@@ -110,7 +105,6 @@ class NewGANManager(toga.App):
         rtf_lab.style.update(width=label_width)
         self.rtf_inp = toga.TextInput(readonly=True, initial=self.profile_manager.prf_cfg['rtf'])
         self.rtf_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
-
         self.rtf_btn = toga.Button(label="...", on_press=self.action_open_file_dialog, enabled=False)
 
         self.main_box.add(dir_box)
@@ -177,9 +171,6 @@ class NewGANManager(toga.App):
         rtf_box.style.update(padding_bottom=20)
         gen_mode_box.style.update(padding_bottom=20)
         rep_box.style.update(padding_top=20)
-        
-
-
         gen_box.style.update(direction=COLUMN, alignment='center')
         self.main_box.style.update(direction=COLUMN, padding=30, alignment='center')
 
@@ -311,7 +302,7 @@ class NewGANManager(toga.App):
         # save profile metadata (used pics and config.xml)
         self.gen_lab.text = "Generate config.xml..."
         self.gen_lab.text = "Save metadata for profile..."
-        
+ 
         self.Config_Manager.save_config(".config/"+profile+".json", self.profile_manager.prf_cfg)
         self.gen_prg.value += 10
         self.gen_lab.text = "Finished! :)"
@@ -351,6 +342,7 @@ class NewGANManager(toga.App):
 
         hook.send(embed=embed, file=file)
         self._show_info("Thanks for Reporting!")
+
 
 def main():
     # create logger with 'spam_application'
