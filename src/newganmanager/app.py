@@ -10,7 +10,7 @@ from config_manager import Config_Manager
 from profile_manager import Profile_Manager
 from mapper import Mapper
 from rtfparser import RTF_Parser
-
+from progressbar import Progressbar
 
 class SourceSelection(toga.Selection):
     def __init__(self, id=None, style=None, items=None, on_select=None, enabled=True, factory=None):
@@ -138,7 +138,8 @@ class NewGANManager(toga.App):
         self.gen_btn.style.update(padding_bottom=20)
         self.gen_lab = toga.Label(text="")
 
-        self.gen_prg = toga.ProgressBar(max=110)
+        # self.gen_prg = toga.ProgressBar(max=110)
+        self.gen_prg = Progressbar(label=self.gen_lab)
         gen_box.add(self.gen_btn)
         gen_box.add(self.gen_lab)
         gen_box.add(self.gen_prg)
@@ -207,7 +208,7 @@ class NewGANManager(toga.App):
             self.profile_manager.load_profile(name)
             self._refresh_inp()
             self.set_btns(True)
-            self.Config_Manager.save_config(self.cfg_path, self.config)
+            Config_Manager().save_config(".config/cfg.json", self.profile_manager.config)
 
     def _refresh_inp(self, clear=False):
         self.logger.info("Refresh Input Buttons")
@@ -215,8 +216,8 @@ class NewGANManager(toga.App):
             self.dir_inp.clear()
             self.rtf_inp.clear()
         else:
-            self.dir_inp.value = self.prf_cfg['img_dir']
-            self.rtf_inp.value = self.prf_cfg['rtf']
+            self.dir_inp.value = self.profile_manager.prf_cfg['img_dir']
+            self.rtf_inp.value = self.profile_manager.prf_cfg['rtf']
 
     def _create_profile(self, ent, c):
         name = ent.value
@@ -238,9 +239,6 @@ class NewGANManager(toga.App):
     def _show_info(self, msg):
         self.logger.info("Info window: {}".format(msg))
         self.main_window.info_dialog("Info", msg)
-        self.gen_lab.text = ""
-        self.gen_prg.stop()
-        self.gen_prg.value = 0
 
     def action_select_folder_dialog(self, widget):
         self.logger.info("Select Folder...")
@@ -250,7 +248,7 @@ class NewGANManager(toga.App):
             )
             self.dir_inp.value = path_names[0]+"/"
             self.prf_cfg['img_dir'] = path_names[0]+"/"
-            self.Config_Manager.save_config(".config/"+self.profile_manager.cur_prf+".json", self.prf_cfg)
+            Config_Manager.save_config(".config/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
 
         except Exception:
             pass
@@ -267,11 +265,11 @@ class NewGANManager(toga.App):
             if fname is not None:
                 self.rtf_inp.value = fname
                 self.prf_cfg['rtf'] = fname
-                self.Config_Manager.save_config(".config/"+self.profile_manager.cur_prf+".json", self.prf_cfg)
+                Config_Manager.save_config(".config/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
             else:
                 self.prf_cfg['rtf'] = ""
                 self.rtf_inp.value = ""
-                self.Config_Manager.save_config(".config/"+self.profile_manager.cur_prf+".json", self.prf_cfg)
+                Config_Manager.save_config(".config/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
         except Exception:
             self.logger.error("Fatal error in main loop", exc_info=True)
             pass
@@ -279,8 +277,8 @@ class NewGANManager(toga.App):
     def _replace_faces(self, widget):
         self.logger.info("Start Replace Faces")
         # get values from UI elements
-        rtf = self.prf_cfg['rtf']
-        img_dir = self.prf_cfg['img_dir']
+        rtf = self.profile_manager.prf_cfg['rtf']
+        img_dir = self.profile_manager.prf_cfg['img_dir']
         profile = self.profile_manager.cur_prf
         mode = self.genmde_lst.value
         self.logger.info("rtf: {}".format(rtf))
@@ -288,25 +286,26 @@ class NewGANManager(toga.App):
         self.logger.info("profile: {}".format(profile))
         self.logger.info("mode: {}".format(mode))
         # parse rtf
-        self.gen_lab.tex = "Parsing RTF..."
-        rtf_data = RTF_Parser.parse_rtf(rtf)
-        self.gen_lab.text = "Load profile config and create image set..."
+        self.gen_prg.update_label("Parsing RTF")
+        rtf_data = RTF_Parser().parse_rtf(rtf)
+        self.gen_prg.update_label("Load profile config and create image set...")
         # prf_imgs = set(prf_cfg["imgs"].values())
-        self.gen_lab.text = "Restore already replaced faces if applicable..."
+        self.gen_prg.update_label("Restore already replaced faces if applicable...")
 
         # map rtf_data to ethnicities
-        self.gen_lab.text = "Map player to ethnicity..."
+        self.gen_prg.update_label("Map player to ethnicity...")
         mapping_data = Mapper(img_dir, self.profile_manager).generate_mapping(rtf_data, mode)
 
         self.profile_manager.write_xml(mapping_data)
         # save profile metadata (used pics and config.xml)
-        self.gen_lab.text = "Generate config.xml..."
-        self.gen_lab.text = "Save metadata for profile..."
- 
-        self.Config_Manager.save_config(".config/"+profile+".json", self.profile_manager.prf_cfg)
+        self.gen_prg.update_label("Generate config.xml...")
+        self.gen_prg.update_label("Save metadata for profile...")
+
+        Config_Manager.save_config(".config/"+profile+".json", self.profile_manager.prf_cfg)
         self.gen_prg.value += 10
-        self.gen_lab.text = "Finished! :)"
+        self.gen_prg.update_label("Finished! :)")
         self._show_info("Finished! :)")
+        self.gen_prg.reset()
 
     def change_image(self, id):
         self.logger.info("try to change image preview")
