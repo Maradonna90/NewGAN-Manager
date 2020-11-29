@@ -184,6 +184,7 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
         self.data_all_cases = self.rtfparser.parse_rtf("test/test_allcases.rtf")
         self.data_subset1 = self.rtfparser.parse_rtf("test/allcases_subset1.rtf")
         self.data_subset2 = self.rtfparser.parse_rtf("test/allcases_subset2.rtf")
+        self.data_exclusive = self.rtfparser.parse_rtf("test/test_exclusive.rtf")
 
         for eth in ["African", "Asian", "EECA", "Italmed", "SAMed", "South American", 
                     "SpanMed", "YugoGreek", "MENA", "MESA", "Caucasian", "Central European",
@@ -253,7 +254,13 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
         self.assertNotEqual(simple_mapping, next_mapping)
 
     def test_overwrite_mapping_double_exclusive(self):
-        pass
+        simple_mapping = self.mapper.generate_mapping(self.data_simple, "Overwrite")
+        self.pm.write_xml(simple_mapping)
+        next_mapping = self.mapper.generate_mapping(self.data_exclusive, "Overwrite")
+        self.pm.write_xml(next_mapping)
+        self.assertEqual(simple_mapping, next_mapping[2:])
+        self.assertEqual(len(next_mapping), 4)
+
 
     def test_overwrite_mapping_complete_subset(self):
         simple_mapping = self.mapper.generate_mapping(self.data_simple, "Overwrite")
@@ -261,7 +268,15 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
         next_mapping = self.mapper.generate_mapping(self.data_all_cases, "Overwrite")
         self.pm.write_xml(next_mapping)
         self.assertNotEqual(simple_mapping, next_mapping[:2])
-    
+
+    def test_overwrite_mapping_complete_subset_reverse(self):
+        next_mapping = self.mapper.generate_mapping(self.data_all_cases, "Overwrite")
+        self.pm.write_xml(next_mapping)
+        simple_mapping = self.mapper.generate_mapping(self.data_simple, "Overwrite")
+        self.pm.write_xml(simple_mapping)
+        self.assertNotEqual(simple_mapping, next_mapping[:2])
+        self.assertEqual(next_mapping[2:], simple_mapping[2:])
+
     def test_overwrite_mapping_partial_subset(self):
         sub2_mapping = self.mapper.generate_mapping(self.data_subset2, "Overwrite")
         self.pm.write_xml(sub2_mapping)
