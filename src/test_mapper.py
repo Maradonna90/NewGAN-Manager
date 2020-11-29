@@ -275,6 +275,13 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
         self.assertIn(sub2_mapping[9], sub1_mapping)
         self.assertEqual(len(sub1_mapping), 12)
 
+    def test_overwrite_mapping_partial_subset_reverse(self):
+        sub1_mapping = self.mapper.generate_mapping(self.data_subset1, "Overwrite")
+        self.pm.write_xml(sub1_mapping)
+        sub2_mapping = self.mapper.generate_mapping(self.data_subset2, "Overwrite")
+        self.pm.write_xml(sub2_mapping)
+        self.assertNotEqual(sub1_mapping[:5], sub2_mapping[:5])
+        self.assertEqual(len(sub2_mapping), 12)
 
 
 if __name__ == '__main__':
