@@ -10,7 +10,7 @@ class Progressbar(toga.widgets.textinput.TextInput):
         factory=None,
         initial=None,
         placeholder=None,
-        readonly=True,
+        readonly=False,
         on_change=None,
         on_gain_focus=None,
         on_lose_focus=None,
@@ -29,12 +29,11 @@ class Progressbar(toga.widgets.textinput.TextInput):
         self.on_lose_focus = on_lose_focus
         self.on_gain_focus = on_gain_focus
 
-        # TODO: create label above
         self.label = label
         self.max_progress = 100
         self.progress = 0
-        self.step_size = 10
-        self.sign = '#'
+        self.step_size = 2
+        self.sign = '█'
         self.label_sign = '...'
         self.running = False
         self.label_flavor = ''
@@ -44,6 +43,7 @@ class Progressbar(toga.widgets.textinput.TextInput):
 
     def stop(self):
         self.running = False
+        self.reset()
 
     def update_progress(self, value):
         self.progress += value
@@ -52,17 +52,17 @@ class Progressbar(toga.widgets.textinput.TextInput):
                 self.value += self.sign
 
     def update_label(self, text):
-        self.label.value = text
+        self.label.text = text
         self.label_flavor = text
 
     def animate_label(self):
         # eg. doing., doing.., doing..., doing. etc.
         while self.running:
             for char in self.label_sign:
-                self.label.value = self.label_flavor + char
+                self.label.text = self.label_flavor + char
 
     def reset(self):
-        self.label.value = ''
+        self.label.text = ''
         self.label_flavor = ''
         self.progress = 0
-        self.stop()
+        self.value = ''

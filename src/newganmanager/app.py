@@ -12,6 +12,7 @@ from mapper import Mapper
 from rtfparser import RTF_Parser
 from progressbar import Progressbar
 
+
 class SourceSelection(toga.Selection):
     def __init__(self, id=None, style=None, items=None, on_select=None, enabled=True, factory=None):
         super().__init__(id=id, style=style, items=items, on_select=on_select, enabled=enabled, factory=factory)
@@ -144,7 +145,8 @@ class NewGANManager(toga.App):
         gen_box.add(self.gen_lab)
         gen_box.add(self.gen_prg)
         self.main_box.add(gen_box)
-        self.gen_lab.style.update(padding_top=20)
+        self.gen_prg.style.update(width=570, alignment="center")
+        self.gen_lab.style.update(padding_top=20, padding_bottom=20, width=100, alignment="center")
 
         # Report bad image
         rep_box = toga.Box()
@@ -247,8 +249,8 @@ class NewGANManager(toga.App):
                 title="Select image root folder"
             )
             self.dir_inp.value = path_names[0]+"/"
-            self.prf_cfg['img_dir'] = path_names[0]+"/"
-            Config_Manager.save_config(".config/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
+            self.profile_manager.prf_cfg['img_dir'] = path_names[0]+"/"
+            Config_Manager().save_config(".config/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
 
         except Exception:
             pass
@@ -264,12 +266,12 @@ class NewGANManager(toga.App):
             self.logger.info("Created file-dialog")
             if fname is not None:
                 self.rtf_inp.value = fname
-                self.prf_cfg['rtf'] = fname
-                Config_Manager.save_config(".config/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
+                self.profile_manager.prf_cfg['rtf'] = fname
+                Config_Manager().save_config(".config/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
             else:
-                self.prf_cfg['rtf'] = ""
+                self.profile_manager.prf_cfg['rtf'] = ""
                 self.rtf_inp.value = ""
-                Config_Manager.save_config(".config/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
+                Config_Manager().save_config(".config/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
         except Exception:
             self.logger.error("Fatal error in main loop", exc_info=True)
             pass
@@ -285,27 +287,29 @@ class NewGANManager(toga.App):
         self.logger.info("img_dir: {}".format(img_dir))
         self.logger.info("profile: {}".format(profile))
         self.logger.info("mode: {}".format(mode))
-        # parse rtf
+        self.gen_prg.start()
         self.gen_prg.update_label("Parsing RTF")
+        yield 0.1
         rtf_data = RTF_Parser().parse_rtf(rtf)
-        self.gen_prg.update_label("Load profile config and create image set...")
-        # prf_imgs = set(prf_cfg["imgs"].values())
-        self.gen_prg.update_label("Restore already replaced faces if applicable...")
-
-        # map rtf_data to ethnicities
-        self.gen_prg.update_label("Map player to ethnicity...")
+        self.gen_prg.update_progress(20)
+        self.gen_prg.update_label("Map player to ethnicity")
+        yield 0.1
         mapping_data = Mapper(img_dir, self.profile_manager).generate_mapping(rtf_data, mode)
-
+        self.gen_prg.update_progress(60)
+        self.gen_prg.update_label("Generate config.xml")
+        yield 0.1
         self.profile_manager.write_xml(mapping_data)
         # save profile metadata (used pics and config.xml)
-        self.gen_prg.update_label("Generate config.xml...")
-        self.gen_prg.update_label("Save metadata for profile...")
-
-        Config_Manager.save_config(".config/"+profile+".json", self.profile_manager.prf_cfg)
-        self.gen_prg.value += 10
+        self.gen_prg.update_label("Save metadata for profile")
+        self.gen_prg.update_progress(10)
+        yield 0.1
+        Config_Manager().save_config(".config/"+profile+".json", self.profile_manager.prf_cfg)
+        self.gen_prg.update_progress(10)
+        yield 0.1
         self.gen_prg.update_label("Finished! :)")
+        yield 0.1
         self._show_info("Finished! :)")
-        self.gen_prg.reset()
+        self.gen_prg.stop()
 
     def change_image(self, id):
         self.logger.info("try to change image preview")
