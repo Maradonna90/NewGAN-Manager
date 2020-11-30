@@ -56,15 +56,15 @@ class Progressbar(toga.widgets.textinput.TextInput):
         self.label.text = text
         self.label_flavor = text
 
-    def animate_label(self):
+    async def animate_label(self):
         # eg. doing., doing.., doing..., doing. etc.
-        if self.running:
+        while self.running:
             self.label.text = self.label_flavor + self.label_sign
             if self.label_sign == '...':
                 self.label_sign = ''
             else:
                 self.label_sign += '.'
-            return
+            return await 0.1
 
     def reset(self):
         self.label.text = ''
