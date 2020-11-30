@@ -28,6 +28,8 @@ jobs:
       run: |
         # stop the build if there are Python syntax errors or undefined names
         python3 -m pip install beeware
+    - name: Run tests with
+      run: python -m unittest 
     - name: Build
       run: |
         briefcase create --no-docker
