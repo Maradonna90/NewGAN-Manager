@@ -7,6 +7,7 @@ class RTF_Parser:
 
     def parse_rtf(self, path):
         UID_regex = re.compile('([0-9]){10}')
+        result_data = []
         rtf = open(path, 'r', encoding="UTF-8")
         # self.logger.info(rtf)
         rtf_data = []
@@ -19,5 +20,6 @@ class RTF_Parser:
             sec_nat = data_fields[3].strip()
             if sec_nat == '':
                 sec_nat = None
-            yield [data_fields[1].strip(), data_fields[2].strip(), sec_nat, data_fields[7].strip()]
+            result_data.append([data_fields[1].strip(), data_fields[2].strip(), sec_nat, data_fields[7].strip()])
         rtf.close()
+        return result_data
