@@ -22,7 +22,6 @@ class Mapper:
         self.logger = logger
 
     def generate_mapping(self, rtf_data, mode):
-        mapping = []
         prf_imgs = []
         xml_data = {}
 
@@ -73,7 +72,7 @@ class Mapper:
             if player[0] in xml_data:
                 if mode == "Preserve":
                     self.logger.info("Preserve: {} {} {}".format(player[0], p_ethnic, xml_data[player[0]]["image"]))
-                    mapping.append([player[0], p_ethnic, xml_data[player[0]]["image"]])
+                    yield [player[0], p_ethnic, xml_data[player[0]]["image"]]
                     del xml_data[player[0]]
                     continue
                 elif mode == "Overwrite":
@@ -86,10 +85,9 @@ class Mapper:
             if player_img is None:
                 self.logger.info("Ethnicity {} has no faces left for mapping. Skipping player {}".format(p_ethnic, player[0]))
                 continue
-            mapping.append([player[0], p_ethnic, player_img])
+            yield [player[0], p_ethnic, player_img]
         if mode in ["Overwrite", "Preserve"]:
-            self.post_rtf_hook(mapping, prf_imgs, xml_data)
-        return mapping
+            yield self.post_rtf_hook(prf_imgs, xml_data)
 
     def get_xml_images(self, xml_data):
         return [i["image"] for i in xml_data.values()]
@@ -101,8 +99,8 @@ class Mapper:
             return None
         return random.choice(tuple(selection_pool))
 
-    def post_rtf_hook(self, mapping, prf_imgs, xml_data):
+    def post_rtf_hook(self, prf_imgs, xml_data):
         for uid, values in xml_data.items():
             p_ethnic = values["ethnicity"]
             player_img = values["image"]
-            mapping.append([uid, p_ethnic, player_img])
+            yield [uid, p_ethnic, player_img]

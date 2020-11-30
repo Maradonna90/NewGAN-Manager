@@ -1,4 +1,5 @@
 import toga
+import time
 
 
 class Progressbar(toga.widgets.textinput.TextInput):
@@ -34,7 +35,7 @@ class Progressbar(toga.widgets.textinput.TextInput):
         self.progress = 0
         self.step_size = 2
         self.sign = '█'
-        self.label_sign = '...'
+        self.label_sign = '.'
         self.running = False
         self.label_flavor = ''
 
@@ -57,9 +58,13 @@ class Progressbar(toga.widgets.textinput.TextInput):
 
     def animate_label(self):
         # eg. doing., doing.., doing..., doing. etc.
-        while self.running:
-            for char in self.label_sign:
-                self.label.text = self.label_flavor + char
+        if self.running:
+            self.label.text = self.label_flavor + self.label_sign
+            if self.label_sign == '...':
+                self.label_sign = ''
+            else:
+                self.label_sign += '.'
+            return
 
     def reset(self):
         self.label.text = ''

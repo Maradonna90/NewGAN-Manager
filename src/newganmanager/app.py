@@ -290,11 +290,21 @@ class NewGANManager(toga.App):
         self.gen_prg.start()
         self.gen_prg.update_label("Parsing RTF")
         yield 0.1
-        rtf_data = RTF_Parser().parse_rtf(rtf)
+        rtf_data = []
+        for i, rtf_entry in enumerate(RTF_Parser().parse_rtf(rtf)):
+            rtf_data.append(rtf_entry)
+            if i % 500 == 0:
+                self.gen_prg.animate_label()
+                yield 0.1
         self.gen_prg.update_progress(20)
         self.gen_prg.update_label("Map player to ethnicity")
         yield 0.1
-        mapping_data = Mapper(img_dir, self.profile_manager).generate_mapping(rtf_data, mode)
+        mapping_data = []
+        for j, map_entry in enumerate(Mapper(img_dir, self.profile_manager).generate_mapping(rtf_data, mode)):
+            mapping_data.append(map_entry)
+            if j % 500 == 0:
+                self.gen_prg.animate_label()
+                yield 0.1
         self.gen_prg.update_progress(60)
         self.gen_prg.update_label("Generate config.xml")
         yield 0.1
