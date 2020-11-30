@@ -30,7 +30,7 @@ jobs:
         # stop the build if there are Python syntax errors or undefined names
         python -m pip install beeware
     - name: Run tests with pytest
-      run: python -m unittest 
+      run: pytest -vv 
     - name: Build
       run: |
         briefcase create
