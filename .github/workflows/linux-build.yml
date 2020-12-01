@@ -31,11 +31,14 @@ jobs:
     - name: Run tests with
       run: |
         cd src/
-        ls
-        ls .config/
-        ls test/
-        cat test/config.xml
-        python -m unittest test_app.Test_Profile_Manager.test_swap_xml
+        python -m unittest test_app.Test_Profile_Manager
+        python -m unittest test_app.Test_XML_Parser
+        python -m unittest test_app.Test_RTF_Parser
+        python -m unittest test_app.Test_Config_Manager
+        python -m unittest test_app.Test_Xml_Writing
+        python -m unittest test_mapper.Test_Mapper_Generate_Mapping
+        python -m unittest test_mapper.Test_Mapper_Preserve_Mapping
+        python -m unittest test_mapper.Test_Mapper_Overwrite_Mapping
     - name: Build
       run: |
         briefcase create --no-docker
