@@ -64,7 +64,7 @@ class Profile_Manager(config_manager.Config_Manager):
             with open('.config/'+deact_name+'.xml', 'wb') as output, open(deact_img_dir+'config.xml', 'rb') as input:
                 copyfileobj(input, output)
 
-        if os.path.isfile('.config/'+act_name+'.xml'):
+        if os.path.isfile(act_img_dir+"config.xml"):
             with open(act_img_dir+'config.xml', 'wb') as output, open('.config/'+act_name+'.xml', 'rb') as input:
                 copyfileobj(input, output)
 
