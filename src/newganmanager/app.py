@@ -283,11 +283,11 @@ class NewGANManager(toga.App):
         img_dir = self.profile_manager.prf_cfg['img_dir']
         profile = self.profile_manager.cur_prf
         mode = self.genmde_lst.value
-        if !os.path.isfile(rtf):
+        if not os.path.isfile(rtf):
             self._throw_error("The RTF file doesn't exist!")
             self.gen_prg.stop()
             return
-        if !os.path.isdir(img_dir):
+        if not os.path.isdir(img_dir):
             self._throw_error("The image directory doesn't exist!")
             self.gen_prg.stop()
             return
