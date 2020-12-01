@@ -7,7 +7,7 @@ name: MacOS
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, workflow-test ]
   pull_request:
     branches: [ master ]
 
@@ -32,8 +32,19 @@ jobs:
         python -m pip install beeware
     - name: Run tests with pytest
       run: |
-        cd src
-        python -m unittest
+        cd src/
+        python -m unittest test_app.Test_Profile_Manager.test_swap_xml -v
+        python -m unittest test_app.Test_Profile_Manager.test_delete_profile -v
+        python -m unittest test_app.Test_Profile_Manager.test_create_profile -v
+        python -m unittest test_app.Test_Profile_Manager.test_load_profile -v
+        python -m unittest test_app.Test_Profile_Manager.test_get_ethnic -v
+        python -m unittest test_app.Test_XML_Parser -v
+        python -m unittest test_app.Test_RTF_Parser -v
+        python -m unittest test_app.Test_Config_Manager -v
+        python -m unittest test_app.Test_Xml_Writing -v
+        python -m unittest test_mapper.Test_Mapper_Generate_Mapping -v
+        python -m unittest test_mapper.Test_Mapper_Preserve_Mapping -v
+        python -m unittest test_mapper.Test_Mapper_Overwrite_Mapping -v
     - name: Build
       run: |
         briefcase create
