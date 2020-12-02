@@ -55,7 +55,8 @@ class NewGANManager(toga.App):
         os.makedirs(".config", exist_ok=True)
 
         self.logger.info("Loading current profile")
-        self.profile_manager = Profile_Manager(".config/cfg.json", Config_Manager().get_latest_prf(".config/cfg.json"))
+        self.profile_manager = Profile_Manager(Config_Manager().get_latest_prf(".user/cfg.json"))
+        self.profile_manager.migrate_config()
         self.logger.info("Creating GUI")
         self.main_box = toga.Box()
         self.logger.info("Created main box")

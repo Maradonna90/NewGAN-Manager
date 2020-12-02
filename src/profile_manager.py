@@ -9,6 +9,20 @@ class Profile_Manager(config_manager.Config_Manager):
         self.prf_cfg = self.load_config(".config/"+name+".json")
         self.cur_prf = name
 
+    def migrate_config(self):
+        if "Profile" in self.config:
+            profiles = self.config["Profile"]
+            self.save_config(".user/cfg.json", profiles)
+            del self.config["Profile"]
+            self.save_config(".config/cfg.json", self.config)
+            for profile in profiles.keys():
+                with open(".user/"+profile+'.xml', 'wb') as output, open('.config/'+profile+'.xml', 'rb') as input:
+                    copyfileobj(input, output)
+                    os.remove('.config/'+profile+'.xml')
+                with open(".user/"+profile+'.json', 'wb') as output, open('.config/'+profile+'.json', 'rb') as input:
+                    copyfileobj(input, output)
+                    os.remove('.config/'+profile+'.json')
+
     def delete_profile(self, name):
         # self.logger.info("Delete profile: {}".format(name))
         if name == "No Profile":
