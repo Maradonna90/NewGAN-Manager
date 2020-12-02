@@ -9,7 +9,7 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
     def setUp(self):
         # TODO: we need prf_map, prf_imgs and prf_eth_map
         self.rtfparser = RTF_Parser()
-        self.pm = Profile_Manager(".config/cfg.json", "No Profile")
+        self.pm = Profile_Manager("No Profile")
         self.pm.prf_cfg["img_dir"] = "test/"
         self.mapper = Mapper("test/", self.pm)
         # data: UID, first_nat, sec_nat, eth-code
@@ -24,6 +24,8 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(".config/")
         shutil.copytree("../.config/", ".config/")
+        shutil.rmtree(".user/")
+        shutil.copytree("../.user/", ".user/")
         with open("test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 
@@ -85,7 +87,7 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
     def setUp(self):
         # TODO: we need prf_map, prf_imgs and prf_eth_map
         self.rtfparser = RTF_Parser()
-        self.pm = Profile_Manager(".config/cfg.json", "No Profile")
+        self.pm = Profile_Manager("No Profile")
         self.mapper = Mapper("test/", self.pm)
         self.pm.prf_cfg["img_dir"] = "test/"
         # data: UID, first_nat, sec_nat, eth-code
@@ -103,6 +105,8 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(".config/")
         shutil.copytree("../.config/", ".config/")
+        shutil.rmtree(".user/")
+        shutil.copytree("../.user/", ".user/")
         with open("test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 
@@ -209,7 +213,7 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
     def setUp(self):
         # TODO: we need prf_map, prf_imgs and prf_eth_map
         self.rtfparser = RTF_Parser()
-        self.pm = Profile_Manager(".config/cfg.json", "No Profile")
+        self.pm = Profile_Manager("No Profile")
         self.mapper = Mapper("test/", self.pm)
         self.pm.prf_cfg["img_dir"] = "test/"
         # data: UID, first_nat, sec_nat, eth-code
@@ -228,6 +232,8 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(".config/")
         shutil.copytree("../.config/", ".config/")
+        shutil.rmtree(".user/")
+        shutil.copytree("../.user/", ".user/")
         with open("test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 

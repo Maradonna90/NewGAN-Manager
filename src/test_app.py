@@ -36,7 +36,7 @@ class Test_Config_Manager(unittest.TestCase):
 
 class Test_Xml_Writing(unittest.TestCase):
     def setUp(self):
-        self.pm = Profile_Manager(".config/cfg.json", "No Profile")
+        self.pm = Profile_Manager("No Profile")
         self.pm.prf_cfg["img_dir"] = "test/"
         self.data = [
             ["African", "African1", "1915714540"],
@@ -62,13 +62,15 @@ class Test_Xml_Writing(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(".config/")
         shutil.copytree("../.config/", ".config/")
+        shutil.rmtree(".user/")
+        shutil.copytree("../.user/", ".user/")
         with open("test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 
 
 class Test_Profile_Manager(unittest.TestCase):
     def setUp(self):
-        self.pm = Profile_Manager(".config/cfg.json", "No Profile")
+        self.pm = Profile_Manager("No Profile")
 
     def test_delete_profile(self):
         pass
@@ -76,11 +78,11 @@ class Test_Profile_Manager(unittest.TestCase):
     def test_create_profile(self):
 
         self.pm.create_profile("test")
-        cfg = Config_Manager().load_config(".config/cfg.json")
+        cfg = Config_Manager().load_config(".user/cfg.json")
         self.assertFalse(cfg["Profile"]["test"])
-        self.assertTrue(os.path.isfile(".config/test.json"))
-        self.assertTrue(os.path.isfile(".config/test.xml"))
-        prf_cfg = Config_Manager().load_config(".config/test.json")
+        self.assertTrue(os.path.isfile(".user/test.json"))
+        self.assertTrue(os.path.isfile(".user/test.xml"))
+        prf_cfg = Config_Manager().load_config(".user/test.json")
         self.assertEqual(prf_cfg["imgs"], {})
         self.assertEqual(prf_cfg["ethnics"], {})
         self.assertEqual(prf_cfg["img_dir"], "")
@@ -91,7 +93,7 @@ class Test_Profile_Manager(unittest.TestCase):
 
     def test_swap_xml(self):
         self.pm.swap_xml("test", "No Profile", "test/", "test/")
-        with open(".config/test.xml", "r") as test_xml:
+        with open(".user/test.xml", "r") as test_xml:
             self.assertEqual(test_xml.read(), "OUTSIDE")
         with open("test/config.xml", "r") as config_xml:
             self.assertEqual(config_xml.read(), "")
@@ -103,10 +105,12 @@ class Test_Profile_Manager(unittest.TestCase):
     def test_switching_profiles_with_invalid_path(self):
         self.pm.swap_xml("test", "No Profile", "invalid/", "test/")
         self.pm.swap_xml("No Profile", "test", "test/", "invalid/")
-        
+ 
     def tearDown(self):
         shutil.rmtree(".config/")
         shutil.copytree("../.config/", ".config/")
+        shutil.rmtree(".user/")
+        shutil.copytree("../.user/", ".user/")
         with open("test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 
