@@ -105,7 +105,30 @@ class Test_Profile_Manager(unittest.TestCase):
     def test_switching_profiles_with_invalid_path(self):
         self.pm.swap_xml("test", "No Profile", "invalid/", "test/")
         self.pm.swap_xml("No Profile", "test", "test/", "invalid/")
- 
+
+    def test_migrate_function(self):
+        cfg = Config_Manager().load_config(".config/cfg.json")
+        cfg["Profile"] = {"testmig" : False, "No Profile": True}
+        Config_Manager().save_config(".config/cfg.json", cfg)
+        self.pm.eth_cfg = cfg
+        f = open(".config/testmig.xml", "a")
+        f.write("TESTMIGXML!")
+        f.close()
+        f = open(".config/testmig.json", "a")
+        f.write("{'text': 'TESTMIGJSON!'}")
+        f.close()
+        self.pm.migrate_config()
+        res_cfg = Config_Manager().load_config(".config/cfg.json")
+        self.assertNotIn("Profile", res_cfg)
+        self.assertIn("Ethnics", res_cfg)
+        usr_cfg = Config_Manager().load_config(".user/cfg.json")
+        self.assertNotIn("Ethnics", usr_cfg)
+        self.assertIn("Profile", usr_cfg)
+        self.assertTrue(os.path.isfile(".user/testmig.json"))
+        self.assertTrue(os.path.isfile(".user/testmig.xml"))
+        self.assertFalse(os.path.isfile(".config/testmig.json"))
+        self.assertFalse(os.path.isfile(".config/testmig.xml"))
+
     def tearDown(self):
         shutil.rmtree(".config/")
         shutil.copytree("../.config/", ".config/")

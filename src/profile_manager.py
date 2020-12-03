@@ -11,12 +11,13 @@ class Profile_Manager(config_manager.Config_Manager):
         self.cur_prf = name
 
     def migrate_config(self):
-        if "Profile" in self.config:
-            profiles = self.config["Profile"]
+        if "Profile" in self.eth_cfg:
+            profiles = {}
+            profiles["Profile"] = self.eth_cfg["Profile"]
             self.save_config(".user/cfg.json", profiles)
-            del self.config["Profile"]
-            self.save_config(".config/cfg.json", self.config)
-            for profile in profiles.keys():
+            del self.eth_cfg["Profile"]
+            self.save_config(".config/cfg.json", self.eth_cfg)
+            for profile in profiles["Profile"].keys():
                 with open(".user/"+profile+'.xml', 'wb') as output, open('.config/'+profile+'.xml', 'rb') as input:
                     copyfileobj(input, output)
                     os.remove('.config/'+profile+'.xml')
