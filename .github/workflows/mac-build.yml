@@ -38,6 +38,8 @@ jobs:
         python -m unittest test_app.Test_Profile_Manager.test_create_profile -v
         python -m unittest test_app.Test_Profile_Manager.test_load_profile -v
         python -m unittest test_app.Test_Profile_Manager.test_get_ethnic -v
+        python -m unittest test_app.Test_Profile_Manager.test_switching_profiles_with_invalid_path -v
+        python -m unittest test_app.Test_Profile_Manager.test_migrate_function -v
         python -m unittest test_app.Test_XML_Parser -v
         python -m unittest test_app.Test_RTF_Parser -v
         python -m unittest test_app.Test_Config_Manager -v
