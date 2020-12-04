@@ -22,11 +22,11 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
             self.mapper.eth_map[eth] = map
 
     def tearDown(self):
-        shutil.rmtree(self.paths.app+"testing/.config/")
-        shutil.copytree(self.paths.app+".config/", "testing/.config/")
-        shutil.rmtree(self.paths.app+"testing/.user/")
-        shutil.copytree(self.paths.app+".user/", "testing/.user/")
-        with open(self.paths.app+"test/config.xml", "w") as cfg:
+        shutil.rmtree("testing/.config/")
+        shutil.copytree(".config/", "testing/.config/")
+        shutil.rmtree("testing/.user/")
+        shutil.copytree(".user/", "testing/.user/")
+        with open("test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 
     def test_generate_mapping_simple(self):
@@ -103,11 +103,11 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
             self.mapper.eth_map[eth] = map
 
     def tearDown(self):
-        shutil.rmtree(self.paths.app+"testing/.config/")
-        shutil.copytree(self.paths.app+".config/", "testing/.config/")
-        shutil.rmtree(self.paths.app+"testing/.user/")
-        shutil.copytree(self.paths.app+".user/", "testing/.user/")
-        with open(self.paths.app+"test/config.xml", "w") as cfg:
+        shutil.rmtree("testing/.config/")
+        shutil.copytree(".config/", "testing/.config/")
+        shutil.rmtree("testing/.user/")
+        shutil.copytree(".user/", "testing/.user/")
+        with open("test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 
     def test_preserve_mapping_simple(self):
@@ -230,11 +230,11 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
             self.mapper.eth_map[eth] = map
 
     def tearDown(self):
-        shutil.rmtree(self.paths.app+"testing/.config/")
-        shutil.copytree(self.paths.app+".config/", "testing/.config/")
-        shutil.rmtree(self.paths.app+"testing/.user/")
-        shutil.copytree(self.paths.app+".user/", "testing/.user/")
-        with open(self.paths.app+"test/config.xml", "w") as cfg:
+        shutil.rmtree("testing/.config/")
+        shutil.copytree(".config/", "testing/.config/")
+        shutil.rmtree("testing/.user/")
+        shutil.copytree(".user/", "testing/.user/")
+        with open("test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 
     def test_overwrite_mapping_simple(self):
