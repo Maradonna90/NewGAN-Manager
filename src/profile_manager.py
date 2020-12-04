@@ -32,16 +32,16 @@ class Profile_Manager(config_manager.Config_Manager):
     def create_profile(self, name):
         # self.logger.info("Create new profile: {}".format(name))
         self.config["Profile"][name] = False
-        self.save_config(self.root_dir+".user/cfg.json", self.config)
-        self.save_config(self.root_dir+".user/"+name+".json", {"imgs": {},
+        self.save_config(self.root_dir+"/.user/cfg.json", self.config)
+        self.save_config(self.root_dir+"/.user/"+name+".json", {"imgs": {},
                                                    "ethnics": {},
                                                    "img_dir": "",
                                                    "rtf": ""})
-        open(self.root_dir+'.user/'+name+'.xml', 'a').close()
+        open(self.root_dir+'/.user/'+name+'.xml', 'a').close()
 
     def load_profile(self, name):
         deact_img_dir = self.prf_cfg['img_dir']
-        self.prf_cfg = self.load_config(self.root_dir+".user/"+name+".json")
+        self.prf_cfg = self.load_config(self.root_dir+"/.user/"+name+".json")
         act_img_dir = self.prf_cfg['img_dir']
         self.swap_xml(self.cur_prf, name, deact_img_dir, act_img_dir)
         self.config[name] = True
