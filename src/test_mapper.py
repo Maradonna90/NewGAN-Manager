@@ -9,12 +9,12 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
     def setUp(self):
         # TODO: we need prf_map, prf_imgs and prf_eth_map
         self.rtfparser = RTF_Parser()
-        self.pm = Profile_Manager("No Profile", "..")
-        self.pm.prf_cfg["img_dir"] = self.app.paths+"test/"
-        self.mapper = Mapper("test/", self.pm)
+        self.pm = Profile_Manager("No Profile", "newganmanager")
+        self.pm.prf_cfg["img_dir"] = "newganmanager/test/"
+        self.mapper = Mapper("newganmanager/test/", self.pm)
         # data: UID, first_nat, sec_nat, eth-code
-        self.data_simple = self.rtfparser.parse_rtf(self.app.paths+"test/test_simple.rtf")
-        self.data_all_cases = self.rtfparser.parse_rtf(self.app.paths+"test/test_allcases.rtf")
+        self.data_simple = self.rtfparser.parse_rtf("newganmanager/test/test_simple.rtf")
+        self.data_all_cases = self.rtfparser.parse_rtf("newganmanager/test/test_allcases.rtf")
         for eth in ["African", "Asian", "EECA", "Italmed", "SAMed", "South American", 
                     "SpanMed", "YugoGreek", "MENA", "MESA", "Caucasian", "Central European",
                     "Scandinavian", "Seasian"]:
@@ -22,11 +22,11 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
             self.mapper.eth_map[eth] = map
 
     def tearDown(self):
-        shutil.rmtree("testing/.config/")
-        shutil.copytree(".config/", "testing/.config/")
-        shutil.rmtree("testing/.user/")
-        shutil.copytree(".user/", "testing/.user/")
-        with open("test/config.xml", "w") as cfg:
+        shutil.rmtree("newganmanager/testing/.config/")
+        shutil.copytree("newganmanager/.config/", "newganmanager/testing/.config/")
+        shutil.rmtree("newganmanager/testing/.user/")
+        shutil.copytree("newganmanager/.user/", "newganmanager/testing/.user/")
+        with open("newganmanager/test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 
     def test_generate_mapping_simple(self):
@@ -87,15 +87,15 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
     def setUp(self):
         # TODO: we need prf_map, prf_imgs and prf_eth_map
         self.rtfparser = RTF_Parser()
-        self.pm = Profile_Manager("No Profile")
-        self.mapper = Mapper(self.app.paths+"test/", self.pm)
-        self.pm.prf_cfg["img_dir"] = self.app.paths+"test/"
+        self.pm = Profile_Manager("No Profile", "newganmanager")
+        self.mapper = Mapper("newganmanager/test/", self.pm)
+        self.pm.prf_cfg["img_dir"] = "newganmanager/test/"
         # data: UID, first_nat, sec_nat, eth-code
-        self.data_simple = self.rtfparser.parse_rtf(self.app.paths+"test/test_simple.rtf")
-        self.data_all_cases = self.rtfparser.parse_rtf(self.app.paths+"test/test_allcases.rtf")
-        self.data_subset1 = self.rtfparser.parse_rtf(self.app.paths+"test/allcases_subset1.rtf")
-        self.data_subset2 = self.rtfparser.parse_rtf(self.app.paths+"test/allcases_subset2.rtf")
-        self.data_exclusive = self.rtfparser.parse_rtf(self.app.paths+"test/test_exclusive.rtf")
+        self.data_simple = self.rtfparser.parse_rtf("newganmanager/test/test_simple.rtf")
+        self.data_all_cases = self.rtfparser.parse_rtf("newganmanager/test/test_allcases.rtf")
+        self.data_subset1 = self.rtfparser.parse_rtf("newganmanager/test/allcases_subset1.rtf")
+        self.data_subset2 = self.rtfparser.parse_rtf("newganmanager/test/allcases_subset2.rtf")
+        self.data_exclusive = self.rtfparser.parse_rtf("newganmanager/test/test_exclusive.rtf")
         for eth in ["African", "Asian", "EECA", "Italmed", "SAMed", "South American", 
                     "SpanMed", "YugoGreek", "MENA", "MESA", "Caucasian", "Central European",
                     "Scandinavian", "Seasian"]:
@@ -103,11 +103,11 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
             self.mapper.eth_map[eth] = map
 
     def tearDown(self):
-        shutil.rmtree("testing/.config/")
-        shutil.copytree(".config/", "testing/.config/")
-        shutil.rmtree("testing/.user/")
-        shutil.copytree(".user/", "testing/.user/")
-        with open("test/config.xml", "w") as cfg:
+        shutil.rmtree("newganmanager/testing/.config/")
+        shutil.copytree("newganmanager/.config/", "newganmanager/testing/.config/")
+        shutil.rmtree("newganmanager/testing/.user/")
+        shutil.copytree("newganmanager/.user/", "newganmanager/testing/.user/")
+        with open("newganmanager/test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 
     def test_preserve_mapping_simple(self):
@@ -213,15 +213,15 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
     def setUp(self):
         # TODO: we need prf_map, prf_imgs and prf_eth_map
         self.rtfparser = RTF_Parser()
-        self.pm = Profile_Manager("No Profile")
-        self.mapper = Mapper(self.app.paths+"test/", self.pm)
-        self.pm.prf_cfg["img_dir"] = self.app.paths+"test/"
+        self.pm = Profile_Manager("No Profile", "newganmanager")
+        self.mapper = Mapper("newganmanager/test/", self.pm)
+        self.pm.prf_cfg["img_dir"] = "newganmanager/test/"
         # data: UID, first_nat, sec_nat, eth-code
-        self.data_simple = self.rtfparser.parse_rtf(self.app.paths+"test/test_simple.rtf")
-        self.data_all_cases = self.rtfparser.parse_rtf(self.app.paths+"test/test_allcases.rtf")
-        self.data_subset1 = self.rtfparser.parse_rtf(self.app.paths+"test/allcases_subset1.rtf")
-        self.data_subset2 = self.rtfparser.parse_rtf(self.app.paths+"test/allcases_subset2.rtf")
-        self.data_exclusive = self.rtfparser.parse_rtf(self.app.paths+"test/test_exclusive.rtf")
+        self.data_simple = self.rtfparser.parse_rtf("newganmanager/test/test_simple.rtf")
+        self.data_all_cases = self.rtfparser.parse_rtf("newganmanager/test/test_allcases.rtf")
+        self.data_subset1 = self.rtfparser.parse_rtf("newganmanager/test/allcases_subset1.rtf")
+        self.data_subset2 = self.rtfparser.parse_rtf("newganmanager/test/allcases_subset2.rtf")
+        self.data_exclusive = self.rtfparser.parse_rtf("newganmanager/test/test_exclusive.rtf")
 
         for eth in ["African", "Asian", "EECA", "Italmed", "SAMed", "South American",
                     "SpanMed", "YugoGreek", "MENA", "MESA", "Caucasian", "Central European",
@@ -230,11 +230,11 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
             self.mapper.eth_map[eth] = map
 
     def tearDown(self):
-        shutil.rmtree("testing/.config/")
-        shutil.copytree(".config/", "testing/.config/")
-        shutil.rmtree("testing/.user/")
-        shutil.copytree(".user/", "testing/.user/")
-        with open("test/config.xml", "w") as cfg:
+        shutil.rmtree("newganmanager/testing/.config/")
+        shutil.copytree("newganmanager/.config/", "newganmanager/testing/.config/")
+        shutil.rmtree("newganmanager/testing/.user/")
+        shutil.copytree("newganmanager/.user/", "newganmanager/testing/.user/")
+        with open("newganmanager/test/config.xml", "w") as cfg:
             cfg.write('OUTSIDE')
 
     def test_overwrite_mapping_simple(self):
