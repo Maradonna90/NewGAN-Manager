@@ -9,7 +9,7 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
     def setUp(self):
         # TODO: we need prf_map, prf_imgs and prf_eth_map
         self.rtfparser = RTF_Parser()
-        self.pm = Profile_Manager("No Profile")
+        self.pm = Profile_Manager("No Profile", "..")
         self.pm.prf_cfg["img_dir"] = self.app.paths+"test/"
         self.mapper = Mapper("test/", self.pm)
         # data: UID, first_nat, sec_nat, eth-code

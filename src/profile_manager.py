@@ -5,9 +5,9 @@ from shutil import copyfileobj
 
 class Profile_Manager(config_manager.Config_Manager):
     def __init__(self, name, root_dir):
-        self.config = self.load_config(root_dir+".user/cfg.json")
-        self.prf_cfg = self.load_config(root_dir+".user/"+name+".json")
-        self.eth_cfg = self.load_config(root_dir+".config/cfg.json")
+        self.config = self.load_config(root_dir+"/.user/cfg.json")
+        self.prf_cfg = self.load_config(root_dir+"/.user/"+name+".json")
+        self.eth_cfg = self.load_config(root_dir+"/.config/cfg.json")
         self.cur_prf = name
         self.root_dir = root_dir
 
@@ -48,7 +48,7 @@ class Profile_Manager(config_manager.Config_Manager):
         self.cur_prf = name
 
     def write_xml(self, data):
-        with open(self.root_dir+".config/config_template", "r", encoding="UTF-8") as fp:
+        with open(self.root_dir+"/.config/config_template", "r", encoding="UTF-8") as fp:
             config_template = fp.read()
             xml_string = []
 
@@ -63,11 +63,11 @@ class Profile_Manager(config_manager.Config_Manager):
 
     def swap_xml(self, deact_name, act_name, deact_img_dir, act_img_dir):
         if os.path.isfile(deact_img_dir+"config.xml"):
-            with open(self.root_dir+'.user/'+deact_name+'.xml', 'wb') as output, open(deact_img_dir+'config.xml', 'rb') as input:
+            with open(self.root_dir+'/.user/'+deact_name+'.xml', 'wb') as output, open(deact_img_dir+'config.xml', 'rb') as input:
                 copyfileobj(input, output)
 
         if os.path.isfile(act_img_dir+"config.xml"):
-            with open(act_img_dir+'config.xml', 'wb') as output, open(self.root_dir+'.user/'+act_name+'.xml', 'rb') as input:
+            with open(act_img_dir+'config.xml', 'wb') as output, open(self.root_dir+'/.user/'+act_name+'.xml', 'rb') as input:
                 copyfileobj(input, output)
 
     def get_ethnic(self, nation):
