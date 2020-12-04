@@ -36,7 +36,7 @@ class Test_Config_Manager(unittest.TestCase):
 
 class Test_Xml_Writing(unittest.TestCase):
     def setUp(self):
-        self.pm = Profile_Manager("No Profile", "newganmanager")
+        self.pm = Profile_Manager("No Profile", "newganmanager/testing/")
         self.pm.prf_cfg["img_dir"] = "newganmanager/test/"
         self.data = [
             ["African", "African1", "1915714540"],
@@ -70,7 +70,7 @@ class Test_Xml_Writing(unittest.TestCase):
 
 class Test_Profile_Manager(unittest.TestCase):
     def setUp(self):
-        self.pm = Profile_Manager("No Profile", "newganmanager")
+        self.pm = Profile_Manager("No Profile", "newganmanager/testing/")
 
     def test_delete_profile(self):
         pass
@@ -78,11 +78,11 @@ class Test_Profile_Manager(unittest.TestCase):
     def test_create_profile(self):
 
         self.pm.create_profile("test")
-        cfg = Config_Manager().load_config("newganmanager/.user/cfg.json")
+        cfg = Config_Manager().load_config("newganmanager/testing/.user/cfg.json")
         self.assertFalse(cfg["Profile"]["test"])
-        self.assertTrue(os.path.isfile("newganmanager/.user/test.json"))
-        self.assertTrue(os.path.isfile("newganmanager/.user/test.xml"))
-        prf_cfg = Config_Manager().load_config("newganmanager/.user/test.json")
+        self.assertTrue(os.path.isfile("newganmanager/testing/.user/test.json"))
+        self.assertTrue(os.path.isfile("newganmanager/testing/.user/test.xml"))
+        prf_cfg = Config_Manager().load_config("newganmanager/testing/.user/test.json")
         self.assertEqual(prf_cfg["imgs"], {})
         self.assertEqual(prf_cfg["ethnics"], {})
         self.assertEqual(prf_cfg["img_dir"], "")
@@ -93,7 +93,7 @@ class Test_Profile_Manager(unittest.TestCase):
 
     def test_swap_xml(self):
         self.pm.swap_xml("test", "No Profile", "newganmanager/test/", "newganmanager/test/")
-        with open("newganmanager/.user/test.xml", "r") as test_xml:
+        with open("newganmanager/testing/.user/test.xml", "r") as test_xml:
             self.assertEqual(test_xml.read(), "OUTSIDE")
         with open("newganmanager/test/config.xml", "r") as config_xml:
             self.assertEqual(config_xml.read(), "")
