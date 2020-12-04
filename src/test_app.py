@@ -70,7 +70,7 @@ class Test_Xml_Writing(unittest.TestCase):
 
 class Test_Profile_Manager(unittest.TestCase):
     def setUp(self):
-        self.pm = Profile_Manager("No Profile", "newganmanager/")
+        self.pm = Profile_Manager("No Profile", "newganmanager")
 
     def test_delete_profile(self):
         pass
