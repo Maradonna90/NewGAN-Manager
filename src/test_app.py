@@ -73,7 +73,22 @@ class Test_Profile_Manager(unittest.TestCase):
         self.pm = Profile_Manager("No Profile", "newganmanager/testing/")
 
     def test_delete_profile(self):
-        pass
+        cfg = Config_Manager().load_config("newganmanager/testing/.user/cfg.json")
+        cfg["Profile"] = {"testmig" : False, "No Profile": True}
+        Config_Manager().save_config("newganmanager/testing/.user/cfg.json", cfg)
+        f = open("newganmanager/testing/.user/testmig.xml", "a")
+        f.write("TESTMIGXML!")
+        f.close()
+        f = open("newganmanager/testing/.user/testmig.json", "a")
+        f.write("{'text': 'TESTMIGJSON!'}")
+        f.close()
+        self.pm.config = Config_Manager().load_config("newganmanager/testing/.user/cfg.json")
+        self.pm.delete_profile("testmig")
+        usr_cfg = Config_Manager().load_config("newganmanager/testing/.user/cfg.json")
+        self.assertNotIn("testmig", usr_cfg["Profile"])
+        self.assertIn("No Profile", usr_cfg["Profile"])
+        self.assertFalse(os.path.isfile("newganmanager/testing/.user/testmig.json"))
+        self.assertFalse(os.path.isfile("newganmanager/testing/.user/testmig.xml"))
 
     def test_create_profile(self):
 

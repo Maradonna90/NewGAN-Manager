@@ -36,16 +36,17 @@ class Profile_Manager(config_manager.Config_Manager):
             # self.logger.info("Can't delet no profile")
             self._throw_error("Can't delete 'No Profile'")
             return
-        del self.config[name]
+        del self.config["Profile"][name]
         try:
             os.remove(self.prf_cfg['img_dir']+"config.xml")
         except OSError:
             pass
         try:
-            os.remove(self.root_dir+".user/"+name+".json")
-            os.remove(self.root_dir+".user/"+name+".xml")
+            os.remove(self.root_dir+"/.user/"+name+".json")
+            os.remove(self.root_dir+"/.user/"+name+".xml")
         except OSError:
             pass
+        self.save_config(self.root_dir+"/.user/cfg.json", self.config)
         self.load_profile("No Profile")
 
     def create_profile(self, name):
