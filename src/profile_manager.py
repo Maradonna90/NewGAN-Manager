@@ -64,7 +64,11 @@ class Profile_Manager(config_manager.Config_Manager):
         self.prf_cfg = self.load_config(self.root_dir+"/.user/"+name+".json")
         act_img_dir = self.prf_cfg['img_dir']
         self.swap_xml(self.cur_prf, name, deact_img_dir, act_img_dir)
-        self.config[name] = True
+        for key in self.config["Profile"].keys():
+            if key == name:
+                self.config["Profile"][key] = True
+            else:
+                self.config["Profile"][key] = False
         self.cur_prf = name
 
     def write_xml(self, data):

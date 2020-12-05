@@ -104,7 +104,25 @@ class Test_Profile_Manager(unittest.TestCase):
         self.assertEqual(prf_cfg["rtf"], "")
 
     def test_load_profile(self):
-        pass
+        cfg = Config_Manager().load_config("newganmanager/testing/.user/cfg.json")
+        cfg["Profile"] = {"testmig" : False, "No Profile": True}
+        Config_Manager().save_config("newganmanager/testing/.user/cfg.json", cfg)
+        f = open("newganmanager/testing/.user/testmig.xml", "a")
+        f.write("TESTMIGXML!")
+        f.close()
+        f = open("newganmanager/testing/.user/testmig.json", "a")
+        f.write("{\"img_dir\": \"newganmanager/test/\"}")
+        f.close()
+        self.pm.config = cfg
+        self.pm.root_dir = "newganmanager/testing"
+        self.pm.load_profile("testmig")
+        self.assertEqual(self.pm.cur_prf, "testmig")
+        self.assertEqual(self.pm.prf_cfg["img_dir"], "newganmanager/test/")
+        with open("newganmanager/test/config.xml", "r") as cfg_xml:
+            data = cfg_xml.read()
+            self.assertEqual(data, "TESTMIGXML!")
+        self.assertTrue(self.pm.config["Profile"]["testmig"])
+        self.assertFalse(self.pm.config["Profile"]["No Profile"])
 
     def test_swap_xml(self):
         self.pm.swap_xml("test", "No Profile", "newganmanager/test/", "newganmanager/test/")
