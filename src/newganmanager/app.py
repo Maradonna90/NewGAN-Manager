@@ -48,14 +48,15 @@ class NewGANManager(toga.App):
         show the main window.
         """
         self.logger.info("Starting Application\n------------------------------------------------")
+        self.logger.info(str(self.paths.app))
 
         self.mode_info = {"Overwrite": "Overwrites already replaced faces",
                           "Preserve":  "Preserves already replaced faces",
                           "Generate": "Generates mapping from scratch."}
-        os.makedirs(".config", exist_ok=True)
+        os.makedirs(str(self.paths.app)+"/.config", exist_ok=True)
 
         self.logger.info("Loading current profile")
-        self.profile_manager = Profile_Manager(Config_Manager().get_latest_prf(".user/cfg.json"))
+        self.profile_manager = Profile_Manager(Config_Manager().get_latest_prf(str(self.paths.app)+"/.user/cfg.json"), str(self.paths.app))
         self.logger.info("Creating GUI")
         self.main_box = toga.Box()
         self.logger.info("Created main box")
@@ -209,7 +210,7 @@ class NewGANManager(toga.App):
             self.profile_manager.load_profile(name)
             self._refresh_inp()
             self.set_btns(True)
-            Config_Manager().save_config(".user/cfg.json", self.profile_manager.config)
+            Config_Manager().save_config(str(self.paths.app)+"/.user/cfg.json", self.profile_manager.config)
 
     def _refresh_inp(self, clear=False):
         self.logger.info("Refresh Input Buttons")
@@ -249,7 +250,7 @@ class NewGANManager(toga.App):
             )
             self.dir_inp.value = path_names[0]+"/"
             self.profile_manager.prf_cfg['img_dir'] = path_names[0]+"/"
-            Config_Manager().save_config(".user/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
+            Config_Manager().save_config(str(self.paths.app)+"/.user/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
 
         except Exception:
             pass
@@ -266,11 +267,11 @@ class NewGANManager(toga.App):
             if fname is not None:
                 self.rtf_inp.value = fname
                 self.profile_manager.prf_cfg['rtf'] = fname
-                Config_Manager().save_config(".user/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
+                Config_Manager().save_config(str(self.paths.app)+"/.user/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
             else:
                 self.profile_manager.prf_cfg['rtf'] = ""
                 self.rtf_inp.value = ""
-                Config_Manager().save_config(".user/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
+                Config_Manager().save_config(str(self.paths.app)+"/.user/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
         except Exception:
             self.logger.error("Fatal error in main loop", exc_info=True)
             pass
@@ -312,7 +313,7 @@ class NewGANManager(toga.App):
         self.gen_prg.update_label("Save metadata for profile")
         self.gen_prg.update_progress(10)
         yield 0.1
-        Config_Manager().save_config(".user/"+profile+".json", self.profile_manager.prf_cfg)
+        Config_Manager().save_config(str(self.paths.app)+"/.user/"+profile+".json", self.profile_manager.prf_cfg)
         self.gen_prg.update_progress(10)
         yield 0.1
         self.gen_prg.update_label("Finished! :)")

@@ -4,11 +4,12 @@ from shutil import copyfileobj
 
 
 class Profile_Manager(config_manager.Config_Manager):
-    def __init__(self, name):
-        self.config = self.load_config(".user/cfg.json")
-        self.prf_cfg = self.load_config(".user/"+name+".json")
-        self.eth_cfg = self.load_config(".config/cfg.json")
+    def __init__(self, name, root_dir):
+        self.config = self.load_config(root_dir+"/.user/cfg.json")
+        self.prf_cfg = self.load_config(root_dir+"/.user/"+name+".json")
+        self.eth_cfg = self.load_config(root_dir+"/.config/cfg.json")
         self.cur_prf = name
+        self.root_dir = root_dir
 
     def delete_profile(self, name):
         # self.logger.info("Delete profile: {}".format(name))
@@ -22,8 +23,8 @@ class Profile_Manager(config_manager.Config_Manager):
         except OSError:
             pass
         try:
-            os.remove(".user/"+name+".json")
-            os.remove(".user/"+name+".xml")
+            os.remove(self.root_dir+".user/"+name+".json")
+            os.remove(self.root_dir+".user/"+name+".xml")
         except OSError:
             pass
         self.load_profile("No Profile")
@@ -31,23 +32,23 @@ class Profile_Manager(config_manager.Config_Manager):
     def create_profile(self, name):
         # self.logger.info("Create new profile: {}".format(name))
         self.config["Profile"][name] = False
-        self.save_config(".user/cfg.json", self.config)
-        self.save_config(".user/"+name+".json", {"imgs": {},
+        self.save_config(self.root_dir+"/.user/cfg.json", self.config)
+        self.save_config(self.root_dir+"/.user/"+name+".json", {"imgs": {},
                                                    "ethnics": {},
                                                    "img_dir": "",
                                                    "rtf": ""})
-        open('.user/'+name+'.xml', 'a').close()
+        open(self.root_dir+'/.user/'+name+'.xml', 'a').close()
 
     def load_profile(self, name):
         deact_img_dir = self.prf_cfg['img_dir']
-        self.prf_cfg = self.load_config(".user/"+name+".json")
+        self.prf_cfg = self.load_config(self.root_dir+"/.user/"+name+".json")
         act_img_dir = self.prf_cfg['img_dir']
         self.swap_xml(self.cur_prf, name, deact_img_dir, act_img_dir)
         self.config[name] = True
         self.cur_prf = name
 
     def write_xml(self, data):
-        with open(".config/config_template", "r", encoding="UTF-8") as fp:
+        with open(self.root_dir+"/.config/config_template", "r", encoding="UTF-8") as fp:
             config_template = fp.read()
             xml_string = []
 
@@ -62,11 +63,11 @@ class Profile_Manager(config_manager.Config_Manager):
 
     def swap_xml(self, deact_name, act_name, deact_img_dir, act_img_dir):
         if os.path.isfile(deact_img_dir+"config.xml"):
-            with open('.user/'+deact_name+'.xml', 'wb') as output, open(deact_img_dir+'config.xml', 'rb') as input:
+            with open(self.root_dir+'/.user/'+deact_name+'.xml', 'wb') as output, open(deact_img_dir+'config.xml', 'rb') as input:
                 copyfileobj(input, output)
 
         if os.path.isfile(act_img_dir+"config.xml"):
-            with open(act_img_dir+'config.xml', 'wb') as output, open('.user/'+act_name+'.xml', 'rb') as input:
+            with open(act_img_dir+'config.xml', 'wb') as output, open(self.root_dir+'/.user/'+act_name+'.xml', 'rb') as input:
                 copyfileobj(input, output)
 
     def get_ethnic(self, nation):
