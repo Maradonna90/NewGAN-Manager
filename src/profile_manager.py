@@ -1,6 +1,7 @@
 import config_manager
 import os
 from shutil import copyfileobj
+import shutil
 
 
 class Profile_Manager(config_manager.Config_Manager):
@@ -12,19 +13,22 @@ class Profile_Manager(config_manager.Config_Manager):
         self.root_dir = root_dir
 
     def migrate_config(self):
-        if "Profile" in self.eth_cfg:
-            profiles = {}
-            profiles["Profile"] = self.eth_cfg["Profile"]
-            self.save_config(".user/cfg.json", profiles)
-            del self.eth_cfg["Profile"]
-            self.save_config(".config/cfg.json", self.eth_cfg)
-            for profile in profiles["Profile"].keys():
-                with open(".user/"+profile+'.xml', 'wb') as output, open('.config/'+profile+'.xml', 'rb') as input:
-                    copyfileobj(input, output)
-                    os.remove('.config/'+profile+'.xml')
-                with open(".user/"+profile+'.json', 'wb') as output, open('.config/'+profile+'.json', 'rb') as input:
-                    copyfileobj(input, output)
-                    os.remove('.config/'+profile+'.json')
+        if os.path.isfile("../.config/cfg.json"):
+            old_cfg = self.load_config("../.config/cfg.json")
+            if "Profile" in old_cfg:
+                profiles = {}
+                profiles["Profile"] = old_cfg["Profile"]
+                self.save_config(self.root_dir+"/.user/cfg.json", profiles)
+                del old_cfg["Profile"]
+                self.save_config(self.root_dir+".config/cfg.json", old_cfg)
+                for profile in profiles["Profile"].keys():
+                    with open(self.root_dir+".user/"+profile+'.xml', 'wb') as output, open('../.config/'+profile+'.xml', 'rb') as input:
+                        copyfileobj(input, output)
+                        os.remove('../.config/'+profile+'.xml')
+                    with open(self.root_dir+".user/"+profile+'.json', 'wb') as output, open('../.config/'+profile+'.json', 'rb') as input:
+                        copyfileobj(input, output)
+                        os.remove('../.config/'+profile+'.json')
+                shutil.rmtree("../.config/")
 
     def delete_profile(self, name):
         # self.logger.info("Delete profile: {}".format(name))

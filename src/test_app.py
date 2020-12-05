@@ -108,15 +108,16 @@ class Test_Profile_Manager(unittest.TestCase):
         self.pm.swap_xml("No Profile", "test", "newganmanager/test/", "newganmanager/invalid/")
 
     def test_migrate_function(self):
-      newganmanager/testing/
-        cfg = Config_Manager().load_config("newganmanager/testing/.config/cfg.json")
+        shutil.copytree("newganmanager/.config/", "../.config/")
+        shutil.copy("newganmanager/.user/No Profile.json", "../.config/No Profile.json")
+        shutil.copy("newganmanager/.user/No Profile.xml", "../.config/No Profile.xml")
+        cfg = Config_Manager().load_config("../.config/cfg.json")
         cfg["Profile"] = {"testmig" : False, "No Profile": True}
-        Config_Manager().save_config("newganmanager/testing/.config/cfg.json", cfg)
-        self.pm.eth_cfg = cfg
-        f = open("newganmanager/testing/.config/testmig.xml", "a")
+        Config_Manager().save_config("../.config/cfg.json", cfg)
+        f = open("../.config/testmig.xml", "a")
         f.write("TESTMIGXML!")
         f.close()
-        f = open("newganmanager/testing/.config/testmig.json", "a")
+        f = open("../.config/testmig.json", "a")
         f.write("{'text': 'TESTMIGJSON!'}")
         f.close()
         self.pm.migrate_config()
@@ -128,8 +129,9 @@ class Test_Profile_Manager(unittest.TestCase):
         self.assertIn("Profile", usr_cfg)
         self.assertTrue(os.path.isfile("newganmanager/testing/.user/testmig.json"))
         self.assertTrue(os.path.isfile("newganmanager/testing/.user/testmig.xml"))
-        self.assertFalse(os.path.isfile("newganmanager/testing/.config/testmig.json"))
-        self.assertFalse(os.path.isfile("newganmanager/testing/.config/testmig.xml"))
+        self.assertFalse(os.path.isfile("../.config/testmig.json"))
+        self.assertFalse(os.path.isfile("../.config/testmig.xml"))
+        self.assertFalse(os.path.isdir("../.config"))
 
     def tearDown(self):
         shutil.rmtree("newganmanager/testing/.config/")
