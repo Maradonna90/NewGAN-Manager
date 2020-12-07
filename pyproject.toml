@@ -11,7 +11,7 @@ author_email = "None"
 formal_name = "NewGAN Manager"
 description = "NewGAN Replacement Management Tool"
 icon = "src/newganmanager/resources/logo"
-sources = ['src/newganmanager', 'views', 'src']
+sources = ['src/newganmanager', 'views', 'src/config_manager', 'src/mapper', 'src/profile_manager', 'src/progressbar', 'src/rtfparser', 'src/xmlparser']
 requires = ["dhooks==1.1.4"]
 
 [tool.briefcase.app.newganmanager.macOS]
