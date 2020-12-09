@@ -3,15 +3,30 @@ from rtfparser import RTF_Parser
 from config_manager import Config_Manager
 from profile_manager import Profile_Manager
 from xmlparser import XML_Parser
+from reporter import Reporter
 import os
 import shutil
 
+
+class Test_Reporter(unittest.TestCase):
+    def test_send_report(self):
+        # TODO:
+        pass
 
 class Test_XML_Parser(unittest.TestCase):
     def test_parse_xml(self):
         test_xml = XML_Parser.parse_xml(None, "newganmanager/test/test.xml")
         self.assertDictEqual(test_xml, {"0123456789": {"ethnicity": "African", "image": "African1"}})
 
+    def test_get_imgpath_from_uid(self):
+        # TODO
+        test_img = XML_Parser.get_imgpath_from_uid(None, "newganmanager/test/test.xml", '0123456789')
+        self.assertEqual(test_img, "African/African1")
+
+    def test_get_imgpath_from_uid_negative(self):
+        # TODO
+        test_img = XML_Parser.get_imgpath_from_uid(None, "newganmanager/test/test.xml", '0000000000')
+        self.assertIsNone(test_img)
 
 class Test_RTF_Parser(unittest.TestCase):
 

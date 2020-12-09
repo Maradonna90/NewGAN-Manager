@@ -23,3 +23,19 @@ class XML_Parser:
                 result_data[uid] = {"ethnicity": eth, "image": img}
         xml.close()
         return result_data
+
+    def get_imgpath_from_uid(self, path, uid):
+        UID_regex = re.compile('('+uid+'(?=\/))')
+        eth_img_regex = re.compile('((?<=from=\").*(?=\" to))')
+        result_data = []
+        xml = open(path, 'r', encoding="UTF-8")
+        result_data = {}
+        for line in xml:
+            if UID_regex.search(line):
+                eth_img = eth_img_regex.search(line)
+                eth_img = eth_img.group(0).strip()
+                xml.close()
+                return eth_img
+        xml.close()
+        return None
+
