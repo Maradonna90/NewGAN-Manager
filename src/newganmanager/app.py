@@ -5,12 +5,13 @@ import toga
 from toga.style.pack import COLUMN, ROW
 import os
 import logging
-from dhooks import Webhook, Embed, File
 from config_manager import Config_Manager
 from profile_manager import Profile_Manager
 from mapper import Mapper
 from rtfparser import RTF_Parser
 from progressbar import Progressbar
+from reporter import Reporter
+from xmlparser import XML_Parser
 
 
 class SourceSelection(toga.Selection):
@@ -61,7 +62,8 @@ class NewGANManager(toga.App):
         self.logger.info("Creating GUI")
         self.main_box = toga.Box()
         self.logger.info("Created main box")
-
+        
+        self.hook = "https://discord.com/api/webhooks/770397581149863946/Wls0g6LEyTXEpOqzfLn2YuDRKANFSAFpwKe62VL9IxpwsQDWFjYHVfy19hrYiv5p0X2a"
         label_width = 125
         # TOP Profiles
         prf_box = toga.Box()
@@ -325,37 +327,27 @@ class NewGANManager(toga.App):
     def change_image(self, id):
         self.logger.info("try to change image preview")
         uid = id.value
-        try:
-            img_name = self.prf_cfg["imgs"][uid]
-            img_eth = self.prf_cfg["ethnics"][uid]
-            img_path = self.prf_cfg["img_dir"] + "/" + img_eth + "/" + img_name
-            self.rep_img.image = toga.Image(img_path)
-            self.logger.info("change image preview to: {}".format(img_path))
-        except Exception:
-            self.logger.info("changing image preview failed!")
-            return
+        if len(uid) == 10:
+            try:
+                img_path = XML_Parser().get_imgpath_from_uid(self.profile_manager.prf_cfg['img_dir']+'config.xml', id)
+                img_path = self.profile_manager.prf_cfg['img_dir']+img_path
+                self.rep_img.image = toga.Image(img_path)
+                self.logger.info("change image preview to: {}".format(img_path))
+            except Exception:
+                self.logger.info("changing image preview failed!")
+                return
+        return
 
     def send_report(self, e):
         uid = self.rep_inp.value
-        img_name = self.prf_cfg["imgs"][uid]
-        img_eth = self.prf_cfg["ethnics"][uid]
-        img_path = img_eth + "/" + img_name
-        img_file = self.rep_img.image.path
-        self.logger.info("send report: {}".format(img_file))
-
-        hook = Webhook("https://discord.com/api/webhooks/770397581149863946/Wls0g6LEyTXEpOqzfLn2YuDRKANFSAFpwKe62VL9IxpwsQDWFjYHVfy19hrYiv5p0X2a")
-
-        embed = Embed(
-            description='A user reported the following face',
-            color=0x5CDBF0,
-            timestamp='now'  # sets the timestamp to current time
-            )
-
-        file = File(img_file)
-        embed.add_field(name='File', value=img_path)
-
-        hook.send(embed=embed, file=file)
-        self._show_info("Thanks for Reporting!")
+        if len(uid) == 10:
+            # TODO: send report
+            rep = Reporter(self.hook, self.profile_manager.prf_cfg['img_dir']+'config.xml')
+            res = rep.send_report(uid)
+            if res:
+                self._show_info("Thanks for Reporting!")
+            else:
+                self._throw_error("Player with ID {} doesn't exist!".format(uid))
 
 
 def main():
