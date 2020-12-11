@@ -2,7 +2,7 @@
 project_name = "NewGAN Manager"
 bundle = "com.fm"
 version = "1.1.0"
-url = "https://google.de"
+url = "https://github.com/Maradonna90/NewGAN-Manager"
 license = "GNU General Public License v3 (GPLv3)"
 author = 'Maradonna (gestalt)'
 author_email = "None"
