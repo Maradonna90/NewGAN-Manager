@@ -2,7 +2,9 @@ import unittest
 from mapper import Mapper
 from rtfparser import RTF_Parser
 from profile_manager import Profile_Manager
+from config_manager import Config_Manager
 import shutil
+import itertools
 
 
 class Test_Mapper_Generate_Mapping(unittest.TestCase):
@@ -82,6 +84,20 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
         next_mapping = self.mapper.generate_mapping(self.data_simple, "Generate")
         self.assertNotEqual(simple_mapping, next_mapping)
 
+    def test_generate_mapping_permutations(self):
+        # TODO: get all 3-letter
+        self.ethnic = Config_Manager().load_config("newganmanager/.config/cfg.json")["Ethnics"].keys()
+        # TODO: all ethnicity values
+        self.eth_val = [str(i) for i in range(11)]
+        product_inp = [["Name"], self.ethnic, self.ethnic, self.eth_val]
+        map_list = list(itertools.product(*product_inp))
+        for eth in ["African", "Asian", "EECA", "Italmed", "SAMed", "South American", 
+                    "SpanMed", "YugoGreek", "MENA", "MESA", "Caucasian", "Central European",
+                    "Scandinavian", "Seasian"]:
+            map = [eth+str(i)for i in range(len(map_list))]
+            self.mapper.eth_map[eth] = map
+        self.mapper.generate_mapping(map_list, "Generate")
+        
 
 class Test_Mapper_Preserve_Mapping(unittest.TestCase):
     def setUp(self):
