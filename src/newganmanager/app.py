@@ -302,25 +302,25 @@ class NewGANManager(toga.App):
         self.logger.info("mode: {}".format(mode))
         self.gen_prg.start()
         self.gen_prg.update_label("Parsing RTF")
-        yield 0.1
+        # yield 0.1
         rtf_data = RTF_Parser().parse_rtf(rtf)
         self.gen_prg.update_progress(20)
         self.gen_prg.update_label("Map player to ethnicity")
-        yield 0.1
+        # yield 0.1
         mapping_data = Mapper(img_dir, self.profile_manager).generate_mapping(rtf_data, mode)
         self.gen_prg.update_progress(60)
         self.gen_prg.update_label("Generate config.xml")
-        yield 0.1
+        # yield 0.1
         self.profile_manager.write_xml(mapping_data)
         # save profile metadata (used pics and config.xml)
         self.gen_prg.update_label("Save metadata for profile")
         self.gen_prg.update_progress(10)
-        yield 0.1
+        # yield 0.1
         Config_Manager().save_config(str(self.paths.app)+"/.user/"+profile+".json", self.profile_manager.prf_cfg)
         self.gen_prg.update_progress(10)
-        yield 0.1
+        # yield 0.1
         self.gen_prg.update_label("Finished! :)")
-        yield 0.1
+        # yield 0.1
         self._show_info("Finished! :)")
         self.gen_prg.stop()
 
