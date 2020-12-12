@@ -89,7 +89,7 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
         self.ethnic = Config_Manager().load_config("newganmanager/.config/cfg.json")["Ethnics"].keys()
         # TODO: all ethnicity values
         self.eth_val = [str(i) for i in range(11)]
-        product_inp = [["Name"], self.ethnic, self.ethnic, self.eth_val]
+        product_inp = [["Name"], self.ethnic, [None], self.eth_val]
         map_list = list(itertools.product(*product_inp))
         for eth in ["African", "Asian", "EECA", "Italmed", "SAMed", "South American", 
                     "SpanMed", "YugoGreek", "MENA", "MESA", "Caucasian", "Central European",
