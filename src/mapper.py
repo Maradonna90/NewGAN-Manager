@@ -32,13 +32,10 @@ class Mapper:
             prf_imgs = self.get_xml_images(xml_data)
 
         for i, player in enumerate(rtf_data):
-            self.logger.info(player)
             n2_ethnic = None
             if player[2]:
                 n2_ethnic = self.profile_manager.get_ethnic(player[2])
-                self.logger.info("eth2:"+n2_ethnic)
             n1_ethnic = self.profile_manager.get_ethnic(player[1])
-            self.logger.info("eth1:"+n1_ethnic)
             if n1_ethnic is None:
                 self.logger.info("Mapping for {} is missing. Skipping player {}".format(player[1], player[0]))
                 continue
