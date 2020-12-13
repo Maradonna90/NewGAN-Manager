@@ -43,15 +43,17 @@ class Mapper:
             if player[3] == "1":
                 if "EECA" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "EECA"
-                elif "Italmed" in [n1_ethnic, n2_ethnic]:
+                if "Italmed" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "Italmed"
-                elif "SAMed" in [n1_ethnic, n2_ethnic]:
+                if "SAMed" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "SAMed"
-                elif "SpanMed" in [n1_ethnic, n2_ethnic]:
+                if "SpanMed" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "SpanMed"
-                elif "YugoGreek" in [n1_ethnic, n2_ethnic]:
+                if "YugoGreek" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "YugoGreek"
-                else:
+                if "South American" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "South American"
+                if not p_ethnic:
                     p_ethnic = "South American"
             elif player[3] in ["3", "6", "7", "8", "9"]:
                 p_ethnic = "African"
@@ -81,7 +83,6 @@ class Mapper:
                     # self.logger.info("Overwrite: {} {}".format(player[0], p_ethnic))
                     prf_imgs.remove(xml_data[player[0]]["image"])
                     del xml_data[player[0]]
-
             player_img = self.pick_image(p_ethnic, prf_imgs)
             prf_imgs.append(player_img)
             if player_img is None:
