@@ -32,6 +32,7 @@ class Mapper:
             prf_imgs = self.get_xml_images(xml_data)
 
         for i, player in enumerate(rtf_data):
+            p_ethnic = None
             n2_ethnic = None
             if player[2]:
                 n2_ethnic = self.profile_manager.get_ethnic(player[2])
@@ -39,8 +40,24 @@ class Mapper:
             if n1_ethnic is None:
                 self.logger.info("Mapping for {} is missing. Skipping player {}".format(player[1], player[0]))
                 continue
-            # self.logger.info("{}, {}, {}".format(player, n1_ethnic, n2_ethnic))
+            print("{}, {}, {}".format(player, n1_ethnic, n2_ethnic))
             if player[3] == "1":
+                if "Scandinavian" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "South American"
+                if "Seasian" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "South American"
+                if "Central European" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "South American"
+                if "Caucasian" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "South American"
+                if "African" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "South American"
+                if "Asian" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "South American"
+                if "MENA" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "South American"
+                if "MESA" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "South American"
                 if "EECA" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "EECA"
                 if "Italmed" in [n1_ethnic, n2_ethnic]:
@@ -52,8 +69,6 @@ class Mapper:
                 if "YugoGreek" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "YugoGreek"
                 if "South American" in [n1_ethnic, n2_ethnic]:
-                    p_ethnic = "South American"
-                if not p_ethnic:
                     p_ethnic = "South American"
             elif player[3] in ["3", "6", "7", "8", "9"]:
                 p_ethnic = "African"

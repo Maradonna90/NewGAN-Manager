@@ -85,11 +85,9 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
         self.assertNotEqual(simple_mapping, next_mapping)
 
     def test_generate_mapping_permutations(self):
-        # TODO: get all 3-letter
-        self.ethnic = Config_Manager().load_config("newganmanager/.config/cfg.json")["Ethnics"].keys()
-        # TODO: all ethnicity values
         self.eth_val = [str(i) for i in range(11)]
-        product_inp = [["Name"], self.ethnic, [None], self.eth_val]
+        self.ethnics = ["VIR", "PRK", "UZB", "ITA", "URU", "PUR", "POR", "SVN", "MAR", "YEM", "USA", "LIE", "SWE", "THA"]
+        product_inp = [["Name"], self.ethnics, self.ethnics, self.eth_val]
         map_list = list(itertools.product(*product_inp))
         for eth in ["African", "Asian", "EECA", "Italmed", "SAMed", "South American", 
                     "SpanMed", "YugoGreek", "MENA", "MESA", "Caucasian", "Central European",
