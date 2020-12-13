@@ -329,12 +329,13 @@ class NewGANManager(toga.App):
         uid = id.value
         if len(uid) == 10:
             try:
-                img_path = XML_Parser().get_imgpath_from_uid(self.profile_manager.prf_cfg['img_dir']+'config.xml', id)
-                img_path = self.profile_manager.prf_cfg['img_dir']+img_path
+                img_path = XML_Parser().get_imgpath_from_uid(self.profile_manager.prf_cfg['img_dir']+"config.xml", uid)
+                img_path = self.profile_manager.prf_cfg['img_dir']+img_path+".png"
                 self.rep_img.image = toga.Image(img_path)
                 self.logger.info("change image preview to: {}".format(img_path))
-            except Exception:
+            except Exception as e:
                 self.logger.info("changing image preview failed!")
+                self.logger.info(e)
                 return
         return
 
@@ -342,12 +343,16 @@ class NewGANManager(toga.App):
         uid = self.rep_inp.value
         if len(uid) == 10:
             # TODO: send report
-            rep = Reporter(self.hook, self.profile_manager.prf_cfg['img_dir']+'config.xml')
+            rep = Reporter(self.hook, self.profile_manager.prf_cfg['img_dir']+"config.xml")
             res = rep.send_report(uid)
             if res:
                 self._show_info("Thanks for Reporting!")
+                self.rep_img.image = toga.Image("resources/logo.png")
+                self.rep_inp.value = ""
             else:
                 self._throw_error("Player with ID {} doesn't exist!".format(uid))
+                self.rep_img.image = toga.Image("resources/logo.png")
+                self.rep_inp.value = ""
 
 
 def main():

@@ -16,8 +16,9 @@ class Reporter:
             )
         img_file = self.xml_parser.get_imgpath_from_uid(self.xml, id)
         if img_file:
+            img_file = self.xml.replace("config.xml", "") + img_file + ".png"
             file = File(img_file)
-            embed.add_field(name='File', value=img_path)
+            embed.add_field(name='File', value=img_file)
 
             self.webhook.send(embed=embed, file=file)
         return img_file

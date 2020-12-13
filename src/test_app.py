@@ -19,12 +19,10 @@ class Test_XML_Parser(unittest.TestCase):
         self.assertDictEqual(test_xml, {"0123456789": {"ethnicity": "African", "image": "African1"}})
 
     def test_get_imgpath_from_uid(self):
-        # TODO
         test_img = XML_Parser.get_imgpath_from_uid(None, "newganmanager/test/test.xml", '0123456789')
         self.assertEqual(test_img, "African/African1")
 
     def test_get_imgpath_from_uid_negative(self):
-        # TODO
         test_img = XML_Parser.get_imgpath_from_uid(None, "newganmanager/test/test.xml", '0000000000')
         self.assertIsNone(test_img)
 

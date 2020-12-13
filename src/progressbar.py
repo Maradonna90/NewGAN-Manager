@@ -11,7 +11,7 @@ class Progressbar(toga.widgets.textinput.TextInput):
         factory=None,
         initial=None,
         placeholder=None,
-        readonly=False,
+        readonly=True,
         on_change=None,
         on_gain_focus=None,
         on_lose_focus=None,
