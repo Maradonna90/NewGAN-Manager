@@ -39,6 +39,7 @@ class Mapper:
             if n1_ethnic is None:
                 self.logger.info("Mapping for {} is missing. Skipping player {}".format(player[1], player[0]))
                 continue
+            # self.logger.info("{}, {}, {}".format(player, n1_ethnic, n2_ethnic))
             if player[3] == "1":
                 if "EECA" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "EECA"
@@ -46,12 +47,14 @@ class Mapper:
                     p_ethnic = "Italmed"
                 if "SAMed" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "SAMed"
-                if "South American" in [n1_ethnic, n2_ethnic]:
-                    p_ethnic = "South American"
                 if "SpanMed" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "SpanMed"
                 if "YugoGreek" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "YugoGreek"
+                if "South American" in [n1_ethnic, n2_ethnic]:
+                    p_ethnic = "South American"
+                if not p_ethnic:
+                    p_ethnic = "South American"
             elif player[3] in ["3", "6", "7", "8", "9"]:
                 p_ethnic = "African"
             elif player[3] == "10":
@@ -72,15 +75,14 @@ class Mapper:
                 p_ethnic = "MESA"
             if player[0] in xml_data:
                 if mode == "Preserve":
-                    self.logger.info("Preserve: {} {} {}".format(player[0], p_ethnic, xml_data[player[0]]["image"]))
+                    # self.logger.info("Preserve: {} {} {}".format(player[0], p_ethnic, xml_data[player[0]]["image"]))
                     mapping.append([player[0], p_ethnic, xml_data[player[0]]["image"]])
                     del xml_data[player[0]]
                     continue
                 elif mode == "Overwrite":
-                    self.logger.info("Overwrite: {} {}".format(player[0], p_ethnic))
+                    # self.logger.info("Overwrite: {} {}".format(player[0], p_ethnic))
                     prf_imgs.remove(xml_data[player[0]]["image"])
                     del xml_data[player[0]]
-
             player_img = self.pick_image(p_ethnic, prf_imgs)
             prf_imgs.append(player_img)
             if player_img is None:
