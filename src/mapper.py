@@ -40,7 +40,7 @@ class Mapper:
             if n1_ethnic is None:
                 self.logger.info("Mapping for {} is missing. Skipping player {}".format(player[1], player[0]))
                 continue
-            print("{}, {}, {}".format(player, n1_ethnic, n2_ethnic))
+            self.logger.info("{}, {}, {}".format(player, n1_ethnic, n2_ethnic))
             if player[3] == "1":
                 if "Scandinavian" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "South American"
