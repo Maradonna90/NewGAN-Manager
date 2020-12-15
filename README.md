@@ -22,8 +22,7 @@ I tried to make the whole installation process as much one-click and go as possi
 ## Windows
 1. Download the .msi Installer and go through the installtion process
 2. Go to the NewGAN installation folder (e.g `%localappdata%\Programs\NewGAN Manager\`)
-	1. Move the `app\.config\` folder to the NewGAN installation folder from step 2.
-	2. Move the `app\views\` folder to your Football Manager userfolder `My Documents\Sports Interactive\Football Manager 20XX\`
+3. Move the `app\views\` folder to your Football Manager userfolder `My Documents\Sports Interactive\Football Manager 20XX\`
 
 **Note**: The `AppData` folder is a hidden folder. How to make hidden folder visible on Windows 10 can be read [here](https://support.microsoft.com/en-us/help/4028316/windows-view-hidden-files-and-folders-in-windows-10)
 ## Linux
@@ -44,7 +43,3 @@ On Linux the log file is created wherever you place the `NewGAN_Manager-*.AppIma
 
 ## newgan.log on Mac
 TBD
-
-# Roadmap
-* test functionalitiy with code
-* 
