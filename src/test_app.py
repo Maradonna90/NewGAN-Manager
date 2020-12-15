@@ -104,7 +104,6 @@ class Test_Profile_Manager(unittest.TestCase):
         self.assertFalse(os.path.isfile("newganmanager/testing/.user/testmig.xml"))
 
     def test_create_profile(self):
-
         self.pm.create_profile("test")
         cfg = Config_Manager().load_config("newganmanager/testing/.user/cfg.json")
         self.assertFalse(cfg["Profile"]["test"])
@@ -149,7 +148,6 @@ class Test_Profile_Manager(unittest.TestCase):
         self.assertEqual(self.pm.get_ethnic("ZZZ"), None)
 
     def test_switching_profiles_with_invalid_path(self):
-
         self.pm.swap_xml("test", "No Profile", "newganmanager/invalid/", "newganmanager/test/")
         self.pm.swap_xml("No Profile", "test", "newganmanager/test/", "newganmanager/invalid/")
 

@@ -5,6 +5,7 @@ from profile_manager import Profile_Manager
 from config_manager import Config_Manager
 import shutil
 import itertools
+import os
 
 
 class Test_Mapper_Generate_Mapping(unittest.TestCase):
@@ -95,7 +96,13 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
             map = [eth+str(i)for i in range(len(map_list))]
             self.mapper.eth_map[eth] = map
         self.mapper.generate_mapping(map_list, "Generate")
-        
+
+    def test_generate_user_rtf(self):
+        rtf_files = [f.name for f in os.scandir("newganmanager/user_rtf") if f.is_file()]
+        for rtf in rtf_files:
+            rtf_data = self.rtfparser.parse_rtf("newganmanager/user_rtf/"+rtf)
+            map_data = self.mapper.generate_mapping(rtf_data, "Generate")
+
 
 class Test_Mapper_Preserve_Mapping(unittest.TestCase):
     def setUp(self):
