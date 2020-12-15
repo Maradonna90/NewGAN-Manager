@@ -46,7 +46,14 @@ jobs:
         python -m unittest test_app.Test_Xml_Writing -v
         python -m unittest test_mapper.Test_Mapper_Generate_Mapping -v
         python -m unittest test_mapper.Test_Mapper_Preserve_Mapping -v
-        python -m unittest test_mapper.Test_Mapper_Overwrite_Mapping -v
+        python -m unittest test_mapper.Test_Mapper_Overwrite_Mapping.test_overwrite_mapping_simple -v
+        python -m unittest test_mapper.Test_Mapper_Overwrite_Mapping.test_overwrite_mapping_all_cases -v
+        python -m unittest test_mapper.Test_Mapper_Overwrite_Mapping.test_overwrite_mapping_double -v
+        python -m unittest test_mapper.Test_Mapper_Overwrite_Mapping.test_overwrite_mapping_double_exclusive -v
+        python -m unittest test_mapper.Test_Mapper_Overwrite_Mapping.test_overwrite_mapping_complete_subset -v
+        python -m unittest test_mapper.Test_Mapper_Overwrite_Mapping.test_overwrite_mapping_complete_subset_reverse -v
+        python -m unittest test_mapper.Test_Mapper_Overwrite_Mapping.test_overwrite_mapping_partial_subset -v
+        python -m unittest test_mapper.Test_Mapper_Overwrite_Mapping.test_overwrite_mapping_partial_subset_reverse -v
     - name: Build
       run: |
         briefcase create
