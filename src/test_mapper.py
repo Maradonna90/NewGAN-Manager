@@ -103,6 +103,21 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
             rtf_data = self.rtfparser.parse_rtf("newganmanager/user_rtf/"+rtf)
             map_data = self.mapper.generate_mapping(rtf_data, "Generate")
 
+    def test_generate_mapping_duplicate(self):
+        self.eth_val = [str(i) for i in range(11)]
+        self.ethnics = ["VIR", "PRK", "UZB", "ITA", "URU", "PUR", "POR", "SVN", "MAR", "YEM", "USA", "LIE", "SWE", "THA"]
+        product_inp = [["Name"], self.ethnics, self.ethnics, self.eth_val]
+        map_list = list(itertools.product(*product_inp))
+        for eth in ["African", "Asian", "EECA", "Italmed", "SAMed", "South American", 
+                    "SpanMed", "YugoGreek", "MENA", "MESA", "Caucasian", "Central European",
+                    "Scandinavian", "Seasian"]:
+            map = [eth+str(i)for i in range(3)]
+            self.mapper.eth_map[eth] = map
+        test_res = self.mapper.generate_mapping(map_list, "Generate", True)
+        imgs = [i[2] for i in test_res]
+        unique_img = set(imgs)
+        self.assertGreaterEqual(len(imgs), len(unique_img))
+
 
 class Test_Mapper_Preserve_Mapping(unittest.TestCase):
     def setUp(self):

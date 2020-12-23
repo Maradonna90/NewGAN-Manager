@@ -127,15 +127,19 @@ class NewGANManager(toga.App):
         self.genmde_lab = toga.Label(text="Mode: ")
         self.genmde_lab.style.update(width=label_width)
         self.genmdeinfo_lab = toga.Label(text=self.mode_info["Generate"])
+        self.gendup = toga.Switch(label="Allow Duplicates?")
         self.genmde_lst = SourceSelection(items=list(self.mode_info.keys()), on_select=self.update_label)
         self.genmde_lst.value = "Generate"
         self.genmde_lst.style.update(direction=ROW, padding=(0, 20), flex=1)
         self.genmde_lab.style.update(padding_top=7)
         self.genmdeinfo_lab.style.update(padding_top=7)
+        self.gendup.style.update(padding_top=7, padding_left=20)
+
 
         gen_mode_box.add(self.genmde_lab)
         gen_mode_box.add(self.genmde_lst)
         gen_mode_box.add(self.genmdeinfo_lab)
+        gen_mode_box.add(self.gendup)
         self.main_box.add(gen_mode_box)
         # BOTTOM Generation
         gen_box = toga.Box()
@@ -307,7 +311,7 @@ class NewGANManager(toga.App):
         self.gen_prg.update_progress(20)
         self.gen_prg.update_label("Map player to ethnicity")
         # yield 0.1
-        mapping_data = Mapper(img_dir, self.profile_manager).generate_mapping(rtf_data, mode)
+        mapping_data = Mapper(img_dir, self.profile_manager).generate_mapping(rtf_data, mode, self.gendup.is_on)
         self.gen_prg.update_progress(60)
         self.gen_prg.update_label("Generate config.xml")
         # yield 0.1
