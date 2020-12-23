@@ -21,7 +21,7 @@ class Mapper:
         logger.addHandler(fh)
         self.logger = logger
 
-    def generate_mapping(self, rtf_data, mode):
+    def generate_mapping(self, rtf_data, mode, duplicates=False):
         mapping = []
         prf_imgs = []
         xml_data = {}
@@ -98,7 +98,7 @@ class Mapper:
                     # self.logger.info("Overwrite: {} {}".format(player[0], p_ethnic))
                     prf_imgs.remove(xml_data[player[0]]["image"])
                     del xml_data[player[0]]
-            player_img = self.pick_image(p_ethnic, prf_imgs)
+            player_img = self.pick_image(p_ethnic, prf_imgs, duplicates)
             prf_imgs.append(player_img)
             if player_img is None:
                 self.logger.info("Ethnicity {} has no faces left for mapping. Skipping player {}".format(p_ethnic, player[0]))
@@ -111,9 +111,12 @@ class Mapper:
     def get_xml_images(self, xml_data):
         return [i["image"] for i in xml_data.values()]
 
-    def pick_image(self, ethnicity, profile_images):
+    def pick_image(self, ethnicity, profile_images, duplicates=False):
         eth_imgs = self.eth_map[ethnicity]
-        selection_pool = set(eth_imgs) - set(profile_images)
+        if duplicates:
+            selection_pool = set(eth_imgs)
+        else:
+            selection_pool = set(eth_imgs) - set(profile_images)
         if len(selection_pool) == 0:
             return None
         return random.choice(tuple(selection_pool))
