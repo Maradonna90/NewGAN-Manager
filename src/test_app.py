@@ -27,7 +27,6 @@ class Test_XML_Parser(unittest.TestCase):
         self.assertIsNone(test_img)
 
 class Test_RTF_Parser(unittest.TestCase):
-
     def test_parse_rtf(self):
         test_simple = RTF_Parser.parse_rtf(None, "newganmanager/test/test_simple.rtf")
         self.assertSequenceEqual(test_simple[0], ["1915714540", "ESP", "BAS", "1"])
@@ -49,7 +48,8 @@ class Test_Config_Manager(unittest.TestCase):
 
 class Test_Xml_Writing(unittest.TestCase):
     def setUp(self):
-        self.pm = Profile_Manager("No Profile", "newganmanager/testing/")
+        shutil.copyfile("newganmanager/.user/default_cfg.json", "newganmanager/testing/.user/cfg.json")
+        self.pm = Profile_Manager("No Profile", "newganmanager/testing")
         self.pm.prf_cfg["img_dir"] = "newganmanager/test/"
         self.data = [
             ["African", "African1", "1915714540"],
@@ -83,7 +83,8 @@ class Test_Xml_Writing(unittest.TestCase):
 
 class Test_Profile_Manager(unittest.TestCase):
     def setUp(self):
-        self.pm = Profile_Manager("No Profile", "newganmanager/testing/")
+        shutil.copyfile("newganmanager/.user/default_cfg.json", "newganmanager/testing/.user/cfg.json")
+        self.pm = Profile_Manager("No Profile", "newganmanager/testing")
 
     def test_delete_profile(self):
         cfg = Config_Manager().load_config("newganmanager/testing/.user/cfg.json")

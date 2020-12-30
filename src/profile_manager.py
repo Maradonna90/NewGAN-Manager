@@ -20,12 +20,12 @@ class Profile_Manager(config_manager.Config_Manager):
                 profiles["Profile"] = old_cfg["Profile"]
                 self.save_config(self.root_dir+"/.user/cfg.json", profiles)
                 del old_cfg["Profile"]
-                self.save_config(self.root_dir+".config/cfg.json", old_cfg)
+                self.save_config(self.root_dir+"/.config/cfg.json", old_cfg)
                 for profile in profiles["Profile"].keys():
-                    with open(self.root_dir+".user/"+profile+'.xml', 'wb') as output, open('../.config/'+profile+'.xml', 'rb') as input:
+                    with open(self.root_dir+"/.user/"+profile+'.xml', 'wb') as output, open('../.config/'+profile+'.xml', 'rb') as input:
                         copyfileobj(input, output)
                         os.remove('../.config/'+profile+'.xml')
-                    with open(self.root_dir+".user/"+profile+'.json', 'wb') as output, open('../.config/'+profile+'.json', 'rb') as input:
+                    with open(self.root_dir+"/.user/"+profile+'.json', 'wb') as output, open('../.config/'+profile+'.json', 'rb') as input:
                         copyfileobj(input, output)
                         os.remove('../.config/'+profile+'.json')
                 shutil.rmtree("../.config/")
