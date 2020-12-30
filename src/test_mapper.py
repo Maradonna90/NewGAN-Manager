@@ -10,7 +10,7 @@ import os
 
 class Test_Mapper_Generate_Mapping(unittest.TestCase):
     def setUp(self):
-        # TODO: we need prf_map, prf_imgs and prf_eth_map
+        shutil.copyfile("newganmanager/.user/default_cfg.json"), str("newganmanager/testing/.user/cfg.json"))
         self.rtfparser = RTF_Parser()
         self.pm = Profile_Manager("No Profile", "newganmanager/testing")
         self.pm.prf_cfg["img_dir"] = "newganmanager/test/"
@@ -123,6 +123,7 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
     def setUp(self):
         # TODO: we need prf_map, prf_imgs and prf_eth_map
         self.rtfparser = RTF_Parser()
+        shutil.copyfile("newganmanager/.user/default_cfg.json"), str("newganmanager/testing/.user/cfg.json"))
         self.pm = Profile_Manager("No Profile", "newganmanager/testing")
         self.mapper = Mapper("newganmanager/test/", self.pm)
         self.pm.prf_cfg["img_dir"] = "newganmanager/test/"
@@ -249,6 +250,7 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
     def setUp(self):
         # TODO: we need prf_map, prf_imgs and prf_eth_map
         self.rtfparser = RTF_Parser()
+        shutil.copyfile("newganmanager/.user/default_cfg.json"), str("newganmanager/testing/.user/cfg.json"))
         self.pm = Profile_Manager("No Profile", "newganmanager/testing")
         self.mapper = Mapper("newganmanager/test/", self.pm)
         self.pm.prf_cfg["img_dir"] = "newganmanager/test/"

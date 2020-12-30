@@ -49,6 +49,7 @@ class Test_Config_Manager(unittest.TestCase):
 
 class Test_Xml_Writing(unittest.TestCase):
     def setUp(self):
+        shutil.copyfile("newganmanager/.user/default_cfg.json"), str("newganmanager/testing/.user/cfg.json"))
         self.pm = Profile_Manager("No Profile", "newganmanager/testing")
         self.pm.prf_cfg["img_dir"] = "newganmanager/test/"
         self.data = [
@@ -83,6 +84,7 @@ class Test_Xml_Writing(unittest.TestCase):
 
 class Test_Profile_Manager(unittest.TestCase):
     def setUp(self):
+        shutil.copyfile("newganmanager/.user/default_cfg.json"), str("newganmanager/testing/.user/cfg.json"))
         self.pm = Profile_Manager("No Profile", "newganmanager/testing")
 
     def test_delete_profile(self):
