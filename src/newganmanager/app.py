@@ -56,8 +56,8 @@ class NewGANManager(toga.App):
                           "Preserve":  "Preserves already replaced faces",
                           "Generate": "Generates mapping from scratch."}
         os.makedirs(str(self.paths.app)+"/.config", exist_ok=True)
-        if !os.path.isfile(str(self.paths.app)+"/.user/cfg.json")):
-            shutil.copyfile(str(self.paths.app)+"/.user/default_cfg.json"), str(self.paths.app)+"/.user/cfg.json"))
+        if not os.path.isfile(str(self.paths.app)+"/.user/cfg.json"):
+            shutil.copyfile(str(self.paths.app)+"/.user/default_cfg.json", str(self.paths.app)+"/.user/cfg.json")
 
         self.logger.info("Loading current profile")
         self.profile_manager = Profile_Manager(Config_Manager().get_latest_prf(str(self.paths.app)+"/.user/cfg.json"), str(self.paths.app))
