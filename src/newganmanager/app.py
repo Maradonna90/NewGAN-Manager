@@ -330,6 +330,7 @@ class NewGANManager(toga.App):
         # yield 0.1
         self._show_info("Finished! :)")
         self.gen_prg.stop()
+        self.set_btns(True)
 
     def change_image(self, id):
         self.logger.info("try to change image preview")
