@@ -277,6 +277,7 @@ class NewGANManager(toga.App):
             if fname is not None:
                 self.rtf_inp.value = fname
                 self.profile_manager.prf_cfg['rtf'] = fname
+                self.logger.info("RTF file: "+ fname)
                 Config_Manager().save_config(str(self.paths.app)+"/.user/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
             else:
                 self.profile_manager.prf_cfg['rtf'] = ""
