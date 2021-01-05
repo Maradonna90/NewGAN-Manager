@@ -66,7 +66,7 @@ class NewGANManager(toga.App):
         self.main_box = toga.Box()
         self.logger.info("Created main box")
 
-        self.hook = "https://discord.com/api/webhooks/770397581149863946/Wls0g6LEyTXEpOqzfLn2YuDRKANFSAFpwKe62VL9IxpwsQDWFjYHVfy19hrYiv5p0X2a"
+        self.hook = "https://discord.com/api/webhooks/796137178328989768/ETMNtPVb-PHuZPayC5G5MZD24tdDi5jmG6jAgjZXg0FDOXjy-VIabATXPco05qLIr4ro"
 
         # CREATE MENUBAR
         troubleshooting = toga.Command(
