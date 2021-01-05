@@ -38,6 +38,10 @@ class Test_RTF_Parser(unittest.TestCase):
         self.assertSequenceEqual(test_simple_UID[0], ["1915576430", "KSA", "ARG", "2"])
         self.assertEqual(len(test_simple_UID), 1)
 
+    def test_valid_rtf(self):
+        self.assertTrue(RTF_Parser.is_rtf_valid(None, "newganmanager/test/test_simple_UID.rtf"))
+        self.assertFalse(RTF_Parser.is_rtf_valid(None, "newganmanager/test/false.rtf"))
+
 
 class Test_Config_Manager(unittest.TestCase):
 

@@ -23,3 +23,12 @@ class RTF_Parser:
             result_data.append([data_fields[1].strip(), data_fields[2].strip(), sec_nat, data_fields[7].strip()])
         rtf.close()
         return result_data
+
+    def is_rtf_valid(self, path):
+        rtf_regex = re.compile('(\|\s*[0-9]{8,}\s*)(\|\s*[A-Z]{3}\s*){2}(\|[\s*\w*]+)(\|[\s*\d+]+){3}\|')
+        rtf = open(path, 'r', encoding="UTF-8")
+        rtf_data = rtf.read()
+        rtf.close()
+        if rtf_regex.search(rtf_data):
+            return True
+        return False
