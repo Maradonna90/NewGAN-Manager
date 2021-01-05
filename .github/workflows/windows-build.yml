@@ -63,4 +63,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: NewGAN-Manager-Installer-Win
-        path: windows\NewGAN Manager-1.1.0.msi
+        path: windows\NewGAN Manager-1.2.0.msi
