@@ -311,6 +311,11 @@ class NewGANManager(toga.App):
         self.gen_prg.start()
         self.gen_prg.update_label("Parsing RTF")
         # yield 0.1
+        rtf_parser = RTF_Parser()
+        if not rtf_parser.is_rtf_valid(rtf):
+            self._throw_error("The RTF file is invalid!")
+            self.gen_prg.stop()
+            return
         rtf_data = RTF_Parser().parse_rtf(rtf)
         self.gen_prg.update_progress(20)
         self.gen_prg.update_label("Map player to ethnicity")
