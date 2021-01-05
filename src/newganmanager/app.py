@@ -13,6 +13,7 @@ from rtfparser import RTF_Parser
 from progressbar import Progressbar
 from reporter import Reporter
 from xmlparser import XML_Parser
+import webbrowser
 
 
 class SourceSelection(toga.Selection):
@@ -66,6 +67,37 @@ class NewGANManager(toga.App):
         self.logger.info("Created main box")
 
         self.hook = "https://discord.com/api/webhooks/770397581149863946/Wls0g6LEyTXEpOqzfLn2YuDRKANFSAFpwKe62VL9IxpwsQDWFjYHVfy19hrYiv5p0X2a"
+
+        # CREATE MENUBAR
+        troubleshooting = toga.Command(
+            lambda e=None, u="https://github.com/Maradonna90/NewGAN-Manager/wiki/Troubleshooting": self.open_link(u),
+            label='Troubleshooting',
+            group=toga.Group.HELP,
+            section=1
+        )
+        usage = toga.Command(
+            lambda e=None, u="https://www.youtube.com/watch?v=iJqZNp0nomM": self.open_link(u),
+            label='User Guide',
+            group=toga.Group.HELP,
+            section=0
+        )
+
+        faq = toga.Command(
+            lambda e=None, u="https://github.com/Maradonna90/NewGAN-Manager/wiki/FAQ": self.open_link(u),
+            label='FAQ',
+            group=toga.Group.HELP,
+            section=2
+        )
+
+        discord = toga.Command(
+            lambda e=None, u="https://discord.gg/UfRpJVc": self.open_link(u),
+            label='Discord',
+            group=toga.Group.HELP,
+            section=3
+        )
+
+        self.commands.add(discord, faq, troubleshooting, usage)
+
         label_width = 125
         # TOP Profiles
         prf_box = toga.Box()
@@ -189,6 +221,9 @@ class NewGANManager(toga.App):
         self.main_window = toga.MainWindow(title=self.formal_name, size=(1000, 600))
         self.main_window.content = self.main_box
         self.main_window.show()
+
+    def open_link(self, url):
+        webbrowser.open(url)
 
     def update_label(self, widget):
         self.logger.info("Updating generation label")
