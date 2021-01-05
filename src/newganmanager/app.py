@@ -36,7 +36,6 @@ class SourceSelection(toga.Selection):
 
 
 class NewGANManager(toga.App):
-
     def __init__(self, log):
         super().__init__()
         self.logger = log
@@ -56,8 +55,8 @@ class NewGANManager(toga.App):
                           "Preserve":  "Preserves already replaced faces",
                           "Generate": "Generates mapping from scratch."}
         os.makedirs(str(self.paths.app)+"/.config", exist_ok=True)
-        if !os.path.isfile(str(self.paths.app)+"/.user/cfg.json")):
-            shutil.copyfile(str(self.paths.app)+"/.user/default_cfg.json"), str(self.paths.app)+"/.user/cfg.json"))
+        if not os.path.isfile(str(self.paths.app)+"/.user/cfg.json"):
+            shutil.copyfile(str(self.paths.app)+"/.user/default_cfg.json", str(self.paths.app)+"/.user/cfg.json")
 
         self.logger.info("Loading current profile")
         self.profile_manager = Profile_Manager(Config_Manager().get_latest_prf(str(self.paths.app)+"/.user/cfg.json"), str(self.paths.app))
@@ -65,7 +64,7 @@ class NewGANManager(toga.App):
         self.logger.info("Creating GUI")
         self.main_box = toga.Box()
         self.logger.info("Created main box")
-        
+
         self.hook = "https://discord.com/api/webhooks/770397581149863946/Wls0g6LEyTXEpOqzfLn2YuDRKANFSAFpwKe62VL9IxpwsQDWFjYHVfy19hrYiv5p0X2a"
         label_width = 125
         # TOP Profiles
@@ -90,7 +89,7 @@ class NewGANManager(toga.App):
         prf_box.add(prf_lab)
         prf_box.add(prf_inp)
         prf_box.add(prf_btn)
-        prf_lab.style.update(padding_top=7) 
+        prf_lab.style.update(padding_top=7)
         prf_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
 
         self.main_box.add(self.prfsel_box)
@@ -176,7 +175,6 @@ class NewGANManager(toga.App):
         self.main_box.add(rep_box)
         self.rep_lab.style.update(padding_top=10)
         self.rep_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
-
 
         # END config
         self.prfsel_box.style.update(padding_bottom=20)
@@ -275,8 +273,11 @@ class NewGANManager(toga.App):
             )
             self.logger.info("Created file-dialog")
             if fname is not None:
+                # TODO: remove when pull-request is merge and released
+                fname = str(fname)
                 self.rtf_inp.value = fname
                 self.profile_manager.prf_cfg['rtf'] = fname
+                self.logger.info("RTF file: " + fname)
                 Config_Manager().save_config(str(self.paths.app)+"/.user/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
             else:
                 self.profile_manager.prf_cfg['rtf'] = ""
@@ -330,6 +331,7 @@ class NewGANManager(toga.App):
         # yield 0.1
         self._show_info("Finished! :)")
         self.gen_prg.stop()
+        self.set_btns(True)
 
     def change_image(self, id):
         self.logger.info("try to change image preview")

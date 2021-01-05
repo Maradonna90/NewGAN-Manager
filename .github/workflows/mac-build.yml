@@ -52,12 +52,12 @@ jobs:
       run: |
         briefcase create
         briefcase build
-        # briefcase package --no-sign
+        briefcase package --no-sign
     - name: Save Installer
       uses: actions/upload-artifact@v1
       with:
         name: NewGAN-Manager-Installer-Mac
-        path: macOS/NewGAN Manager/NewGAN Manager.app
+        path: macOS/NewGAN Manager-1.1.0.dmg
           #     - name: Append configs
           #       uses: actions/upload-artifact@v1
           #       with:
