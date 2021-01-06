@@ -30,10 +30,10 @@ I tried to make the whole installation process as much one-click and go as possi
 2. give the AppImage executable rights with `sudo chmod +x *.AppImage`
 
 ## Mac
-1. Find the downloaded file, which usually ends up in your Desktop or Downloads folder.
-2. Double-click the NewGAN-Manager-vX.X.X.DMG file to mount it. A new Finder window showing its contents should appear.
-3. If the window also contains a shortcut icon to “Applications”, drag and drop the app onto the shortcut.
-4. If not, double-click the mounted volume on your desktop and drag the app icon from there to the “Applications” icon in the Finder sidebar.
+1. Find the downloaded file, which usually ends up in your `Desktop` or `Downloads` folder.
+2. Double-click the `NewGAN-Manager-vX.X.X.DMG` file to mount it. A new `Finder` window showing its contents should appear.
+3. If the window also contains a shortcut icon to `Applications`, drag and drop the app onto the shortcut.
+4. If not, double-click the mounted volume on your desktop and drag the app icon from there to the `Applications` icon in the `Finder` sidebar.
 5. In your `Finder` window add the Football Manager user folder (default: `~/Library/Application Support/Sports Interactive/Football Manager 20XX` to favorites
 
 
