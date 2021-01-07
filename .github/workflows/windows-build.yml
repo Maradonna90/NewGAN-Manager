@@ -69,7 +69,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         path: |
-        views/
-        filters/
-        windows/NewGAN-Manager-1.2.0.msi
-        # NewGAN-Manager-Installer-Win-v1.2.0.zip 
+          views/
+          filters/
+          windows/NewGAN-Manager-1.2.0.msi
+          # NewGAN-Manager-Installer-Win-v1.2.0.zip 
