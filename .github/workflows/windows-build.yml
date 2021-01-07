@@ -60,14 +60,22 @@ jobs:
         briefcase build
         briefcase package
     - name: Zip Files
-      uses: papeloto/action-zip@v1
-      with:
-        files: views/ filters/ ${{ github.workspace }}windows/NewGAN-Manager-1.2.0.msi
-        recursive: true
-        dest: NewGAN-Manager-Installer-Win-v1.2.0.zip
+      run: |
+        zip -r result.zip filters/ views/ windows/NewGAN-Manager-1.2.0.msi
     - name: Save Installer
       uses: actions/upload-artifact@v1
       with:
         name: NewGAN-Manager-Installer-Win-v1.2.0.zip
-        path: ${{ github.workspace }}/NewGAN-Manager-Installer-Win-v1.2.0.zip
+        path: result.zip
 
+      #       uses: papeloto/action-zip@v1
+      #       with:
+      #         files: views/ filters/ ${{ github.workspace }}windows/NewGAN-Manager-1.2.0.msi
+      #         recursive: true
+      #         dest: NewGAN-Manager-Installer-Win-v1.2.0.zip
+      #     - name: Save Installer
+      #       uses: actions/upload-artifact@v1
+      #       with:
+      #         name: NewGAN-Manager-Installer-Win-v1.2.0.zip
+      #         path: ${{ github.workspace }}/NewGAN-Manager-Installer-Win-v1.2.0.zip
+      # 
