@@ -20,14 +20,13 @@ Most of us are active on several FM platforms under the same Nicknames.
 I tried to make the whole installation process as much one-click and go as possible. Unfortunately providing a cross-platform app without managing a codebase for every supported platform is impossible to me. Therefore some small adjustments may be needed, depending on your system.
 
 ## Windows
-1. Download the .msi Installer and go through the installtion process
-2. Go to the NewGAN installation folder (e.g `%localappdata%\Programs\NewGAN Manager\`)
-3. Move the `app\views\` folder to your Football Manager userfolder `My Documents\Sports Interactive\Football Manager 20XX\`
+1. Download the Installer unzip it and run the .msi. Go through the installtion process
+2. Move the `views\` and `filters/` folder to your Football Manager userfolder `My Documents\Sports Interactive\Football Manager 20XX\`
 
-**Note**: The `AppData` folder is a hidden folder. How to make hidden folder visible on Windows 10 can be read [here](https://support.microsoft.com/en-us/help/4028316/windows-view-hidden-files-and-folders-in-windows-10)
 ## Linux
 1. Download the .zip file and extract it.
-2. give the AppImage executable rights with `sudo chmod +x *.AppImage`
+2. Give the AppImage executable rights with `sudo chmod +x *.AppImage`
+3. Move the `views\` and `filters/` folder to your Football Manager userfolder.
 
 ## Mac
 1. Find the downloaded file, which usually ends up in your `Desktop` or `Downloads` folder.
@@ -35,6 +34,7 @@ I tried to make the whole installation process as much one-click and go as possi
 3. If the window also contains a shortcut icon to `Applications`, drag and drop the app onto the shortcut.
 4. If not, double-click the mounted volume on your desktop and drag the app icon from there to the `Applications` icon in the `Finder` sidebar.
 5. In your `Finder` window add the Football Manager user folder (default: `~/Library/Application Support/Sports Interactive/Football Manager 20XX` to favorites
+6. Move the `views\` and `filters/` folder to your Football Manager userfolder.
 
 
 # Troubleshooting
