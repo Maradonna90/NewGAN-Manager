@@ -66,6 +66,10 @@ jobs:
         recursive: true
         dest: NewGAN-Manager-Installer-Win-v1.2.0.zip
     - name: Save Installer
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
-        path: NewGAN-Manager-Installer-Win-v1.2.0.zip
+        path: |
+        views/
+        filters/
+        windows/NewGAN-Manager-1.2.0.msi
+        # NewGAN-Manager-Installer-Win-v1.2.0.zip 
