@@ -68,6 +68,4 @@ jobs:
     - name: Save Installer
       uses: actions/upload-artifact@v1
       with:
-        name: NewGAN-Manager-Installer-Win-v1.2.0.zip
         path: NewGAN-Manager-Installer-Win-v1.2.0.zip
-
