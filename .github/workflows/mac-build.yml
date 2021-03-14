@@ -57,7 +57,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: NewGAN-Manager-Installer-Mac
-        path: macOS/NewGAN Manager-1.2.0.dmg
+        path: macOS/NewGAN Manager-1.2.1.dmg
           #     - name: Append configs
           #       uses: actions/upload-artifact@v1
           #       with:

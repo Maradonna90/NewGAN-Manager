@@ -1,7 +1,7 @@
 [tool.briefcase]
 project_name = "NewGAN Manager"
 bundle = "com.fm"
-version = "1.2.0"
+version = "1.2.1"
 url = "https://github.com/Maradonna90/NewGAN-Manager"
 license = "GNU General Public License v3 (GPLv3)"
 author = 'Maradonna (gestalt)'

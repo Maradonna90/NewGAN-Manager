@@ -55,7 +55,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: NewGAN-Manager-Installer-Linux
-        path: linux/NewGAN_Manager-1.2.0-x86_64.AppImage
+        path: linux/NewGAN_Manager-1.2.1-x86_64.AppImage
     - name: Append configs
       uses: actions/upload-artifact@v1
       with:

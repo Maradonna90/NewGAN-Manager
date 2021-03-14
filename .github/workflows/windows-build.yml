@@ -62,12 +62,12 @@ jobs:
     - name: Zip Files
       uses: papeloto/action-zip@v1
       with:
-        files: views/ filters/ ${{ github.workspace }}windows/NewGAN-Manager-1.2.0.msi
+        files: views/ filters/ ${{ github.workspace }}windows/NewGAN-Manager-1.2.1.msi
         recursive: true
-        dest: NewGAN-Manager-Installer-Win-v1.2.0.zip
+        dest: NewGAN-Manager-Installer-Win-v1.2.1.zip
     - name: Save Installer
       uses: actions/upload-artifact@v1
       with:
-        name: NewGAN-Manager-Installer-Win-v1.2.0.zip
-        path: ${{ github.workspace }}/NewGAN-Manager-Installer-Win-v1.2.0.zip
+        name: NewGAN-Manager-Installer-Win-v1.2.1.zip
+        path: ${{ github.workspace }}/NewGAN-Manager-Installer-Win-v1.2.1.zip
 
