@@ -1,5 +1,5 @@
 [tool.briefcase]
-project_name = "NewGAN Manager"
+project_name = "NewGAN-Manager"
 bundle = "com.fm"
 version = "1.2.1"
 url = "https://github.com/Maradonna90/NewGAN-Manager"
@@ -8,10 +8,10 @@ author = 'Maradonna (gestalt)'
 author_email = "None"
 
 [tool.briefcase.app.newganmanager]
-formal_name = "NewGAN Manager"
+formal_name = "NewGAN-Manager"
 description = "NewGAN Replacement Management Tool"
 icon = "src/newganmanager/resources/logo"
-sources = ['src/newganmanager', 'views', 'src/config_manager.py', 'src/mapper.py', 'src/profile_manager.py', 'src/progressbar.py', 'src/rtfparser.py', 'src/xmlparser.py', 'src/reporter.py', 'filters']
+sources = ['src/newganmanager', 'src/config_manager.py', 'src/mapper.py', 'src/profile_manager.py', 'src/progressbar.py', 'src/rtfparser.py', 'src/xmlparser.py', 'src/reporter.py']
 requires = ["dhooks==1.1.4"]
 
 [tool.briefcase.app.newganmanager.macOS]
