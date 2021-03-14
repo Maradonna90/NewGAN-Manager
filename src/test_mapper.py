@@ -18,6 +18,7 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
         # data: UID, first_nat, sec_nat, eth-code
         self.data_simple = self.rtfparser.parse_rtf("newganmanager/test/test_simple.rtf")
         self.data_all_cases = self.rtfparser.parse_rtf("newganmanager/test/test_allcases.rtf")
+        self.data_buggy_ethnicity = self.rtfparser.parse_rtf("newganmanager/test/ethnicity.rtf")
         for eth in ["African", "Asian", "EECA", "Italmed", "SAMed", "South American", 
                     "SpanMed", "YugoGreek", "MENA", "MESA", "Caucasian", "Central European",
                     "Scandinavian", "Seasian"]:
@@ -117,6 +118,10 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
         imgs = [i[2] for i in test_res]
         unique_img = set(imgs)
         self.assertGreaterEqual(len(imgs), len(unique_img))
+
+    def test_buggy_ethnicity(self):
+        map_data = self.mapper.generate_mapping(self.data_buggy_ethnicity, "Generate")
+        self.assertEqual(len(map_data), 3)
 
 
 class Test_Mapper_Preserve_Mapping(unittest.TestCase):

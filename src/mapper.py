@@ -41,6 +41,9 @@ class Mapper:
                 self.logger.info("Mapping for {} is missing. Skipping player {}".format(player[1], player[0]))
                 continue
             self.logger.info("{}/{}: {}, {}, {}".format(i, len(rtf_data), player, n1_ethnic, n2_ethnic))
+            if int(player[3]) > 10:
+                self.logger.info("Ethnic value {} is invalid. Most likely a bug in the view. Skipping player {}".format(player[3], player[0]))
+                continue
             if player[3] == "1":
                 if "Scandinavian" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "South American"
