@@ -23,7 +23,7 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
                     "SpanMed", "YugoGreek", "MENA", "MESA", "Caucasian", "Central European",
                     "Scandinavian", "Seasian"]:
             map = [eth+str(i)for i in range(20)]
-            self.mapper.eth_map[eth] = map
+            self.mapper.eth_map[eth] = set(map)
 
     def tearDown(self):
         shutil.rmtree("newganmanager/testing/.config/")
@@ -141,7 +141,7 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
         for eth in ["African", "Asian", "EECA", "Italmed", "SAMed", "South American", 
                     "SpanMed", "YugoGreek", "MENA", "MESA", "Caucasian", "Central European",
                     "Scandinavian", "Seasian"]:
-            map = [eth+str(i)for i in range(20)]
+            map = set([eth+str(i)for i in range(20)])
             self.mapper.eth_map[eth] = map
 
     def tearDown(self):
@@ -270,7 +270,7 @@ class Test_Mapper_Overwrite_Mapping(unittest.TestCase):
                     "SpanMed", "YugoGreek", "MENA", "MESA", "Caucasian", "Central European",
                     "Scandinavian", "Seasian"]:
             map = [eth+str(i)for i in range(20)]
-            self.mapper.eth_map[eth] = map
+            self.mapper.eth_map[eth] = set(map)
 
     def tearDown(self):
         shutil.rmtree("newganmanager/testing/.config/")
