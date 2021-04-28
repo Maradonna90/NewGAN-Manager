@@ -30,6 +30,9 @@ class Mapper:
             xml_parser = XML_Parser()
             xml_data = xml_parser.parse_xml(self.img_dir+"config.xml")
             prf_imgs = self.get_xml_images(xml_data)
+            
+            for eth in self.eth_map:
+                self.eth_map[eth] = self.eth_map[eth] - set(prf_imgs)
 
         for i, player in enumerate(rtf_data):
             p_ethnic = None
@@ -101,7 +104,7 @@ class Mapper:
                     # self.logger.info("Overwrite: {} {}".format(player[0], p_ethnic))
                     prf_imgs.remove(xml_data[player[0]]["image"])
                     del xml_data[player[0]]
-            player_img = self.pick_image(p_ethnic, prf_imgs, duplicates)
+            player_img = self.pick_image(p_ethnic, duplicates)
             prf_imgs.append(player_img)
             if player_img is None:
                 self.logger.info("Ethnicity {} has no faces left for mapping. Skipping player {}".format(p_ethnic, player[0]))
@@ -114,15 +117,16 @@ class Mapper:
     def get_xml_images(self, xml_data):
         return [i["image"] for i in xml_data.values()]
 
-    def pick_image(self, ethnicity, profile_images, duplicates=False):
-        eth_imgs = self.eth_map[ethnicity]
-        if duplicates:
-            selection_pool = set(eth_imgs)
-        else:
-            selection_pool = set(eth_imgs) - set(profile_images)
+    def pick_image(self, ethnicity, duplicates=False):
+        selection_pool = self.eth_map[ethnicity]
         if len(selection_pool) == 0:
             return None
-        return random.choice(tuple(selection_pool))
+        choice = random.choice(tuple(selection_pool))
+
+        if not duplicates:
+            selection_pool.remove(choice)
+
+        return choice
 
     def post_rtf_hook(self, mapping, prf_imgs, xml_data):
         for uid, values in xml_data.items():
