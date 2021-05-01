@@ -51,7 +51,7 @@ class NewGANManager(toga.App):
         """
         self.logger.info("Starting Application\n------------------------------------------------")
         self.logger.info(str(self.paths.app))
-
+        self.facepack_dirs = set(["African", "Asian", "Caucasian", "Central European", "EECA", "Italmed", "MENA", "MESA", "SAMed", "Scandinavian", "Seasian", "South American", "SpanMed", "YugoGreek"])
         self.mode_info = {"Overwrite": "Overwrites already replaced faces",
                           "Preserve":  "Preserves already replaced faces",
                           "Generate": "Generates mapping from scratch."}
@@ -339,6 +339,15 @@ class NewGANManager(toga.App):
             self.gen_prg.stop()
             self.profile_manager.prf_cfg['img_dir'] = ''
             return
+        img_dirs = set()
+        for entry in os.scandir(img_dir):
+            if entry.is_dir():
+                img_dirs.add(entry.name)
+        for fp_dir in self.facepack_dirs:
+            if fp_dir not in img_dirs:
+                self._throw_error("Folder {} is missing in the image directory".format(fp_dir))
+                self.gen_prg.stop()
+                return
         self.logger.info("rtf: {}".format(rtf))
         self.logger.info("img_dir: {}".format(img_dir))
         self.logger.info("profile: {}".format(profile))
