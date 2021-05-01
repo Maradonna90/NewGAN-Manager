@@ -6,7 +6,7 @@ class XML_Parser:
         pass
 
     def parse_xml(self, path):
-        UID_regex = re.compile('([0-9]{10}(?=\/))')
+        UID_regex = re.compile('([0-9]{7,}(?=\/))')
         eth_img_regex = re.compile('((?<=from=\").*(?=\" to))')
         result_data = []
         xml = open(path, 'r', encoding="UTF-8")
@@ -27,9 +27,7 @@ class XML_Parser:
     def get_imgpath_from_uid(self, path, uid):
         UID_regex = re.compile('('+uid+'(?=\/))')
         eth_img_regex = re.compile('((?<=from=\").*(?=\" to))')
-        result_data = []
         xml = open(path, 'r', encoding="UTF-8")
-        result_data = {}
         for line in xml:
             if UID_regex.search(line):
                 eth_img = eth_img_regex.search(line)
