@@ -343,6 +343,7 @@ class NewGANManager(toga.App):
         self.logger.info("img_dir: {}".format(img_dir))
         self.logger.info("profile: {}".format(profile))
         self.logger.info("mode: {}".format(mode))
+        self.set_btns(False)
         self.gen_prg.start()
         self.gen_prg.update_label("Parsing RTF")
         # yield 0.1
