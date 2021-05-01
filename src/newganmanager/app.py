@@ -339,6 +339,7 @@ class NewGANManager(toga.App):
             self.gen_prg.stop()
             self.profile_manager.prf_cfg['img_dir'] = ''
             return
+        # Check if valid image_directory contains all the needed subfolders
         img_dirs = set()
         for entry in os.scandir(img_dir):
             if entry.is_dir():
