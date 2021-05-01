@@ -41,7 +41,7 @@ class Test_RTF_Parser(unittest.TestCase):
     def test_parse_rtf_fake_players(self):
         test_simple_UID_fake = RTF_Parser.parse_rtf(None, "newganmanager/test/test_simple_UID_fake.rtf")
         self.assertSequenceEqual(test_simple_UID_fake[0], ["1915576430", "KSA", "ARG", "2"])
-        self.assertSequenceEqual(test_simple_UID_fake[0], ["1915576", "KSA", "GER", "2"])
+        self.assertSequenceEqual(test_simple_UID_fake[1], ["1915576", "KSA", "GER", "2"])
         self.assertEqual(len(test_simple_UID_fake), 2)
 
     def test_valid_rtf(self):
