@@ -13,10 +13,12 @@ class Mapper:
         for dir in eth_dirs:
             dir_imgs = set([f.name.split('.')[0] for f in os.scandir(img_dir+dir) if f.is_file()])
             self.eth_map[dir] = dir_imgs
-        logger = logging.getLogger('NewGAN Logger')
-        logger.setLevel(logging.DEBUG)
-        # create file handler which logs even debug messages
+
+        formatter = logging.Formatter("%(asctime)s | %(name)s: %(message)s")
         fh = logging.FileHandler('newgan.log')
+        fh.setFormatter(formatter)
+        logger = logging.getLogger('NewGAN Mapper')
+        logger.setLevel(logging.DEBUG)
         fh.setLevel(logging.DEBUG)
         logger.addHandler(fh)
         self.logger = logger
@@ -30,7 +32,7 @@ class Mapper:
             xml_parser = XML_Parser()
             xml_data = xml_parser.parse_xml(self.img_dir+"config.xml")
             prf_imgs = self.get_xml_images(xml_data)
-            
+
             for eth in self.eth_map:
                 self.eth_map[eth] = self.eth_map[eth] - set(prf_imgs)
 

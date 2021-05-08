@@ -424,10 +424,12 @@ class NewGANManager(toga.App):
 
 def main():
     # create logger with 'spam_application'
-    logger = logging.getLogger('NewGAN Logger')
+    formatter = logging.Formatter("%(asctime)s | %(name)s: %(message)s")
+    fh = logging.FileHandler('newgan.log')
+    fh.setFormatter(formatter)
+    logger = logging.getLogger('NewGAN App')
     logger.setLevel(logging.DEBUG)
     # create file handler which logs even debug messages
-    fh = logging.FileHandler('newgan.log')
     fh.setLevel(logging.DEBUG)
     logger.addHandler(fh)
     try:
