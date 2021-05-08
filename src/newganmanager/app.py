@@ -14,6 +14,7 @@ from progressbar import Progressbar
 from reporter import Reporter
 from xmlparser import XML_Parser
 import webbrowser
+import requests
 
 
 class SourceSelection(toga.Selection):
@@ -222,6 +223,8 @@ class NewGANManager(toga.App):
         self.main_window.content = self.main_box
         self.main_window.show()
 
+        self.check_for_update()
+
     def open_link(self, url):
         webbrowser.open(url)
 
@@ -308,7 +311,6 @@ class NewGANManager(toga.App):
             )
             self.logger.info("Created file-dialog")
             if fname is not None:
-                # TODO: remove when pull-request is merge and released
                 fname = str(fname)
                 self.rtf_inp.value = fname
                 self.profile_manager.prf_cfg['rtf'] = fname
@@ -387,7 +389,7 @@ class NewGANManager(toga.App):
     def change_image(self, id):
         self.logger.info("try to change image preview")
         uid = id.value
-        if len(uid) == 10:
+        if len(uid) >= 7:
             try:
                 img_path = XML_Parser().get_imgpath_from_uid(self.profile_manager.prf_cfg['img_dir']+"config.xml", uid)
                 img_path = self.profile_manager.prf_cfg['img_dir']+img_path+".png"
@@ -401,8 +403,7 @@ class NewGANManager(toga.App):
 
     def send_report(self, e):
         uid = self.rep_inp.value
-        if len(uid) == 10:
-            # TODO: send report
+        if len(uid) >= 7:
             rep = Reporter(self.hook, self.profile_manager.prf_cfg['img_dir']+"config.xml")
             res = rep.send_report(uid)
             if res:
@@ -413,6 +414,12 @@ class NewGANManager(toga.App):
                 self._throw_error("Player with ID {} doesn't exist!".format(uid))
                 self.rep_img.image = toga.Image("resources/logo.png")
                 self.rep_inp.value = ""
+
+    def check_for_update(self):
+        r = requests.get("https://raw.githubusercontent.com/Maradonna90/NewGAN-Manager/master/version")
+        if r.text.strip() != self.version:
+            self._show_info("There is a new version. Please Update!")
+            self.open_link("https://github.com/Maradonna90/NewGAN-Manager/releases/latest")
 
 
 def main():
