@@ -22,6 +22,7 @@ class Mapper:
         fh.setLevel(logging.DEBUG)
         logger.addHandler(fh)
         self.logger = logger
+        random.seed()
 
     def generate_mapping(self, rtf_data, mode, duplicates=False):
         mapping = []
@@ -79,9 +80,20 @@ class Mapper:
                 if "South American" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "South American"
             elif player[3] in ["3", "6", "7", "8", "9"]:
-                p_ethnic = "African"
+                # SAMed with 7 is light-skinned
+                if "SAMed" in [n1_ethnic, n2_ethnic] and player[3] == "7":
+                    p_ethnic = "SAMed"
+                # South American with 7 is light-skinned
+                elif "South American" in [n1_ethnic, n2_ethnic] and player[3] == "7":
+                    p_ethnic = "South American"
+                else:
+                    p_ethnic = "African"
             elif player[3] == "10":
-                p_ethnic = "Asian"
+                # 1% of the South American population is Asian
+                if "South American" in [n1_ethnic, n2_ethnic] and random.randint(1, 100) != 1:
+                    p_ethnic = "South American"
+                else:
+                    p_ethnic = "Asian"
             elif player[3] == "2":
                 p_ethnic = "MENA"
                 if "MESA" in [n1_ethnic, n2_ethnic]:
