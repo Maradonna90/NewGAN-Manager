@@ -123,6 +123,14 @@ class Test_Mapper_Generate_Mapping(unittest.TestCase):
         map_data = self.mapper.generate_mapping(self.data_buggy_ethnicity, "Generate")
         self.assertEqual(len(map_data), 3)
 
+    def test_buggy_eth2(self):
+        parsedSquad = self.rtfparser.parse_rtf("newganmanager/test/wrong_ethnicity.rtf")
+        # Map result index to expected ethnicity
+        expectedOut = {0: "SAMed", 1: "South American", 2: "SAMed", 3: "South American"}
+        map_data = self.mapper.generate_mapping(parsedSquad, "Generate")
+        for key in expectedOut:
+            self.assertEqual(map_data[key][1], expectedOut[key])
+
 
 class Test_Mapper_Preserve_Mapping(unittest.TestCase):
     def setUp(self):
