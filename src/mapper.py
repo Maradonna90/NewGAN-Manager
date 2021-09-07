@@ -79,9 +79,19 @@ class Mapper:
                 if "South American" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "South American"
             elif player[3] in ["3", "6", "7", "8", "9"]:
-                p_ethnic = "African"
+                # SAMed with 7 is light-skinned
+                if "SAMed" == n1_ethnic and player[3] == "7":
+                    p_ethnic = "SAMed"
+                # South American with 7 is light-skinned
+                elif "South American" == n1_ethnic and player[3] == "7":
+                    p_ethnic = "South American"
+                else:
+                    p_ethnic = "African"
             elif player[3] == "10":
-                p_ethnic = "Asian"
+                if "South American" == n1_ethnic:
+                    p_ethnic = "South American"
+                else:
+                    p_ethnic = "Asian"
             elif player[3] == "2":
                 p_ethnic = "MENA"
                 if "MESA" in [n1_ethnic, n2_ethnic]:
