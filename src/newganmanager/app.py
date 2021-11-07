@@ -10,7 +10,6 @@ from config_manager import Config_Manager
 from profile_manager import Profile_Manager
 from mapper import Mapper
 from rtfparser import RTF_Parser
-from progressbar import Progressbar
 from reporter import Reporter
 from xmlparser import XML_Parser
 import webbrowser
@@ -182,8 +181,8 @@ class NewGANManager(toga.App):
         self.gen_btn.style.update(padding_bottom=20)
         self.gen_lab = toga.Label(text="")
 
-        # self.gen_prg = toga.ProgressBar(max=110)
-        self.gen_prg = Progressbar(label=self.gen_lab)
+        self.gen_prg = toga.ProgressBar(max=100)
+        # self.gen_prg = Progressbar(label=self.gen_lab)
         gen_box.add(self.gen_btn)
         gen_box.add(self.gen_lab)
         gen_box.add(self.gen_prg)
@@ -357,34 +356,37 @@ class NewGANManager(toga.App):
         self.logger.info("mode: {}".format(mode))
         self.set_btns(False)
         self.gen_prg.start()
-        self.gen_prg.update_label("Parsing RTF")
-        # yield 0.1
+        self.gen_lab.text =  "Parsing RTF"
+        yield 0.1
         rtf_parser = RTF_Parser()
         if not rtf_parser.is_rtf_valid(rtf):
             self._throw_error("The RTF file is invalid!")
             self.gen_prg.stop()
             return
         rtf_data = rtf_parser.parse_rtf(rtf)
-        self.gen_prg.update_progress(20)
-        self.gen_prg.update_label("Map player to ethnicity")
-        # yield 0.1
+        self.gen_prg.value += 20
+        self.gen_lab.text = "Map player to ethnicity"
+        yield 0.1
         mapping_data = Mapper(img_dir, self.profile_manager).generate_mapping(rtf_data, mode, self.gendup.is_on)
-        self.gen_prg.update_progress(60)
-        self.gen_prg.update_label("Generate config.xml")
-        # yield 0.1
+        self.gen_prg.value += 60
+        self.gen_lab.text = "Generate config.xml"
+        yield 0.1
         self.profile_manager.write_xml(mapping_data)
         # save profile metadata (used pics and config.xml)
-        self.gen_prg.update_label("Save metadata for profile")
-        self.gen_prg.update_progress(10)
-        # yield 0.1
+        self.gen_lab.text = "Save metadata for profile"
+        self.gen_prg.value += 10
+        yield 0.1
         Config_Manager().save_config(str(self.paths.app)+"/.user/"+profile+".json", self.profile_manager.prf_cfg)
-        self.gen_prg.update_progress(10)
-        # yield 0.1
-        self.gen_prg.update_label("Finished! :)")
-        # yield 0.1
+        self.gen_prg.value += 10
+        yield 0.1
+        self.gen_lab.text = "Finished! :)"
+        yield 0.1
         self._show_info("Finished! :)")
         self.gen_prg.stop()
+        self.gen_prg.value = 0
+        self.gen_lab.text = ''
         self.set_btns(True)
+        yield 0.1
 
     def change_image(self, id):
         self.logger.info("try to change image preview")
