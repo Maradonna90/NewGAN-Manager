@@ -25,7 +25,7 @@ class RTF_Parser:
         return result_data
 
     def is_rtf_valid(self, path):
-        rtf_regex = re.compile('(\|\s*[0-9]{8,}\s*)(\|\s*[A-Z]{3}\s*){2}(\|[\s*\w*]+)(\|[\s*\d+]+){3}\|')
+        rtf_regex = re.compile('(\|\s*[0-9]{8,}\s*)(\|\s*([A-Z]{3})*\s*)+(\|[\s*\w*\.*\-*]+)(\|[\s*\d+]+){3}\|')
         rtf = open(path, 'r', encoding="UTF-8")
         rtf_data = rtf.read()
         rtf.close()
