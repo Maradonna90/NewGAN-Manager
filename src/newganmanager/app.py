@@ -10,7 +10,6 @@ from config_manager import Config_Manager
 from profile_manager import Profile_Manager
 from mapper import Mapper
 from rtfparser import RTF_Parser
-from progressbar import Progressbar
 from reporter import Reporter
 from xmlparser import XML_Parser
 import webbrowser
