@@ -425,7 +425,11 @@ class NewGANManager(toga.App):
                 self.rep_inp.value = ""
 
     def check_for_update(self):
-        r = requests.get("https://raw.githubusercontent.com/Maradonna90/NewGAN-Manager/master/version")
+        try:
+            r = requests.get("https://raw.githubusercontent.com/Maradonna90/NewGAN-Manager/master/version", timeout=1)
+        except:
+            self.logger.info("check update timeout exceeded!")
+            return
         if r.text.strip() != self.version:
             self._show_info("There is a new version. Please Update!")
             self.open_link("https://github.com/Maradonna90/NewGAN-Manager/releases/latest")
