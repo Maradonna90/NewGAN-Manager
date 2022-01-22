@@ -68,3 +68,4 @@ django/
 #config dir
 .config/
 beeware-newgan/
+beeware-venv/
