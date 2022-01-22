@@ -428,7 +428,7 @@ class NewGANManager(toga.App):
         try:
             r = requests.get("https://raw.githubusercontent.com/Maradonna90/NewGAN-Manager/master/version", timeout=1)
         except:
-            self.logger("check update timeout exceeded!")
+            self.logger.info("check update timeout exceeded!")
             return
         if r.text.strip() != self.version:
             self._show_info("There is a new version. Please Update!")
