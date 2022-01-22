@@ -168,7 +168,7 @@ class NewGANManager(toga.App):
         self.genmde_lab = toga.Label(text="Mode: ")
         self.genmde_lab.style.update(width=label_width)
         self.genmdeinfo_lab = toga.Label(text=self.mode_info["Generate"])
-        self.gendup = toga.Switch(label="Allow Duplicates?")
+        self.gendup = toga.Switch(label="Allow Duplicates?", is_on=True)
         self.genmde_lst = SourceSelection(items=list(self.mode_info.keys()), on_select=self.update_label)
         self.genmde_lst.value = "Generate"
         self.genmde_lst.style.update(direction=ROW, padding=(0, 20), flex=1)
@@ -230,7 +230,7 @@ class NewGANManager(toga.App):
         self.main_window.show()
 
         self.check_for_update()
-
+        self.set_btns(True)
     def open_link(self, url):
         webbrowser.open(url)
 
