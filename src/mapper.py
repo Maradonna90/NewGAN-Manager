@@ -14,13 +14,7 @@ class Mapper:
             dir_imgs = set([f.name.split('.')[0] for f in os.scandir(img_dir+dir) if f.is_file()])
             self.eth_map[dir] = dir_imgs
 
-        formatter = logging.Formatter("%(asctime)s | %(name)s: %(message)s")
-        fh = logging.FileHandler('newgan.log')
-        fh.setFormatter(formatter)
-        logger = logging.getLogger('NewGAN Mapper')
-        logger.setLevel(logging.DEBUG)
-        fh.setLevel(logging.DEBUG)
-        logger.addHandler(fh)
+        logger = logging.getLogger('NewGAN App')
         self.logger = logger
 
     def generate_mapping(self, rtf_data, mode, duplicates=False):

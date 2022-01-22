@@ -37,9 +37,8 @@ class SourceSelection(toga.Selection):
 
 
 class NewGANManager(toga.App):
-    def __init__(self, log):
+    def __init__(self):
         super().__init__()
-        self.logger = log
 
     def startup(self):
         """
@@ -49,6 +48,14 @@ class NewGANManager(toga.App):
         We then create a main window (with a name matching the app), and
         show the main window.
         """
+        # Logging setup
+        formatter = logging.Formatter("%(asctime)s | %(name)s: %(message)s")
+        fh = logging.FileHandler(str(self.paths.app)+'/newgan.log')
+        fh.setFormatter(formatter)
+        self.logger = logging.getLogger('NewGAN App')
+        self.logger.setLevel(logging.DEBUG)
+        fh.setLevel(logging.DEBUG)
+        self.logger.addHandler(fh)
         self.logger.info("Starting Application\n------------------------------------------------")
         self.logger.info(str(self.paths.app))
         self.facepack_dirs = set(["African", "Asian", "Caucasian", "Central European", "EECA", "Italmed", "MENA", "MESA", "SAMed", "Scandinavian", "Seasian", "South American", "SpanMed", "YugoGreek"])
@@ -425,16 +432,4 @@ class NewGANManager(toga.App):
 
 
 def main():
-    # create logger with 'spam_application'
-    formatter = logging.Formatter("%(asctime)s | %(name)s: %(message)s")
-    fh = logging.FileHandler('newgan.log')
-    fh.setFormatter(formatter)
-    logger = logging.getLogger('NewGAN App')
-    logger.setLevel(logging.DEBUG)
-    # create file handler which logs even debug messages
-    fh.setLevel(logging.DEBUG)
-    logger.addHandler(fh)
-    try:
-        return NewGANManager(logger)
-    except Exception:
-        logger.error("Fatal error in main loop", exc_info=True)
+    return NewGANManager()
