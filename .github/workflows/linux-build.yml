@@ -58,4 +58,4 @@ jobs:
         path: | 
           views/
           filters/
-          linux/NewGAN_Manager-1.3.1-x86_64.AppImage
+          linux/NewGAN-Manager-1.3.1-x86_64.AppImage
