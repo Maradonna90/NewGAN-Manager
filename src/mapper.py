@@ -27,8 +27,9 @@ class Mapper:
             xml_data = xml_parser.parse_xml(self.img_dir+"config.xml")
             prf_imgs = self.get_xml_images(xml_data)
 
-            for eth in self.eth_map:
-                self.eth_map[eth] = self.eth_map[eth] - set(prf_imgs)
+            if not duplicates:
+                for eth in self.eth_map:
+                    self.eth_map[eth] = self.eth_map[eth] - set(prf_imgs)
 
         for i, player in enumerate(rtf_data):
             p_ethnic = None
