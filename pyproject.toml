@@ -36,7 +36,7 @@ requires = [
     'toga-winforms>=0.3.0.dev18',
 ]
 
-# Mobile deployments
+## Mobile deployments
 [tool.briefcase.app.newganmanager.iOS]
 requires = [
     'toga-iOS>=0.3.0.dev18',
