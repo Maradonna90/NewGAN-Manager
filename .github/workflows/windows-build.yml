@@ -66,4 +66,4 @@ jobs:
         path: |
           views/
           filters/
-          windows/NewGAN-Manager-1.3.2.msi
+          dist/NewGAN-Manager-1.3.2.msi
