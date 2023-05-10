@@ -16,12 +16,12 @@ requires = ["dhooks==1.1.4"]
 
 [tool.briefcase.app.newganmanager.macOS]
 requires = [
-    'toga-cocoa==0.3.0.dev30',
+    'toga-cocoa==0.3.0.dev18',
 ]
 
 [tool.briefcase.app.newganmanager.linux]
 requires = [
-    'toga-gtk==0.3.0.dev30',
+    'toga-gtk==0.3.0.dev18',
 ]
 system_requires = [
     'libgirepository1.0-dev',
@@ -33,16 +33,16 @@ system_requires = [
 
 [tool.briefcase.app.newganmanager.windows]
 requires = [
-    'toga-winforms==0.3.0.dev30',
+    'toga-winforms==0.3.0.dev18',
 ]
 
 # Mobile deployments
 [tool.briefcase.app.newganmanager.iOS]
 requires = [
-    'toga-iOS==0.3.0.dev30',
+    'toga-iOS==0.3.0.dev18',
 ]
 
 [tool.briefcase.app.newganmanager.android]
 requires = [
-    'toga-android==0.3.0.dev30',
+    'toga-android==0.3.0.dev18',
 ]
