@@ -28,8 +28,8 @@ jobs:
     - name: Beeware dependencies
       run: |
         # stop the build if there are Python syntax errors or undefined names d
-        # python -m pip install beeware
         python -m pip install briefcase==0.3.5
+        python -m pip install beeware
         python -m pip install dhooks
     - name: Run tests with pytest
       run: |
