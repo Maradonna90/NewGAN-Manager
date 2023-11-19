@@ -49,7 +49,7 @@ jobs:
         run: |
           briefcase create
           briefcase build
-          briefcase package --target ubuntu:jammy
+          briefcase package
       - name: Save Installer
         uses: actions/upload-artifact@v2
         with:
