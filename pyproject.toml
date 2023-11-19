@@ -20,6 +20,7 @@ requires = [
 ]
 
 [tool.briefcase.app.newganmanager.linux]
+long_description = 'NewGAN Replacement Management Tool'
 requires = [
     'toga-gtk>=0.3.0.dev18',
 ]
