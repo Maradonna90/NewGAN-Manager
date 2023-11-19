@@ -1,6 +1,8 @@
-![MacOS](https://github.com/Maradonna90/NewGAN-Manager/workflows/MacOS/badge.svg)
-![Linux](https://github.com/Maradonna90/NewGAN-Manager/workflows/Linux/badge.svg)
-![Windows](https://github.com/Maradonna90/NewGAN-Manager/workflows/Windows/badge.svg)
+![MacOS](https://github.com/imfulee/NewGAN-Manager/workflows/MacOS/badge.svg)
+![Linux](https://github.com/imfulee/NewGAN-Manager/workflows/Linux/badge.svg)
+![Windows](https://github.com/imfulee/NewGAN-Manager/workflows/Windows/badge.svg)
+
+> The Linux build would build but I still couldn't make all the dependecies work well. 
 
 # Main Contributors
 **[Maradonna](https://community.sigames.com/profile/50821-maradonna/) (gestalt)**: Initiator, Coding, Image Generation  
