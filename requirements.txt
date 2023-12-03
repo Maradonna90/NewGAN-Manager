@@ -12,7 +12,7 @@ chardet==5.2.0
 charset-normalizer==3.3.2
 click==8.1.7
 cookiecutter==2.5.0
-dhooks==1.1.4
+# dhooks==1.1.4
 frozenlist==1.4.0
 gbulb==0.6.4
 gitdb==4.0.11
