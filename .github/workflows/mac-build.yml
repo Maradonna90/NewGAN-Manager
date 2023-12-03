@@ -53,7 +53,7 @@ jobs:
       run: |
         briefcase create
         briefcase build
-        briefcase package --no-sign
+        briefcase package --adhoc-sign
     - name: Save Installer
       uses: actions/upload-artifact@v3
       with:
