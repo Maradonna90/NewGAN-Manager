@@ -28,7 +28,8 @@ jobs:
     - name: Beeware dependencies
       run: |
         # stop the build if there are Python syntax errors or undefined names d
-        python -m pip install beeware==0.3.0.dev3
+        # python -m pip install -r requirements.txt
+        python -m pip install beeware==0.3.0.dev3 toga==0.3.0.dev19
         python -m pip install dhooks
     - name: Run tests with pytest
       run: |
