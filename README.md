@@ -2,6 +2,9 @@
 ![Linux](https://github.com/Maradonna90/NewGAN-Manager/workflows/Linux/badge.svg)
 ![Windows](https://github.com/Maradonna90/NewGAN-Manager/workflows/Windows/badge.svg)
 
+# THIS REPOSITORY IS NOT MAINTAINED. THERE WILL BE NO MORE RELEASES. FEEL FREE TO FORK AND ESTABLISH A NEW MAIN REPOSITORY
+open an issue here so I update the readme.
+
 # Main Contributors
 **[Maradonna](https://community.sigames.com/profile/50821-maradonna/) (gestalt)**: Initiator, Coding, Image Generation  
 **Samaroy**: Coordination, Image Generation  
@@ -13,8 +16,10 @@
 
 Most of us are active on several FM platforms under the same Nicknames.
 
-# Support Me!
-[![Donate with PayPal](https://i.imgur.com/CKweDND.png)](https://www.paypal.com/paypalme/marcojott90)
+# Usage
+To rule out any point of error consider the following
+* use English (UK) as FM Language (other languages might have different country codes)
+* use FM default skin (other skins use flags instead of country codes, making the RTF unusable)
 
 # Installation Guide
 I tried to make the whole installation process as much one-click and go as possible. Unfortunately providing a cross-platform app without managing a codebase for every supported platform is impossible to me. Therefore some small adjustments may be needed, depending on your system.
@@ -27,6 +32,7 @@ I tried to make the whole installation process as much one-click and go as possi
 1. Download the .zip file and extract it.
 2. Give the AppImage executable rights with `sudo chmod +x *.AppImage`
 3. Move the `views\` and `filters/` folder to your Football Manager userfolder.
+4. You might want to run the application with `sudo`.
 
 ## Mac
 1. Find the downloaded file, which usually ends up in your `Desktop` or `Downloads` folder.
@@ -39,6 +45,9 @@ I tried to make the whole installation process as much one-click and go as possi
 
 # Troubleshooting
 If the app crashes for some reason open an issue and please provide the `newgan.log` file. It helps to figure where exactly the app crashed combined with your description.
+
+## Mac
+Run the application with Rosetta if its not starting otherwise.
 
 ## newgan.log on Windows
 On Windows the log file is created in the installation directory. It should be under `%localappdata%\Programs\NewGAN-Manager\`
