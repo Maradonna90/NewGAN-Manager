@@ -30,7 +30,7 @@ jobs:
       run: |
         # stop the build if there are Python syntax errors or undefined names
         # python -m pip install -r requirements.txt
-        python -m pip install beeware==0.3.0.dev3 toga==0.3.0.dev19
+        python -m pip install beeware==0.3.0 toga==0.4.0
         python -m pip install dhooks
     - name: Run tests with pytest
       run: |
