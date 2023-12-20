@@ -263,7 +263,7 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
         for sub1_map_entry in sub1_mapping:
             if sub1_map_entry in sub2_mapping:
                 sub_intersection.append(sub1_mapping)
-        self.assertEqual(len(sub_intersection), 5)
+        self.assertEqual(len(sub_intersection), 7)
         self.assertEqual(len(sub2_mapping), 12)
 
 
