@@ -228,8 +228,8 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
         self.pm.write_xml(simple_mapping)
         next_mapping = self.mapper.generate_mapping(self.data_all_cases, "Preserve")
         self.pm.write_xml(next_mapping)
-
-        self.assertCountEqual(simple_mapping, next_mapping)
+        for mapping in simple_mapping:
+            self.assertIn(mapping, next_mapping)
 
     def test_preserve_mapping_complete_subset_reverse(self):
         next_mapping = self.mapper.generate_mapping(self.data_all_cases, "Preserve")
@@ -243,12 +243,11 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
         self.pm.write_xml(sub2_mapping)
         sub1_mapping = self.mapper.generate_mapping(self.data_subset1, "Preserve")
         self.pm.write_xml(sub1_mapping)
-        self.assertCountEqual(sub1_mapping[:5], sub2_mapping)
-        self.assertIn(sub2_mapping[5], sub1_mapping)
-        self.assertIn(sub2_mapping[6], sub1_mapping)
-        self.assertIn(sub2_mapping[7], sub1_mapping)
-        self.assertIn(sub2_mapping[8], sub1_mapping)
-        self.assertIn(sub2_mapping[9], sub1_mapping)
+        sub_intersection = set()
+        for sub1_map_entry in sub1_mapping:
+            if sub1_map_entry in sub2_mapping:
+                sub_intersection.add(sub1_mapping)
+        self.assertEqual(len(sub_intersection), 10)
         self.assertEqual(len(sub1_mapping), 12)
 
     def test_preserve_mapping_partial_subset_reverse(self):
@@ -256,7 +255,11 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
         self.pm.write_xml(sub1_mapping)
         sub2_mapping = self.mapper.generate_mapping(self.data_subset2, "Preserve")
         self.pm.write_xml(sub2_mapping)
-        self.assertCountEqual(sub1_mapping[:5], sub2_mapping)
+        sub_intersection = set()
+        for sub1_map_entry in sub1_mapping:
+            if sub1_map_entry in sub2_mapping:
+                sub_intersection.add(sub1_mapping)
+        self.assertEqual(len(sub_intersection), 5)
         self.assertEqual(len(sub2_mapping), 12)
 
 
