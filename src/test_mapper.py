@@ -243,6 +243,8 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
         self.pm.write_xml(sub2_mapping)
         sub1_mapping = self.mapper.generate_mapping(self.data_subset1, "Preserve")
         self.pm.write_xml(sub1_mapping)
+        print(sub2_mapping)
+        print(sub1_mapping)
         sub_intersection = list()
         for sub1_map_entry in sub1_mapping:
             if sub1_map_entry in sub2_mapping:
@@ -255,6 +257,8 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
         self.pm.write_xml(sub1_mapping)
         sub2_mapping = self.mapper.generate_mapping(self.data_subset2, "Preserve")
         self.pm.write_xml(sub2_mapping)
+        print(sub1_mapping)
+        print(sub2_mapping)
         sub_intersection = list()
         for sub1_map_entry in sub1_mapping:
             if sub1_map_entry in sub2_mapping:
