@@ -285,7 +285,7 @@ class NewGANManager(toga.App):
 
     async def _show_info(self, msg):
         self.logger.info("Info window: {}".format(msg))
-        await self.main_window.info_dialog("Info", msg)
+        info = await self.main_window.info_dialog("Info", msg)
 
     async def action_select_folder_dialog(self, widget):
         self.logger.info("Select Folder...")
