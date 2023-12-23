@@ -279,13 +279,13 @@ class NewGANManager(toga.App):
         self._refresh_inp(True)
         self.set_btns(False)
 
-    def _throw_error(self, msg):
+    async def _throw_error(self, msg):
         self.logger.info("Error window {}:".format(msg))
-        self.main_window.error_dialog('Error', msg)
+        await self.main_window.error_dialog('Error', msg)
 
-    def _show_info(self, msg):
+    async def _show_info(self, msg):
         self.logger.info("Info window: {}".format(msg))
-        self.main_window.info_dialog("Info", msg)
+        await self.main_window.info_dialog("Info", msg)
 
     async def action_select_folder_dialog(self, widget):
         self.logger.info("Select Folder...")
