@@ -39,7 +39,7 @@ rich==13.7.0
 six==1.16.0
 smmap==5.0.1
 text-unidecode==1.3
-toga==0.3.0.dev17
+toga==0.3.0.dev39
 toga-core==0.3.0.dev17
 toga-gtk==0.3.0.dev17
 tomli==2.0.1
