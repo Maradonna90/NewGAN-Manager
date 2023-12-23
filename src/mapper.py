@@ -44,6 +44,14 @@ class Mapper:
             if int(player[3]) > 10:
                 self.logger.info("Ethnic value {} is invalid. Most likely a bug in the view. Skipping player {}".format(player[3], player[0]))
                 continue
+            # if player is in config.xml and we use preserver or overwrite handle it properly
+            if player[0] in xml_data:
+                if mode == "Preserve":
+                    self.logger.info("Preserve: {} {} {}".format(player[0], xml_data[player[0]]["ethnicity"], xml_data[player[0]]["image"]))
+                    continue
+                elif mode == "Overwrite":
+                    prf_imgs.remove(xml_data[player[0]]["image"])
+                    del xml_data[player[0]]
             if player[3] == "1":
                 if "Scandinavian" in [n1_ethnic, n2_ethnic]:
                     p_ethnic = "South American"
@@ -101,16 +109,8 @@ class Mapper:
                     p_ethnic = "Caucasian"
             elif player[3] == "4":
                 p_ethnic = "MESA"
-            if player[0] in xml_data:
-                if mode == "Preserve":
-                    # self.logger.info("Preserve: {} {} {}".format(player[0], p_ethnic, xml_data[player[0]]["image"]))
-                    mapping.append([player[0], p_ethnic, xml_data[player[0]]["image"]])
-                    del xml_data[player[0]]
-                    continue
-                elif mode == "Overwrite":
-                    # self.logger.info("Overwrite: {} {}".format(player[0], p_ethnic))
-                    prf_imgs.remove(xml_data[player[0]]["image"])
-                    del xml_data[player[0]]
+
+            # pick image based on p_ethnic
             player_img = self.pick_image(p_ethnic, duplicates)
             prf_imgs.append(player_img)
             if player_img is None:
