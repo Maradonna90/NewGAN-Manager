@@ -228,7 +228,8 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
         self.pm.write_xml(simple_mapping)
         next_mapping = self.mapper.generate_mapping(self.data_all_cases, "Preserve")
         self.pm.write_xml(next_mapping)
-        self.assertEqual(simple_mapping, next_mapping[:2])
+
+        self.assertCountEqual(simple_mapping, next_mapping)
 
     def test_preserve_mapping_complete_subset_reverse(self):
         next_mapping = self.mapper.generate_mapping(self.data_all_cases, "Preserve")
@@ -242,7 +243,7 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
         self.pm.write_xml(sub2_mapping)
         sub1_mapping = self.mapper.generate_mapping(self.data_subset1, "Preserve")
         self.pm.write_xml(sub1_mapping)
-        self.assertEqual(sub1_mapping[:5], sub2_mapping[:5])
+        self.assertCountEqual(sub1_mapping[:5], sub2_mapping)
         self.assertIn(sub2_mapping[5], sub1_mapping)
         self.assertIn(sub2_mapping[6], sub1_mapping)
         self.assertIn(sub2_mapping[7], sub1_mapping)
@@ -255,7 +256,7 @@ class Test_Mapper_Preserve_Mapping(unittest.TestCase):
         self.pm.write_xml(sub1_mapping)
         sub2_mapping = self.mapper.generate_mapping(self.data_subset2, "Preserve")
         self.pm.write_xml(sub2_mapping)
-        self.assertEqual(sub1_mapping[:5], sub2_mapping[:5])
+        self.assertCountEqual(sub1_mapping[:5], sub2_mapping)
         self.assertEqual(len(sub2_mapping), 12)
 
 
