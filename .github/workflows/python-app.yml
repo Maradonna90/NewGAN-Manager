@@ -1,0 +1,60 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Linux
+
+on:
+  push:
+    branches: [ master, workflow-test, app-path ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install git python3-dev python3-gi python3-gi-cairo libgirepository1.0-dev libcairo2-dev libpango1.0-dev libwebkit2gtk-4.0-37 gir1.2-webkit2-4.0
+    - name: Beeware dependencies
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        python3 -m pip install -r requirements.txt
+    - name: Run tests with
+      run: |
+        cd src/
+        python -m unittest test_app.Test_Profile_Manager.test_swap_xml -v
+        python -m unittest test_app.Test_Profile_Manager.test_delete_profile -v
+        python -m unittest test_app.Test_Profile_Manager.test_create_profile -v
+        python -m unittest test_app.Test_Profile_Manager.test_load_profile -v
+        python -m unittest test_app.Test_Profile_Manager.test_get_ethnic -v
+        python -m unittest test_app.Test_Profile_Manager.test_switching_profiles_with_invalid_path -v
+        python -m unittest test_app.Test_Profile_Manager.test_migrate_function -v
+        python -m unittest test_app.Test_XML_Parser -v
+        python -m unittest test_app.Test_RTF_Parser -v
+        python -m unittest test_app.Test_Config_Manager -v
+        python -m unittest test_app.Test_Xml_Writing -v
+        python -m unittest test_mapper.Test_Mapper_Generate_Mapping -v
+        python -m unittest test_mapper.Test_Mapper_Preserve_Mapping -v
+        python -m unittest test_mapper.Test_Mapper_Overwrite_Mapping -v
+    - name: Build
+      run: |
+        briefcase create --no-docker build linux
+        briefcase build --no-docker build linux
+        #briefcase package --no-docker build linux
+    - name: Save Installer
+      uses: actions/upload-artifact@v2
+      with:
+        name: NewGAN-Manager-Installer-Linux-v1.4.0
+        path: | 
+          views/
+          filters/
+          linux/NewGAN-Manager-1.4.0-x86_64.AppImage
