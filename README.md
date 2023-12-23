@@ -27,6 +27,7 @@ I tried to make the whole installation process as much one-click and go as possi
 ## Windows
 1. Download the Installer unzip it and run the .msi. Go through the installtion process
 2. Move the `views\` and `filters/` folder to your Football Manager userfolder `My Documents\Sports Interactive\Football Manager 20XX\`
+3. Run the Application as Administrator
 
 ## Linux
 1. Download the .zip file and extract it.
