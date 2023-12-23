@@ -17,23 +17,15 @@ import requests
 
 
 class SourceSelection(toga.Selection):
-    def __init__(self, id=None, style=None, items=None, on_select=None, enabled=True, factory=None):
-        super().__init__(id=id, style=style, items=items, on_select=on_select, enabled=enabled, factory=factory)
+    def __init__(self, id=None, style=None, items=None, on_change=None, enabled=True):
+        super().__init__(id=id, style=style, items=items, on_change=on_change, enabled=enabled)
 
     def add_item(self, item):
         self._items.append(item)
-        self._impl.add_item(item)
 
     def remove_item(self, item):
-        self._items.remove(item)
-        items = self._items
-
-        if self._items is []:
-            pass
-        else:
-            self._impl.remove_all_items()
-            for itm in items:
-                self._impl.add_item(itm)
+        row = self._items.find(item)
+        self._items.remove(row)
 
 
 class NewGANManager(toga.App):
@@ -78,27 +70,27 @@ class NewGANManager(toga.App):
         # CREATE MENUBAR
         troubleshooting = toga.Command(
             lambda e=None, u="https://github.com/Maradonna90/NewGAN-Manager/wiki/Troubleshooting": self.open_link(u),
-            label='Troubleshooting',
+            text='Troubleshooting',
             group=toga.Group.HELP,
             section=1
         )
         usage = toga.Command(
             lambda e=None, u="https://www.youtube.com/watch?v=iJqZNp0nomM": self.open_link(u),
-            label='User Guide',
+            text='User Guide',
             group=toga.Group.HELP,
             section=0
         )
 
         faq = toga.Command(
             lambda e=None, u="https://github.com/Maradonna90/NewGAN-Manager/wiki/FAQ": self.open_link(u),
-            label='FAQ',
+            text='FAQ',
             group=toga.Group.HELP,
             section=2
         )
 
         discord = toga.Command(
             lambda e=None, u="https://discord.gg/UfRpJVc": self.open_link(u),
-            label='Discord',
+            text='Discord',
             group=toga.Group.HELP,
             section=3
         )
@@ -119,10 +111,10 @@ class NewGANManager(toga.App):
 
         prfsel_lab = toga.Label(text="Select Profile: ")
         prfsel_lab.style.update(width=label_width)
-        self.prfsel_lst = SourceSelection(items=list(self.profile_manager.config["Profile"].keys()), on_select=self._set_profile_status)
+        self.prfsel_lst = SourceSelection(items=list(self.profile_manager.config["Profile"].keys()), on_change=self._set_profile_status)
         self.prfsel_lst.value = self.profile_manager.cur_prf
-        prfsel_btn = toga.Button(label="Delete", on_press=lambda e=None, c=self.prfsel_lst : self._delete_profile(c))
-        prf_btn = toga.Button(label="Create", on_press=lambda e=None, d=prf_inp, c=self.prfsel_lst: self._create_profile(d, c))
+        prfsel_btn = toga.Button(text="Delete", on_press=lambda e=None, c=self.prfsel_lst: self._delete_profile(c))
+        prf_btn = toga.Button(text="Create", on_press=lambda e=None, d=prf_inp, c=self.prfsel_lst: self._create_profile(d, c))
 
         self.main_box.add(prf_box)
         prf_box.add(prf_lab)
@@ -142,16 +134,16 @@ class NewGANManager(toga.App):
         dir_box = toga.Box()
         dir_lab = toga.Label(text="Select Image Directory: ")
         dir_lab.style.update(width=label_width)
-        self.dir_inp = toga.TextInput(readonly=True, initial=self.profile_manager.prf_cfg['img_dir'])
+        self.dir_inp = toga.TextInput(readonly=True, value=self.profile_manager.prf_cfg['img_dir'])
         self.dir_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
-        self.dir_btn = toga.Button(label="...", on_press=self.action_select_folder_dialog, enabled=False)
+        self.dir_btn = toga.Button(text="...", on_press=self.action_select_folder_dialog, enabled=False)
 
         rtf_box = toga.Box()
         rtf_lab = toga.Label(text="RTF File: ")
         rtf_lab.style.update(width=label_width)
-        self.rtf_inp = toga.TextInput(readonly=True, initial=self.profile_manager.prf_cfg['rtf'])
+        self.rtf_inp = toga.TextInput(readonly=True, value=self.profile_manager.prf_cfg['rtf'])
         self.rtf_inp.style.update(direction=ROW, padding=(0, 20), flex=1)
-        self.rtf_btn = toga.Button(label="...", on_press=self.action_open_file_dialog, enabled=False)
+        self.rtf_btn = toga.Button(text="...", on_press=self.action_open_file_dialog, enabled=False)
 
         self.main_box.add(dir_box)
         self.main_box.add(rtf_box)
@@ -168,8 +160,8 @@ class NewGANManager(toga.App):
         self.genmde_lab = toga.Label(text="Mode: ")
         self.genmde_lab.style.update(width=label_width)
         self.genmdeinfo_lab = toga.Label(text=self.mode_info["Generate"])
-        self.gendup = toga.Switch(label="Allow Duplicates?", is_on=True)
-        self.genmde_lst = SourceSelection(items=list(self.mode_info.keys()), on_select=self.update_label)
+        self.gendup = toga.Switch(text="Allow Duplicates?", value=True)
+        self.genmde_lst = SourceSelection(items=list(self.mode_info.keys()), on_change=self.update_label)
         self.genmde_lst.value = "Generate"
         self.genmde_lst.style.update(direction=ROW, padding=(0, 20), flex=1)
         self.genmde_lab.style.update(padding_top=7)
@@ -184,7 +176,7 @@ class NewGANManager(toga.App):
         self.main_box.add(gen_mode_box)
         # BOTTOM Generation
         gen_box = toga.Box()
-        self.gen_btn = toga.Button(label="Replace Faces", on_press=self._replace_faces, enabled=False)
+        self.gen_btn = toga.Button(text="Replace Faces", on_press=self._replace_faces, enabled=False)
         self.gen_btn.style.update(padding_bottom=20)
         self.gen_lab = toga.Label(text="")
 
@@ -205,7 +197,7 @@ class NewGANManager(toga.App):
         self.rep_img = toga.ImageView(toga.Image("resources/logo.png"))
         self.rep_img.style.update(height=180)
         self.rep_img.style.update(width=180)
-        self.rep_btn = toga.Button(label="Report", on_press=self.send_report, enabled=False)
+        self.rep_btn = toga.Button(text="Report", on_press=self.send_report, enabled=False)
 
         rep_box.add(self.rep_lab)
         rep_box.add(self.rep_inp)
@@ -268,8 +260,8 @@ class NewGANManager(toga.App):
     def _refresh_inp(self, clear=False):
         self.logger.info("Refresh Input Buttons")
         if clear:
-            self.dir_inp.clear()
-            self.rtf_inp.clear()
+            self.dir_inp.value = None
+            self.rtf_inp.value = None
         else:
             self.dir_inp.value = self.profile_manager.prf_cfg['img_dir']
             self.rtf_inp.value = self.profile_manager.prf_cfg['rtf']
@@ -277,7 +269,7 @@ class NewGANManager(toga.App):
     def _create_profile(self, ent, c):
         name = ent.value
         self.profile_manager.create_profile(name)
-        ent.clear()
+        ent.value = None
         c.add_item(name)
 
     def _delete_profile(self, c):
@@ -295,25 +287,28 @@ class NewGANManager(toga.App):
         self.logger.info("Info window: {}".format(msg))
         self.main_window.info_dialog("Info", msg)
 
-    def action_select_folder_dialog(self, widget):
+    async def action_select_folder_dialog(self, widget):
         self.logger.info("Select Folder...")
         try:
-            path_names = self.main_window.select_folder_dialog(
+            path_name = await self.main_window.select_folder_dialog(
                 title="Select image root folder"
             )
-            self.dir_inp.value = path_names[0]+"/"
-            self.profile_manager.prf_cfg['img_dir'] = path_names[0]+"/"
+            path_name = str(path_name)
+            self.logger.info(path_name)
+            self.dir_inp.value = path_name+"/"
+            self.profile_manager.prf_cfg['img_dir'] = path_name+"/"
             Config_Manager().save_config(str(self.paths.app)+"/.user/"+self.profile_manager.cur_prf+".json", self.profile_manager.prf_cfg)
 
         except Exception:
+            self.logger.error("Fatal error in main loop", exc_info=True)
             pass
 
-    def action_open_file_dialog(self, widget):
+    async def action_open_file_dialog(self, widget):
         self.logger.info("Select File...")
         try:
-            fname = self.main_window.open_file_dialog(
+            fname = await self.main_window.open_file_dialog(
                 title="Open RTF file",
-                multiselect=False,
+                multiple_select=False,
                 file_types=['rtf']
             )
             self.logger.info("Created file-dialog")
@@ -375,7 +370,7 @@ class NewGANManager(toga.App):
         self.gen_prg.value += 20
         self.gen_lab.text = "Map player to ethnicity"
         yield 0.1
-        mapping_data = Mapper(img_dir, self.profile_manager).generate_mapping(rtf_data, mode, self.gendup.is_on)
+        mapping_data = Mapper(img_dir, self.profile_manager).generate_mapping(rtf_data, mode, self.gendup.value)
         self.gen_prg.value += 60
         self.gen_lab.text = "Generate config.xml"
         yield 0.1
