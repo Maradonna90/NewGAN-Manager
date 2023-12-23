@@ -1,7 +1,7 @@
 [tool.briefcase]
 project_name = "NewGAN-Manager"
 bundle = "com.fm"
-version = "1.3.2"
+version = "1.3.1"
 url = "https://github.com/Maradonna90/NewGAN-Manager"
 license = "GNU General Public License v3 (GPLv3)"
 author = 'Maradonna (gestalt)'
@@ -16,12 +16,12 @@ requires = ["dhooks==1.1.4"]
 
 [tool.briefcase.app.newganmanager.macOS]
 requires = [
-    'toga-cocoa>=0.3.0.dev18',
+    'toga-cocoa==0.3.0.dev19',
 ]
 
 [tool.briefcase.app.newganmanager.linux]
 requires = [
-    'toga-gtk>=0.3.0.dev18',
+    'toga-gtk==0.3.0.dev19',
 ]
 system_requires = [
     'libgirepository1.0-dev',
@@ -33,7 +33,7 @@ system_requires = [
 
 [tool.briefcase.app.newganmanager.windows]
 requires = [
-    'toga-winforms>=0.3.0.dev18',
+    'toga-winforms==0.3.0.dev19',
 ]
 
 ## Mobile deployments
