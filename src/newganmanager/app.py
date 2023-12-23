@@ -221,7 +221,7 @@ class NewGANManager(toga.App):
         self.main_window.content = self.main_box
         self.main_window.show()
 
-        self.check_for_update()
+        # self.check_for_update()
         self.set_btns(True)
 
     def open_link(self, url):
