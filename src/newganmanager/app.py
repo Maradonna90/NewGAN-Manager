@@ -384,7 +384,7 @@ class NewGANManager(toga.App):
         yield 0.1
         self.gen_lab.text = "Finished! :)"
         yield 0.1
-        self._show_info("Finished! :)")
+        # self._show_info("Finished! :)")
         self.gen_prg.stop()
         self.gen_prg.value = 0
         self.gen_lab.text = ''
