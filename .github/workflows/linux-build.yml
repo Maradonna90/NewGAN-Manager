@@ -1,4 +1,4 @@
-name: Linux
+ame: Linux
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.12
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v3
       with:
         python-version: 3.12
     - name: Install dependencies
@@ -47,7 +47,9 @@ jobs:
         briefcase create 
         briefcase build 
         #briefcase package 
-   
+    - name: Save Installer
+      uses: actions/upload-artifact@v4
+      with:
         name: NewGAN-Manager-Installer-Linux-v1.4.0
         path: | 
           views/
