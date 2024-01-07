@@ -27,8 +27,8 @@ system_requires = [
     'libgirepository1.0-dev',
     'libcairo2-dev',
     'libpango1.0-dev',
-    'libwebkitgtk-3.0-0',
-    'gir1.2-webkit-3.0',
+    'libwxgtk3.0-gtk3-dev',
+    'gir1.2-webkit2-4.0',
 ]
 
 [tool.briefcase.app.newganmanager.windows]
