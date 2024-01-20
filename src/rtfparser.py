@@ -6,7 +6,7 @@ class RTF_Parser:
         pass
 
     def parse_rtf(self, path):
-        UID_regex = re.compile('([0-9]){7,}')
+        UID_regex = re.compile('([0-9]){4,}')
         result_data = []
         rtf = open(path, 'r', encoding="UTF-8")
         # self.logger.info(rtf)
