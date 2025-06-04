@@ -77,7 +77,17 @@ class Profile_Manager(config_manager.Config_Manager):
             xml_string = []
 
         for dat in data:
-            xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/r-{}/portrait\"/>".format(dat[1]+"/"+dat[2], dat[0]))
+            # None değerlerini güvenli şekilde işle
+            ethnicity = dat[1] if dat[1] is not None else "Europeans"
+            image_name = dat[2] if dat[2] is not None else ""
+            
+            if ethnicity and image_name:  # İkisi de boş değil ise ekle
+                xml_string.append("<record from=\"{}\" to=\"graphics/pictures/person/r-{}/portrait\"/>".format(ethnicity+"/"+image_name, dat[0]))
+            else:
+                # Hatalı kayıtları logla
+                import logging
+                logger = logging.getLogger('NewGAN App')
+                logger.warning("Skipping invalid record for player {}: ethnicity={}, image={}".format(dat[0], ethnicity, image_name))
 
         xml_players = "\n".join(xml_string)
         xml_config = config_template.replace("[players]", xml_players)
