@@ -30,7 +30,12 @@ class SourceSelection(toga.Selection):
 
 class NewGANManager(toga.App):
     def __init__(self):
-        super().__init__()
+        super().__init__(
+            formal_name="NewGAN Manager",
+            app_id="org.maradonna90.newganmanager",
+            app_name="NewGAN Manager",
+            version="1.4.0"
+        )
 
     def startup(self):
         """
@@ -50,7 +55,7 @@ class NewGANManager(toga.App):
         self.logger.addHandler(fh)
         self.logger.info("Starting Application\n------------------------------------------------")
         self.logger.info(str(self.paths.app))
-        self.facepack_dirs = set(["African", "Asian", "Caucasian", "Central European", "EECA", "Italmed", "MENA", "MESA", "SAMed", "Scandinavian", "Seasian", "South American", "SpanMed", "YugoGreek"])
+        self.facepack_dirs = set(["Africans", "Asians", "British_Irish", "Europeans", "Mixed Race", "North Africans", "North Americans", "Oceanians", "Scandinavians", "South Americans", "Staff"])
         self.mode_info = {"Overwrite": "Overwrites already replaced faces",
                           "Preserve":  "Preserves already replaced faces",
                           "Generate": "Generates mapping from scratch."}

@@ -1,0 +1,101 @@
+2025-06-04 19:41:32,666 | NewGAN-Dev: Starting NewGAN Manager in DEV mode...
+2025-06-04 19:41:32,666 | NewGAN-Dev: Loading application modules...
+2025-06-04 19:41:32,692 | NewGAN-Dev: Stubbing problematic module: aiohttp
+2025-06-04 19:41:33,190 | NewGAN-Dev: Loaded core modules successfully
+2025-06-04 19:41:33,190 | NewGAN-Dev: Starting application...
+2025-06-04 19:41:33,221 | NewGAN-Dev: Failed to import modules: Choices.__init__() got an unexpected keyword argument 'default'
+2025-06-04 19:41:33,221 | NewGAN-Dev: Detailed error:
+Traceback (most recent call last):
+  File "C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\dev_run.py", line 63, in <module>
+    from src.newganmanager.app import NewGANManager
+  File "C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\dev_run.py", line 41, in mock_import
+    return original_import(name, globals, locals, fromlist, level)
+  File "C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\src\newganmanager\app.py", line 4, in <module>
+    import toga
+  File "C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\dev_run.py", line 41, in mock_import
+    return original_import(name, globals, locals, fromlist, level)
+  File "C:\Users\nezi\AppData\Roaming\Python\Python313\site-packages\toga\__init__.py", line 1, in <module>
+    from .app import App, DocumentApp, DocumentMainWindow, MainWindow
+  File "C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\dev_run.py", line 41, in mock_import
+    return original_import(name, globals, locals, fromlist, level)
+  File "C:\Users\nezi\AppData\Roaming\Python\Python313\site-packages\toga\app.py", line 20, in <module>
+    from toga.widgets.base import Widget, WidgetRegistry
+  File "C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\dev_run.py", line 41, in mock_import
+    return original_import(name, globals, locals, fromlist, level)
+  File "C:\Users\nezi\AppData\Roaming\Python\Python313\site-packages\toga\widgets\base.py", line 10, in <module>
+    from toga.style import Pack, TogaApplicator
+  File "C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\dev_run.py", line 41, in mock_import
+    return original_import(name, globals, locals, fromlist, level)
+  File "C:\Users\nezi\AppData\Roaming\Python\Python313\site-packages\toga\style\__init__.py", line 2, in <module>
+    from toga.style.pack import Pack  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\dev_run.py", line 41, in mock_import
+    return original_import(name, globals, locals, fromlist, level)
+  File "C:\Users\nezi\AppData\Roaming\Python\Python313\site-packages\toga\style\pack.py", line 54, in <module>
+    ALIGNMENT_CHOICES = Choices(LEFT, RIGHT, TOP, BOTTOM, CENTER, default=True)
+TypeError: Choices.__init__() got an unexpected keyword argument 'default'
+2025-06-04 19:41:33,224 | NewGAN-Dev: Dev script finished executing
+2025-06-04 19:43:28,787 | NewGAN-Dev: INFO: Starting NewGAN Manager in simplified development mode...
+2025-06-04 19:43:29,553 | NewGAN-Dev: INFO: Successfully imported core modules
+2025-06-04 19:43:29,553 | NewGAN-Dev: INFO: Default config exists at: C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\src\newganmanager\.user\default_cfg.json
+2025-06-04 19:43:29,553 | NewGAN-Dev: INFO: Default config content: {'Profile': {'No Profile': True}}
+2025-06-04 19:44:28,968 | NewGAN-Dev: ERROR: RTF file not found: "C:\Users\nezi\Documents\Sports Interactive\Football Manager 2024\tumtakim23.rtf"
+2025-06-04 19:44:28,968 | NewGAN-Dev: INFO: Development mode session completed
+2025-06-04 19:45:20,612 | NewGAN-Dev: INFO: Starting NewGAN Manager in simplified development mode...
+2025-06-04 19:45:21,256 | NewGAN-Dev: INFO: Successfully imported core modules
+2025-06-04 19:45:21,256 | NewGAN-Dev: INFO: Default config exists at: C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\src\newganmanager\.user\default_cfg.json
+2025-06-04 19:45:21,256 | NewGAN-Dev: INFO: Default config content: {'Profile': {'No Profile': True}}
+2025-06-04 19:45:25,931 | NewGAN-Dev: INFO: Parsing RTF file: C:\Users\nezi\Documents\Sports Interactive\Football Manager 2024\tumtakim23.rtf
+2025-06-04 19:45:26,169 | NewGAN-Dev: INFO: Parsed 46676 entries from RTF
+2025-06-04 19:45:26,170 | NewGAN-Dev: INFO: Entry 1: ['2002074346', 'HIR', 'ALM', '1']
+2025-06-04 19:45:26,170 | NewGAN-Dev: INFO: Entry 2: ['2002072570', 'MEK', None, '1']
+2025-06-04 19:45:26,170 | NewGAN-Dev: INFO: Entry 3: ['2002073185', 'ARJ', None, '1']
+2025-06-04 19:45:26,172 | NewGAN-Dev: INFO: Entry 4: ['2002074350', 'TÜR', 'ALM', '2']
+2025-06-04 19:45:26,172 | NewGAN-Dev: INFO: Entry 5: ['2002074514', 'BEL', None, '0']
+2025-06-04 19:45:26,173 | NewGAN-Dev: INFO: Development mode session completed
+2025-06-04 19:46:04,310 | NewGAN-Dev: INFO: Starting NewGAN Manager in simplified development mode...
+2025-06-04 19:46:04,869 | NewGAN-Dev: INFO: Successfully imported core modules
+2025-06-04 19:46:04,870 | NewGAN-Dev: INFO: Default config exists at: C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\src\newganmanager\.user\default_cfg.json
+2025-06-04 19:46:04,870 | NewGAN-Dev: INFO: Default config content: {'Profile': {'No Profile': True}}
+2025-06-04 19:46:07,984 | NewGAN-Dev: INFO: Testing Mapper functionality
+2025-06-04 19:46:40,782 | NewGAN-Dev: ERROR: Image directory not found: "C:\Users\nezi\Documents\Sports Interactive\Football Manager 2024\graphics\Newgen"
+2025-06-04 19:46:40,782 | NewGAN-Dev: INFO: Development mode session completed
+2025-06-04 19:47:58,028 | NewGAN-Dev: INFO: Starting NewGAN Manager in simplified development mode...
+2025-06-04 19:47:58,736 | NewGAN-Dev: INFO: Successfully imported core modules
+2025-06-04 19:47:58,736 | NewGAN-Dev: INFO: Default config exists at: C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\src\newganmanager\.user\default_cfg.json
+2025-06-04 19:47:58,736 | NewGAN-Dev: INFO: Default config content: {'Profile': {'No Profile': True}}
+2025-06-04 19:48:01,104 | NewGAN-Dev: INFO: Testing Mapper functionality
+2025-06-04 19:48:03,353 | NewGAN-Dev: INFO: Checking image directory structure: C:\Users\nezi\Documents\Sports Interactive\Football Manager 2024\graphics\Newgen
+2025-06-04 19:48:03,379 | NewGAN-Dev: INFO: Development mode session completed
+2025-06-04 19:48:51,782 | NewGAN-Dev: INFO: Starting NewGAN Manager in simplified development mode...
+2025-06-04 19:48:52,349 | NewGAN-Dev: INFO: Successfully imported core modules
+2025-06-04 19:48:52,349 | NewGAN-Dev: INFO: Default config exists at: C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\src\newganmanager\.user\default_cfg.json
+2025-06-04 19:48:52,349 | NewGAN-Dev: INFO: Default config content: {'Profile': {'No Profile': True}}
+2025-06-04 19:48:59,062 | NewGAN-Dev: INFO: Testing Mapper functionality
+2025-06-04 19:49:08,651 | NewGAN-Dev: INFO: Checking image directory structure: C:\Users\nezi\Documents\Sports Interactive\Football Manager 2024\graphics\Newgen
+2025-06-04 19:49:08,651 | NewGAN-Dev: INFO: Found subdirectories: ['Africans', 'Asians', 'British_Irish', 'Europeans', 'Mixed Race', 'North Africans', 'North Americans', 'Oceanians', 'Scandinavians', 'South Americans', 'Staff', 'ÎŸceanians']
+2025-06-04 19:49:08,651 | NewGAN-Dev: INFO: Development mode session completed
+2025-06-04 19:50:06,026 | NewGAN-Dev: INFO: Starting NewGAN Manager in simplified development mode...
+2025-06-04 19:50:06,590 | NewGAN-Dev: INFO: Successfully imported core modules
+2025-06-04 19:50:06,591 | NewGAN-Dev: INFO: Default config exists at: C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\src\newganmanager\.user\default_cfg.json
+2025-06-04 19:50:06,591 | NewGAN-Dev: INFO: Default config content: {'Profile': {'No Profile': True}}
+2025-06-04 19:50:08,363 | NewGAN-Dev: INFO: Testing Profile Manager
+2025-06-04 19:50:20,044 | NewGAN-Dev: INFO: Creating test profile: test
+2025-06-04 19:50:20,045 | NewGAN-Dev: INFO: Created test profile at: C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\src\newganmanager\.user\test.json
+2025-06-04 19:50:20,045 | NewGAN-Dev: INFO: Development mode session completed
+2025-06-04 19:51:41,871 | NewGAN-Dev: INFO: Starting NewGAN Manager in simplified development mode...
+2025-06-04 19:51:42,489 | NewGAN-Dev: INFO: Successfully imported core modules
+2025-06-04 19:51:42,489 | NewGAN-Dev: INFO: Default config exists at: C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\src\newganmanager\.user\default_cfg.json
+2025-06-04 19:51:42,489 | NewGAN-Dev: INFO: Default config content: {'Profile': {'No Profile': True}}
+2025-06-04 19:53:54,182 | NewGAN-Dev: INFO: Starting NewGAN Manager in simplified development mode...
+2025-06-04 19:53:54,812 | NewGAN-Dev: INFO: Successfully imported core modules
+2025-06-04 19:53:54,812 | NewGAN-Dev: INFO: Default config exists at: C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\src\newganmanager\.user\default_cfg.json
+2025-06-04 19:53:54,812 | NewGAN-Dev: INFO: Default config content: {'Profile': {'No Profile': True}}
+2025-06-04 19:54:00,502 | NewGAN-Dev: INFO: Testing XML Parser
+2025-06-04 19:54:20,750 | NewGAN-Dev: INFO: Testing XML parser with file: C:\Users\nezi\Documents\Sports Interactive\Football Manager 2024\graphics\Newgen\config.xml
+2025-06-04 19:54:51,109 | NewGAN-Dev: INFO: Found image path for UID 0123456789: African/African1
+2025-06-04 19:54:51,110 | NewGAN-Dev: INFO: Development mode session completed
+2025-06-04 20:01:22,483 | NewGAN-Dev: INFO: Starting NewGAN Manager in simplified development mode...
+2025-06-04 20:01:23,142 | NewGAN-Dev: INFO: Successfully imported core modules
+2025-06-04 20:01:23,142 | NewGAN-Dev: INFO: Default config exists at: C:\Users\nezi\Desktop\Projeler\fmprojesi\NewGAN-Manager\src\newganmanager\.user\default_cfg.json
+2025-06-04 20:01:23,143 | NewGAN-Dev: INFO: Default config content: {'Profile': {'No Profile': True}}

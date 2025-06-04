@@ -2,8 +2,22 @@
 ![Linux](https://github.com/Maradonna90/NewGAN-Manager/workflows/Linux/badge.svg)
 ![Windows](https://github.com/Maradonna90/NewGAN-Manager/workflows/Windows/badge.svg)
 
-# THIS REPOSITORY IS NOT MAINTAINED. THERE WILL BE NO MORE RELEASES. FEEL FREE TO FORK AND ESTABLISH A NEW MAIN REPOSITORY
-open an issue here so I update the readme.
+# NewGAN Manager - Maintained Fork
+
+Bu repo, [orijinal NewGAN Manager](https://github.com/Maradonna90/NewGAN-Manager) projesinin bir fork'udur.
+
+## Yeni Geliştirmeler (2025-06-04)
+
+### Ethnicity Mapping İyileştirmeleri
+- Tüm yaygın ülke kodları için kapsamlı etnik köken eşleştirmeleri eklendi
+- None değerleri için güvenli fallback mekanizması eklendi
+- Tekil/çoğul etnik köken isimlerini düzgün eşleştirme
+- XML oluşturma sürecinde hata işleme iyileştirmeleri
+
+Ayrıntılar için [ETHNICITY_MAPPING_CHANGES.md](ETHNICITY_MAPPING_CHANGES.md) dosyasına bakabilirsiniz.
+
+---
+**Not:** Bu, artık aktif olarak sürdürülen bir fork'tur. Orijinal repo artık sürdürülmüyor.
 
 # Main Contributors
 **[Maradonna](https://community.sigames.com/profile/50821-maradonna/) (gestalt)**: Initiator, Coding, Image Generation  
